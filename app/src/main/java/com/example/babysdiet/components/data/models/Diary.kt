@@ -12,6 +12,6 @@ class Diary(
     val food: Food,
     val amountFood: Float,
     val reaction: String,
-    val timeReaction: Long,
+    val reactionTime: Long,
     val mealEvaluations: Int
 )
