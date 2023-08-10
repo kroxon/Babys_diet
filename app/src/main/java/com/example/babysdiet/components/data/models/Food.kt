@@ -8,6 +8,8 @@ import com.example.babysdiet.util.Constants.DATABASE_TABLE_FOOD
 class Food(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val name: String,
     val category: String,
-    val description: String
+    val description: String,
+    val isAllergen: Boolean = false
 )
