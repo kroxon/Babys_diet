@@ -2,8 +2,8 @@ package com.example.babysdiet.components
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.babysdiet.components.data.DiaryDao
-import com.example.babysdiet.components.data.FoodDao
+import com.example.babysdiet.components.data.Dao.DiaryDao
+import com.example.babysdiet.components.data.Dao.FoodDao
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Food
 

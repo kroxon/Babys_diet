@@ -1,4 +1,4 @@
-package com.example.babysdiet.components.data
+package com.example.babysdiet.components.data.Dao
 
 import androidx.room.Dao
 import androidx.room.Delete
