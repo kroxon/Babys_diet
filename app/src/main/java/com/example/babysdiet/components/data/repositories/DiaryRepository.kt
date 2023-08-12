@@ -1,8 +1,7 @@
 package com.example.babysdiet.components.data.repositories
 
-import com.example.babysdiet.components.data.Dao.DiaryDao
+import com.example.babysdiet.components.data.daos.DiaryDao
 import com.example.babysdiet.components.data.models.Diary
-import com.example.babysdiet.components.data.models.Food
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -11,8 +10,8 @@ import javax.inject.Inject
 class DiaryRepository @Inject constructor(private val diaryDao: DiaryDao) {
     val getAllDiaryEntries: Flow<List<Diary>> = diaryDao.getAllDiaryEntries()
 
-    fun getDiaryByFood(food: Food): Flow<List<Diary>> {
-        return diaryDao.getDiaryByFood(food = food)
+    fun getDiaryByFood(foodId: Int): Flow<List<Diary>> {
+        return diaryDao.getDiaryByFood(foodId = foodId)
     }
 
     suspend fun addDiaryEntry(diary: Diary) {

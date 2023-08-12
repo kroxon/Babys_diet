@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.example.babysdiet.util.Constants.DATABASE_TABLE_FOOD
 
 @Entity(tableName = DATABASE_TABLE_FOOD)
-class Food(
+data class Food(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
