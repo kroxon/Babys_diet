@@ -5,12 +5,12 @@ import androidx.navigation.NavHostController
 
 class Screens(navController: NavHostController) {
 
-    val home: (Int) -> Unit = { category ->
-        navController.navigate("categories/$category")
+    val home: () -> Unit = {
+        navController.navigate("categories_screen")
     }
 
-    val categories: (Int) -> Unit = { taskId ->
-        navController.navigate("task/$taskId")
+    val categories: (Int) -> Unit = { categoryId ->
+        navController.navigate("product_screen/$categoryId")
     }
 
 }
