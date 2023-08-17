@@ -10,10 +10,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.babysdiet.ui.screens.Screen
 import com.example.babysdiet.ui.screens.categories.CategoriesScreen
+import com.example.babysdiet.ui.screens.history.HistoryScreen
 import com.example.babysdiet.ui.screens.home.HomeScreen
 import com.example.babysdiet.ui.screens.product.ProductsScreen
 import com.example.babysdiet.util.Constants.CATEGORY_ARGUMENT_KEY
 import com.example.babysdiet.util.Constants.CATEGORY_ARGUMENT_KEY2
+import com.example.babysdiet.util.Constants.HISTORY_ARGUMENT_KEY
 import com.example.babysdiet.util.Constants.PRODUCT_ARGUMENT_KEY
 
 @Composable
@@ -51,6 +53,17 @@ fun SetupNavGraph(
         ) {
             Log.d("Arguments", it.arguments?.getInt(PRODUCT_ARGUMENT_KEY).toString())
             ProductsScreen(navController)
+        }
+
+        composable(
+            route = Screen.History.route,
+            arguments = listOf(
+                navArgument(HISTORY_ARGUMENT_KEY) {
+                    type = NavType.IntType
+                })
+        ) {
+            Log.d("Arguments", it.arguments?.getInt(HISTORY_ARGUMENT_KEY).toString())
+            HistoryScreen(navController)
         }
     }
 }

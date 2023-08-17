@@ -2,6 +2,7 @@ package com.example.babysdiet.ui.screens
 
 import com.example.babysdiet.util.Constants.CATEGORY_ARGUMENT_KEY
 import com.example.babysdiet.util.Constants.CATEGORY_ARGUMENT_KEY2
+import com.example.babysdiet.util.Constants.HISTORY_ARGUMENT_KEY
 import com.example.babysdiet.util.Constants.PRODUCT_ARGUMENT_KEY
 
 
@@ -31,4 +32,11 @@ sealed class Screen(val route: String) {
             return "product_screen/$id"
         }
     }
+
+    object History: Screen(
+        route = "history_screen/{$HISTORY_ARGUMENT_KEY}"){
+            fun passHistoryId(id: Int): String {
+                return "history_screen/$id"
+            }
+        }
 }

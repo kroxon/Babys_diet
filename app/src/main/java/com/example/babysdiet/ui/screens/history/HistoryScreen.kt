@@ -1,4 +1,4 @@
-package com.example.babysdiet.ui.screens.home
+package com.example.babysdiet.ui.screens.history
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.babysdiet.ui.screens.Screen
 
 @Composable
-fun HomeScreen(
+fun HistoryScreen(
     navController: NavController
 ) {
     Box(
@@ -31,35 +32,27 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
             Text(
-                text = "Home",
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                text = "History",
+                fontSize = MaterialTheme.typography.titleLarge.fontSize
             )
             Spacer(modifier = Modifier.height(200.dp))
             Text(
                 modifier = Modifier.clickable {
-                    navController.navigate(
-                        route = Screen.Categories.route
-                    )
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Home.route) {
+                            inclusive = true
+                        }
+                    }
                 },
-                text = "Category"
-            )
-            Text(
-                modifier = Modifier.clickable {
-                    navController.navigate(
-                        route = Screen.History.passHistoryId(9)
-                    )
-                },
-                text = "History"
+                text = "Home"
             )
         }
     }
-
 }
 
 @Composable
 @Preview(showBackground = true)
-fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+fun CategoriesScreenPreview() {
+    HistoryScreen(navController = rememberNavController())
 }
