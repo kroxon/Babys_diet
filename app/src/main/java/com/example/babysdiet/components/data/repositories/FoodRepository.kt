@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class FoodRepository @Inject constructor(private val foodDao: FoodDao) {
-    val getAllFoods: Flow<List<Food>> = foodDao.getAllFood()
+    val getAllProducts: Flow<List<Food>> = foodDao.getAllFood()
     val getAllergenFoods: Flow<List<Food>> = foodDao.getAllergens(true)
 
     suspend fun addFood(food: Food) {
