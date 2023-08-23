@@ -17,49 +17,26 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.babysdiet.ui.screens.Screen
+import com.example.babysdiet.ui.viewmodels.SharedViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navigateToCategoryScreen: (categoryId: Int) -> Unit,
+    navigateToDiaryScreen: (diaryId: Int) -> Unit
+//    ,
+//    sharedViewModel: SharedViewModel
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
 
-            Text(
-                text = "Home",
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-            )
-            Spacer(modifier = Modifier.height(200.dp))
-            Text(
-                modifier = Modifier.clickable {
-                    navController.navigate(
-                        route = Screen.Categories.route
-                    )
-                },
-                text = "Category"
-            )
-            Text(
-                modifier = Modifier.clickable {
-                    navController.navigate(
-                        route = Screen.History.passHistoryId(9)
-                    )
-                },
-                text = "History"
-            )
-        }
-    }
 
 }
 
 @Composable
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen(
+        navigateToCategoryScreen = {},
+        navigateToDiaryScreen = {}
+//        ,
+//        sharedViewModel = sharedViewModel
+    )
 }

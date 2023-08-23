@@ -33,9 +33,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BabysDietTheme {
-                
                 navController = rememberNavController()
-                SetupNavGraph(navController = navController)
+                SetupNavGraph(
+                    navController = navController,
+                    sharedViewModel = sharedViewModel
+                )
             }
         }
     }

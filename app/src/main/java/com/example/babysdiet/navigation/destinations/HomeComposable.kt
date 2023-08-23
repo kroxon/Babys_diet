@@ -1,29 +1,33 @@
 package com.example.babysdiet.navigation.destinations
 
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.babysdiet.ui.screens.home.HomeScreen
+import com.example.babysdiet.ui.viewmodels.SharedViewModel
+import com.example.babysdiet.util.Constants.HOME_ARGUMENT_KEY
 import com.example.babysdiet.util.Constants.HOME_SCREEN
 
 
-fun NavGraphBuilder.listComposable(
-    navigateToTaskScreen: (taskId: Int) -> Unit,
+fun NavGraphBuilder.homeComposable(
+    navigateToCategoryScreen: (categoryId: Int) -> Unit,
+    navigateToDiaryScreen: (diaryId: Int) -> Unit
+//    ,
+//    sharedViewModel: SharedViewModel
 ) {
     composable(
         route = HOME_SCREEN,
-    ) { navBAckStackEntry ->
-//        val action =navBAckStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
-        
-//        LaunchedEffect(key1 = action){
-//            sharedViewModel.action.value = action
-//        }
-
-//        ListScreen(
-//            navigateToTaskScreen = navigateToTaskScreen,
+        arguments = listOf(navArgument(HOME_ARGUMENT_KEY) {
+            type = NavType.StringType
+        })
+    ) {
+        HomeScreen(
+            navigateToCategoryScreen = {},
+            navigateToDiaryScreen = {}
+//            ,
 //            sharedViewModel = sharedViewModel
-//        )
+        )
     }
 }
 
