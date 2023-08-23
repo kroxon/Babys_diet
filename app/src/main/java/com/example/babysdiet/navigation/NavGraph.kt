@@ -3,6 +3,7 @@ package com.example.babysdiet.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
@@ -23,13 +24,14 @@ fun SetupNavGraph(
         Screens(navController = navController)
     }
 
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = HOME_SCREEN
     ) {
         homeComposable(
             navigateToCategoryScreen = screen.categories,
-            navigateToDiaryScreen = screen.diary,
+            navigateToDiaryScreen = screen.diary
+            ,
             sharedViewModel = sharedViewModel
         )
         diaryComposable(

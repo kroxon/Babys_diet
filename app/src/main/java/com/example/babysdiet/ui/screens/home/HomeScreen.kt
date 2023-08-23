@@ -1,42 +1,67 @@
 package com.example.babysdiet.ui.screens.home
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import android.annotation.SuppressLint
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.babysdiet.ui.screens.Screen
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.example.babysdiet.R
+import com.example.babysdiet.ui.theme.fabContentColor
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navigateToCategoryScreen: (categoryId: Int) -> Unit,
-    navigateToDiaryScreen: (diaryId: Int) -> Unit
-//    ,
-//    sharedViewModel: SharedViewModel
+    navigateToDiaryScreen: (diaryId: Int) -> Unit,
+    sharedViewModel: SharedViewModel
 ) {
-
-
+    LaunchedEffect(key1 = true) {
+        sharedViewModel.getAllProducts()
+    }
+    val allProducts = sharedViewModel.allProducts.collectAsState()
+    Scaffold(
+        topBar = {
+            HomeAppBar()
+        },
+        content = {},
+        floatingActionButton = {
+            HomeFab(onFabClicked = navigateToDiaryScreen)
+        }
+    )
 }
 
 @Composable
-@Preview(showBackground = true)
-fun HomeScreenPreview() {
-    HomeScreen(
-        navigateToCategoryScreen = {},
-        navigateToDiaryScreen = {}
-//        ,
-//        sharedViewModel = sharedViewModel
-    )
+fun HomeFab(
+    onFabClicked: (taskId: Int) -> Unit
+) {
+    FloatingActionButton(
+        onClick = {
+            onFabClicked(-1)
+        },
+        containerColor = MaterialTheme.colorScheme.fabContentColor
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Add,
+            contentDescription = stringResource(id = R.string.add_button),
+            tint = Color.White
+        )
+    }
 }
+
+//@Composable
+//@Preview(showBackground = true)
+//fun HomeScreenPreview() {
+//    HomeScreen(
+//        navigateToCategoryScreen = {},
+//        navigateToDiaryScreen = {},
+//        sharedViewModel = {}
+//    )
+//}
