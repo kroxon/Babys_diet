@@ -22,9 +22,8 @@ fun NavGraphBuilder.homeComposable(
         })
     ) {
         HomeScreen(
-            navigateToCategoryScreen = {},
-            navigateToDiaryScreen = {}
-            ,
+            navigateToCategoryScreen = navigateToCategoryScreen,
+            navigateToDiaryScreen = navigateToDiaryScreen,
             sharedViewModel = sharedViewModel
         )
     }

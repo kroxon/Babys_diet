@@ -1,4 +1,4 @@
-package com.example.babysdiet.ui.screens.home
+package com.example.babysdiet.ui.screens.diary
 
 import android.util.Log
 import androidx.compose.foundation.Canvas
@@ -29,21 +29,20 @@ import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.DIARY_ITEM_ELEVATION
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.LARGE_PADDING
-import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.diaryItemTextColor
 import com.example.babysdiet.ui.theme.diaryItembackgroudColor
 import com.example.babysdiet.util.RequestState
 
 @Composable
-fun HomeContent(
+fun DiaryContent(
     diaries: RequestState<List<Diary>>,
     products: RequestState<List<Product>>,
     navigateToDiaryScreen: (diaryId: Int) -> Unit
 ) {
     if (diaries is RequestState.Success && products is RequestState.Success){
         if (diaries.data.isEmpty()) {
-            EmptyContent()
+//            EmptyContent()
         } else
             DisplayDiaries(
                 diaries = diaries.data,
@@ -98,7 +97,7 @@ fun DiaryItem(
     ) {
         Column(
             modifier = Modifier
-                .padding(all = MEDIUM_PADDING)
+                .padding(all = LARGE_PADDING)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.Center
         ) {
@@ -108,7 +107,7 @@ fun DiaryItem(
                 Text(
                     text = product.name,
                     color = MaterialTheme.colorScheme.diaryItemTextColor,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1
                 )

@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.babysdiet.ui.screens.diary.DiaryScreen
 import com.example.babysdiet.ui.screens.home.HomeScreen
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
@@ -23,10 +24,8 @@ fun NavGraphBuilder.diaryComposable(
             type = NavType.IntType
         })
     ) {
-        HomeScreen(
-            navigateToCategoryScreen = {},
-            navigateToDiaryScreen = {}
-            ,
+        DiaryScreen(
+            navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel
         )
     }

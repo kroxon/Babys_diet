@@ -24,12 +24,7 @@ fun NavGraphBuilder.categoriesComposable(
             type = NavType.IntType
         })
     ) {
-        HomeScreen(
-            navigateToCategoryScreen = {},
-            navigateToDiaryScreen = {}
-            ,
-            sharedViewModel = sharedViewModel
-        )
+
     }
 }
 
