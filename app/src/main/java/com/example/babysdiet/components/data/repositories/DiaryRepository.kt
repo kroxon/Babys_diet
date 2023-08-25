@@ -10,8 +10,11 @@ import javax.inject.Inject
 class DiaryRepository @Inject constructor(private val diaryDao: DiaryDao) {
     val getAllDiaryEntries: Flow<List<Diary>> = diaryDao.getAllDiaryEntries()
 
-    fun getDiaryByFood(foodId: Int): Flow<List<Diary>> {
-        return diaryDao.getDiaryByFood(foodId = foodId)
+    fun getSelectedDiary(idDiary: Int): Flow<Diary> {
+        return diaryDao.getSelectedDiary(idDiary = idDiary)
+    }
+    fun getDiaryByProduct(productId: Int): Flow<List<Diary>> {
+        return diaryDao.getDiaryByProduct(productId = productId)
     }
 
     suspend fun addDiaryEntry(diary: Diary) {

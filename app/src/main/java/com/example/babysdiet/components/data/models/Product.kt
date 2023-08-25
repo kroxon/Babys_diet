@@ -2,14 +2,14 @@ package com.example.babysdiet.components.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.babysdiet.util.Constants.DATABASE_TABLE_FOOD
+import com.example.babysdiet.util.Constants.DATABASE_TABLE_PRODUCT
 
-@Entity(tableName = DATABASE_TABLE_FOOD)
-data class Food(
+@Entity(tableName = DATABASE_TABLE_PRODUCT)
+data class Product(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val productId: Int = 0,
     val name: String,
-    val category: String,
+    val categoryId: String,
     val description: String,
     val isAllergen: Boolean = false
 )

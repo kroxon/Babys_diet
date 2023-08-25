@@ -12,9 +12,8 @@ import com.example.babysdiet.util.Constants.HOME_SCREEN
 
 fun NavGraphBuilder.homeComposable(
     navigateToCategoryScreen: (categoryId: Int) -> Unit,
-    navigateToDiaryScreen: (diaryId: Int) -> Unit
-//    ,
-//    sharedViewModel: SharedViewModel
+    navigateToDiaryScreen: (diaryId: Int) -> Unit,
+    sharedViewModel: SharedViewModel
 ) {
     composable(
         route = HOME_SCREEN,
@@ -25,8 +24,8 @@ fun NavGraphBuilder.homeComposable(
         HomeScreen(
             navigateToCategoryScreen = {},
             navigateToDiaryScreen = {}
-//            ,
-//            sharedViewModel = sharedViewModel
+            ,
+            sharedViewModel = sharedViewModel
         )
     }
 }

@@ -12,11 +12,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DiaryDao {
 
-    @Query("SELECT * FROM diary_table ORDER BY reactionTime DESC")
+    @Query("SELECT * FROM diary_table ORDER BY timeEating DESC")
     fun getAllDiaryEntries(): Flow<List<Diary>>
 
-    @Query("SELECT * FROM diary_table WHERE foodId=:foodId  ORDER BY reactionTime DESC")
-    fun getDiaryByFood(foodId: Int): Flow<List<Diary>>
+    @Query("SELECT * FROM diary_table WHERE productId=:productId  ORDER BY timeEating DESC")
+    fun getDiaryByProduct(productId: Int): Flow<List<Diary>>
+
+    @Query("SELECT * FROM diary_table WHERE idDiary=:idDiary")
+    fun getSelectedDiary(idDiary: Int): Flow<Diary>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addDiaryEntry(diary: Diary)

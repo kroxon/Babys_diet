@@ -1,7 +1,9 @@
 package com.example.babysdiet.util
 
+import androidx.compose.ui.unit.dp
+
 object Constants {
-    const val DATABASE_TABLE_FOOD = "food_table"
+    const val DATABASE_TABLE_PRODUCT = "product_table"
     const val DATABASE_TABLE_DIARY = "diary_table"
     const val DATABASE_NAME = "diet_database"
 
@@ -17,4 +19,6 @@ object Constants {
 
     const val MAX_TITLE_LENGHT = 20
     const val SPLASH_SCREEN_DELAY = 3000L
+
+
 }

@@ -24,9 +24,9 @@ object DatabaseModul {
 
     @Singleton
     @Provides
-    fun provideDao(database: DietDatabase) = database.foodDao()
+    fun provideProductDao(database: DietDatabase) = database.productDao()
 
-//    @Singleton
-//    @Provides
-//    fun provideDiaryDao(database: DietDatabase) = database.diaryDao()
+    @Singleton
+    @Provides
+    fun provideDiaryDao(database: DietDatabase) = database.diaryDao()
 }

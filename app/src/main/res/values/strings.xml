@@ -3,5 +3,8 @@
     <string name="add_button">Add Button</string>
     <string name="home">Home</string>
     <string name="search_action">Search Action</string>
+    <string name="sad_icon">Sad Face Icon</string>
+    <string name="no_tasks_found">No meals were found.</string>
+
 
 </resources>

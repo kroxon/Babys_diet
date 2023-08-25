@@ -21,15 +21,16 @@ val FineEvaluationColor = Color(0xFF66FF33)
 val NeutralEvaluationColor = Color(0xFFFFFF00)
 val BadEvaluationColor = Color(0xFFFF6600)
 val VeryBadEvaluationColor = Color(0xFFFF0000)
-//val MediumPriorityColor = Color(0XFFFFC114)
-//val HighPriorityColor = Color(0xFFFF4646)
-//val NonePriorityColor = MediumGrey
 
-val ColorScheme.taskItemTextColor: Color
+val LightGrey = Color(0XFFFCFCFC)
+val MediumGrey = Color(0XFF9C9C9C)
+val DarkGrey = Color(0XFF141414)
+
+val ColorScheme.diaryItemTextColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
 
-val ColorScheme.taskItembackgroudColor: Color
+val ColorScheme.diaryItembackgroudColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color.DarkGray else Color.White
 
