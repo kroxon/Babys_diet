@@ -5,12 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 import com.example.babysdiet.navigation.destinations.categoriesComposable
 import com.example.babysdiet.navigation.destinations.diaryComposable
 import com.example.babysdiet.navigation.destinations.homeComposable
-import com.example.babysdiet.navigation.destinations.productComposable
+//import com.example.babysdiet.navigation.destinations.productComposable
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Constants.HOME_SCREEN
 
@@ -40,13 +39,13 @@ fun SetupNavGraph(
         )
         categoriesComposable(
             navigateToHomeScreen = screen.home,
-            navigateToProductScreen = screen.product,
+//            navigateToProductScreen = screen.product,
             sharedViewModel = sharedViewModel
         )
-        productComposable(
-//            navigateToCategoryScreen = screen.categories,
-            sharedViewModel = sharedViewModel
-        )
+//        productComposable(
+////            navigateToCategoryScreen = screen.categories,
+//            sharedViewModel = sharedViewModel
+//        )
     }
 
 //    AnimatedNavHost(
