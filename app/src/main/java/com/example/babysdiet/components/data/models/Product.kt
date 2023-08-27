@@ -9,7 +9,7 @@ data class Product(
     @PrimaryKey(autoGenerate = true)
     val productId: Int = 0,
     val name: String,
-    val categoryId: String,
+    val categoryId: Int,
     val description: String,
     val isAllergen: Boolean = false
 )

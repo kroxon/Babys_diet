@@ -5,6 +5,12 @@
     <string name="search_action">Search Action</string>
     <string name="sad_icon">Sad Face Icon</string>
     <string name="no_tasks_found">No meals were found.</string>
+    <string name="add_diary">Add a new entry</string>
+    <string name="edit_diary">Edit entry</string>
+    <string name="update_diary">Update entry</string>
+    <string name="close_diary">Close diary</string>
+    <string name="delete_diary">Delete diary</string>
+    <string name="arrow_back">Arrow Back</string>
 
 
 </resources>

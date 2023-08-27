@@ -48,8 +48,30 @@ class SharedViewModel @Inject constructor(
                     _allDiaries.value = RequestState.Success(it)
                 }
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             _allDiaries.value = RequestState.Error(e)
+        }
+    }
+
+    private val _selectedDiary: MutableStateFlow<Diary?> = MutableStateFlow(null)
+    val selectedDiary: StateFlow<Diary?> = _selectedDiary
+
+    fun getSelectedDiary(diaryId: Int) {
+        viewModelScope.launch {
+            diaryRepository.getSelectedDiary(diaryId).collect { diary ->
+                _selectedDiary.value = diary
+            }
+        }
+    }
+
+    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
+    val selectedProduct: StateFlow<Product?> = _selectedProduct
+
+    fun getSelectedProduct(productId: Int) {
+        viewModelScope.launch {
+            productRepository.getSelectedProduct(productId).collect { product ->
+                _selectedProduct.value = product
+            }
         }
     }
 

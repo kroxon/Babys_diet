@@ -27,7 +27,11 @@ class ProductRepository @Inject constructor(private val productDao: ProductDao) 
         return productDao.getProductCategory(category = searchQuery)
     }
 
-    fun searchByProductName(searchQuery: String): Flow<List<Product>>{
+    fun getSelectedProduct(productId: Int): Flow<Product> {
+        return productDao.getSelectedProduct(productId = productId)
+    }
+
+    fun searchByProductName(searchQuery: String): Flow<List<Product>> {
         return productDao.searchProductByName(searchQuery = searchQuery)
     }
 

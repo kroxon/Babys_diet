@@ -153,7 +153,7 @@ fun DiaryItemPreview() {
             true,
             true
         ),
-        product = Product(0, "Milk", "1", "milk", true),
+        product = Product(0, "Milk", 1, "milk", true),
         navigateToDiaryScreen = {}
     )
 }

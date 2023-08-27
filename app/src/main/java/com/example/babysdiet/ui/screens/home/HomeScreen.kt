@@ -54,7 +54,7 @@ fun HomeScreen(
 
 @Composable
 fun HomeFab(
-    onFabClicked: (taskId: Int) -> Unit
+    onFabClicked: (diaryId: Int) -> Unit
 ) {
     FloatingActionButton(
         onClick = {

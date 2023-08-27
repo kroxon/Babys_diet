@@ -1,17 +1,18 @@
 package com.example.babysdiet.navigation.destinations
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.screens.diary.DiaryScreen
-import com.example.babysdiet.ui.screens.home.HomeScreen
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.Constants.DIARY_ARGUMENT_KEY
 import com.example.babysdiet.util.Constants.DIARY_SCREEN
-import com.example.babysdiet.util.Constants.HOME_ARGUMENT_KEY
-import com.example.babysdiet.util.Constants.HOME_SCREEN
 
 
 fun NavGraphBuilder.diaryComposable(
@@ -23,10 +24,16 @@ fun NavGraphBuilder.diaryComposable(
         arguments = listOf(navArgument(DIARY_ARGUMENT_KEY) {
             type = NavType.IntType
         })
-    ) {
+    ) { navBackStackEntry ->
+        val diaryId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY)
+
+        sharedViewModel.getSelectedDiary(diaryId = diaryId)
+        val selectedDiary by sharedViewModel.selectedDiary.collectAsState()
+
         DiaryScreen(
             navigateToHomeScreen = navigateToHomeScreen,
-            sharedViewModel = sharedViewModel
+            sharedViewModel = sharedViewModel,
+            selectedDiary = selectedDiary
         )
     }
 }
