@@ -17,7 +17,8 @@ import com.example.babysdiet.util.Action
 fun DiaryScreen(
     navigateToHomeScreen: (Action) -> Unit,
     sharedViewModel: SharedViewModel,
-    selectedDiary: Diary?
+    selectedDiary: Diary?,
+    selectedProduct: Product?
 ) {
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllProducts()
@@ -34,6 +35,7 @@ fun DiaryScreen(
             DiaryAppBar(
                 navigateToHomeScreen = navigateToHomeScreen,
                 selectedDiary = selectedDiary,
+                selectedProduct = selectedProduct,
                 sharedViewModel = sharedViewModel
             )
         },

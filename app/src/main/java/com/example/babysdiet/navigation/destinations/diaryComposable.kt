@@ -12,6 +12,7 @@ import com.example.babysdiet.ui.screens.diary.DiaryScreen
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.Constants.DIARY_ARGUMENT_KEY
+import com.example.babysdiet.util.Constants.DIARY_ARGUMENT_KEY_2
 import com.example.babysdiet.util.Constants.DIARY_SCREEN
 
 
@@ -21,19 +22,29 @@ fun NavGraphBuilder.diaryComposable(
 ) {
     composable(
         route = DIARY_SCREEN,
-        arguments = listOf(navArgument(DIARY_ARGUMENT_KEY) {
-            type = NavType.IntType
-        })
+        arguments = listOf(
+            navArgument(DIARY_ARGUMENT_KEY) {
+                type = NavType.IntType
+            },
+            navArgument(DIARY_ARGUMENT_KEY_2) {
+                type = NavType.IntType
+            },
+        )
     ) { navBackStackEntry ->
         val diaryId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY)
+        val productId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY_2)
 
         sharedViewModel.getSelectedDiary(diaryId = diaryId)
         val selectedDiary by sharedViewModel.selectedDiary.collectAsState()
 
+        sharedViewModel.getSelectedProduct(productId = productId)
+        val selectedProduct by sharedViewModel.selectedProduct.collectAsState()
+
         DiaryScreen(
             navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel,
-            selectedDiary = selectedDiary
+            selectedDiary = selectedDiary,
+            selectedProduct = selectedProduct
         )
     }
 }

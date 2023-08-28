@@ -18,7 +18,7 @@ interface DiaryDao {
     @Query("SELECT * FROM diary_table WHERE productId=:productId  ORDER BY timeEating DESC")
     fun getDiaryByProduct(productId: Int): Flow<List<Diary>>
 
-    @Query("SELECT * FROM diary_table WHERE idDiary=:idDiary")
+    @Query("SELECT * FROM diary_table WHERE diaryId=:idDiary")
     fun getSelectedDiary(idDiary: Int): Flow<Diary>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

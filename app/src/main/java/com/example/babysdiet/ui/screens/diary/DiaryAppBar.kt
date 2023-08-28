@@ -28,6 +28,7 @@ import com.example.babysdiet.util.Action
 fun DiaryAppBar(
     selectedDiary: Diary?,
     sharedViewModel: SharedViewModel,
+    selectedProduct: Product?,
     navigateToHomeScreen: (Action) -> Unit
 ) {
     if (selectedDiary == null) {
@@ -35,6 +36,7 @@ fun DiaryAppBar(
     } else {
         ExistindDiaryAppBar(
             navigateToHomeScreen = navigateToHomeScreen,
+            selecteProduct = selectedProduct
         )
     }
 }
@@ -64,13 +66,20 @@ fun NewDiaryAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExistindDiaryAppBar(
-    navigateToHomeScreen: (Action) -> Unit
+    navigateToHomeScreen: (Action) -> Unit,
+    selecteProduct: Product?
 ) {
     TopAppBar(
         navigationIcon = {
             BackAction(onBackClicked = navigateToHomeScreen)
         },
-        title = { Text(text = stringResource(id = R.string.edit_diary)) },
+//        title = { Text(text = stringResource(id = R.string.edit_diary)) },
+        title = {
+            if (selecteProduct != null)
+                Text(text = selecteProduct!!.name)
+            else
+                Text(text = stringResource(id = R.string.edit_diary))
+        },
         actions = {
             DeleteAction(onDeleteeClicked = navigateToHomeScreen)
             UpdateAction(onUpdateClicked = navigateToHomeScreen)
