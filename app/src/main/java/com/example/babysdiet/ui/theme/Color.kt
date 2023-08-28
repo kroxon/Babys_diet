@@ -45,3 +45,7 @@ val ColorScheme.topAppBarContentColor: Color
 val ColorScheme.topAppBarBackgroumdColor: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color.Black else Blue1
+
+val ColorScheme.buttonBackgroumdColor: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) Color.Black else Blue1

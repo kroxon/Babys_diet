@@ -40,7 +40,10 @@ fun DiaryScreen(
             )
         },
         content = {
-
+            DiaryContent(
+                selectedDiary = selectedDiary,
+                selectedProduct = selectedProduct
+            )
         }
     )
 }

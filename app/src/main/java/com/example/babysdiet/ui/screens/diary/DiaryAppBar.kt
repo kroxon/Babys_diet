@@ -73,13 +73,13 @@ fun ExistindDiaryAppBar(
         navigationIcon = {
             BackAction(onBackClicked = navigateToHomeScreen)
         },
-//        title = { Text(text = stringResource(id = R.string.edit_diary)) },
-        title = {
-            if (selecteProduct != null)
-                Text(text = selecteProduct!!.name)
-            else
-                Text(text = stringResource(id = R.string.edit_diary))
-        },
+        title = { Text(text = stringResource(id = R.string.edit_diary)) },
+//        title = {
+//            if (selecteProduct != null)
+//                Text(text = selecteProduct!!.name)
+//            else
+//                Text(text = stringResource(id = R.string.edit_diary))
+//        },
         actions = {
             DeleteAction(onDeleteeClicked = navigateToHomeScreen)
             UpdateAction(onUpdateClicked = navigateToHomeScreen)
