@@ -7,7 +7,7 @@ import com.example.babysdiet.util.Constants.DATABASE_TABLE_DIARY
 @Entity(tableName = DATABASE_TABLE_DIARY)
 data class Diary(
     @PrimaryKey(autoGenerate = true)
-    val idDiary: Int = 0,
+    val diaryId: Int = 0,
     val timeEating: Long,
     val productId: Int,
     val reactionOccurred: Boolean,

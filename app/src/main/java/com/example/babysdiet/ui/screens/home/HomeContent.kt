@@ -1,13 +1,11 @@
 package com.example.babysdiet.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,7 +26,6 @@ import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.DIARY_ITEM_ELEVATION
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
-import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.diaryItemTextColor
@@ -39,7 +36,7 @@ import com.example.babysdiet.util.RequestState
 fun HomeContent(
     diaries: RequestState<List<Diary>>,
     products: RequestState<List<Product>>,
-    navigateToDiaryScreen: (diaryId: Int) -> Unit
+    navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit
 ) {
     if (diaries is RequestState.Success && products is RequestState.Success){
         if (diaries.data.isEmpty()) {
@@ -57,7 +54,7 @@ fun HomeContent(
 fun DisplayDiaries(
     diaries: List<Diary>,
     products: List<Product>,
-    navigateToDiaryScreen: (diaryId: Int) -> Unit
+    navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT)
@@ -66,7 +63,7 @@ fun DisplayDiaries(
         items(
             items = diaries,
             key = { diary ->
-                diary.idDiary
+                diary.diaryId
             }
         ) { diary ->
             // Find a product by diary.productId
@@ -85,7 +82,8 @@ fun DisplayDiaries(
 fun DiaryItem(
     diary: Diary,
     product: Product,
-    navigateToDiaryScreen: (diaryId: Int) -> Unit
+    navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit
+
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -93,7 +91,7 @@ fun DiaryItem(
         shape = RectangleShape,
         tonalElevation = DIARY_ITEM_ELEVATION,
         onClick = {
-            navigateToDiaryScreen(diary.idDiary)
+            navigateToDiaryScreen(diary.diaryId, diary.productId)
         }
     ) {
         Column(
@@ -154,7 +152,7 @@ fun DiaryItemPreview() {
             true,
             true
         ),
-        product = Product(0, "Milk", "1", "milk", true),
-        navigateToDiaryScreen = {}
+        product = Product(0, "Milk", 1, "milk", true),
+        navigateToDiaryScreen = { _, _ ->}
     )
 }

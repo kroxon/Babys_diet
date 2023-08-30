@@ -17,6 +17,9 @@ interface ProductDao {
     @Query("SELECT * FROM product_table WHERE categoryId=:category")
     fun getProductCategory(category: String): Flow<List<Product>>
 
+    @Query("SELECT * FROM product_table WHERE productId=:productId")
+    fun getSelectedProduct(productId: Int): Flow<Product>
+
     @Query("SELECT * FROM product_table WHERE isAllergen = :isAllergenValue")
     fun getAllergens(isAllergenValue: Boolean = true): Flow<List<Product>>
 

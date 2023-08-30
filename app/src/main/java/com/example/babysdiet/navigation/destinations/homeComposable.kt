@@ -12,7 +12,7 @@ import com.example.babysdiet.util.Constants.HOME_SCREEN
 
 fun NavGraphBuilder.homeComposable(
     navigateToCategoryScreen: (categoryId: Int) -> Unit,
-    navigateToDiaryScreen: (diaryId: Int) -> Unit,
+    navigateToDiaryScreen: (Int, Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
     composable(

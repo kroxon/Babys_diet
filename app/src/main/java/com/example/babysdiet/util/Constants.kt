@@ -10,12 +10,13 @@ object Constants {
     const val HOME_SCREEN = "home_screen/{action}"
     const val CATEGORY_SCREEN = "categories_screen/{categoryId}"
     const val PRODUCT_SCREEN = "product_screen/{productId}"
-    const val DIARY_SCREEN = "diary_screen/{diaryId}"
+    const val DIARY_SCREEN = "diary_screen/{diaryId}/{productId}"
 
     const val HOME_ARGUMENT_KEY = "action"
     const val CATEGORY_ARGUMENT_KEY = "categoryId"
     const val PRODUCT_ARGUMENT_KEY = "productId"
     const val DIARY_ARGUMENT_KEY = "diaryId"
+    const val DIARY_ARGUMENT_KEY_2 = "productId"
 
     const val MAX_TITLE_LENGHT = 20
     const val SPLASH_SCREEN_DELAY = 3000L
