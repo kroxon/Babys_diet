@@ -197,10 +197,16 @@ fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int
                 if (index == 0 && isSelected) {
                     completedList.replaceAll { true }
                 }
-                var s: String = ""
-                for (e in completedList)
-                    s += e.toString() + ", "
-                Log.d("Boolean", s)
+                if (index == 0 && !isSelected) {
+                    completedList.replaceAll { false }
+                }
+                if (index != 0 && completedList.drop(1).all { it }) {
+                    completedList.replaceAll { true }
+                }
+                if (index != 0 && !isSelected) {
+                    completedList[0] = false
+                }
+
             },
             contentPadding = PaddingValues(
                 start = 8.dp,
