@@ -24,7 +24,7 @@ val VeryBadEvaluationColor = Color(0xFFFF0000)
 
 val LightGrey = Color(0XFFFCFCFC)
 val MediumGrey = Color(0XFF9C9C9C)
-val DarkGrey = Color(0XFF141414)
+val DarkGrey = Color(0xFF2E2E2E)
 
 val ColorScheme.diaryItemTextColor: Color
     @Composable

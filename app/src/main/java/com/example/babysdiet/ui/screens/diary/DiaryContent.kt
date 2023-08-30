@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -21,12 +22,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -35,30 +39,43 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
+import com.example.babysdiet.ui.theme.LARGE_PADDING
+import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
+import com.example.babysdiet.ui.theme.diaryItemTextColor
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 
@@ -67,22 +84,23 @@ fun DiaryContent(
     selectedDiary: Diary?,
     selectedProduct: Product?
 ) {
-    Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = SMALL_PADDING)
     ) {
+        Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
+
         SearchableExposedDropdownMenuBox()
-        val names: List<String> = listOf(
-            "All", "Fruits", "Vegetables", "Dairy", "Meat", "Grains",
-            "Sweets", "Beverages", "Snacks", "Seafood", "Condiments",
-            "Desserts", "Pasta", "Canned Goods", "Frozen Foods", "Bakery",
-            "Cereals", "Nuts", "Herbs and Spices", "Oils and Sauces", "Baby Food"
-        )
+        // get category board
+        val categoriesArray = stringArrayResource(id = R.array.categories_array)
+
+        // assign the contents of the array to val names
+        val names: List<String> = categoriesArray.toList()
+
+        // assign initial values
         var completed = remember {
             mutableStateListOf<Boolean>().apply {
-                addAll(List(21) { true })
+                addAll(List(names.size) { true })
             }
         }
 
@@ -95,35 +113,78 @@ fun DiaryContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchableExposedDropdownMenuBox() {
     val context = LocalContext.current
     val coffeeDrinks = arrayOf("Americano", "Cappuccino", "Espresso", "Latte", "Mocha")
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+    var isClearButtonVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(SMALL_PADDING)
+            .padding(start = SMALL_PADDING, end = SMALL_PADDING, bottom = SMALL_PADDING)
     ) {
         ExposedDropdownMenuBox(
             modifier = Modifier.fillMaxWidth(),
             expanded = expanded,
             onExpandedChange = {
                 expanded = !expanded
+                if (!expanded) {
+                    keyboardController?.hide() // Hide the keyboard to remove focus
+                    focusManager.clearFocus()
+                    isClearButtonVisible = false
+                }
             }
         ) {
             OutlinedTextField(
                 value = selectedText,
-                onValueChange = { selectedText = it },
-                label = { Text(text = "Search") },
+                onValueChange = {
+                    selectedText = it
+                    isClearButtonVisible = it.isNotEmpty()
+                },
+                label = {
+                    Text(
+                        text = stringResource(id = R.string.search),
+                        modifier = Modifier.padding(start = SMALL_PADDING)
+                    )
+                },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier
                     .menuAnchor()
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(24.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+                    focusedTextColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+                    focusedLabelColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+                    unfocusedBorderColor = Color.DarkGray,
+                    unfocusedLabelColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray
+                )
             )
+            if (isClearButtonVisible) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 48.dp, top = SMALL_PADDING)
+                            .size(24.dp)
+                            .clickable {
+                                selectedText = ""
+                            },
+                        tint = Color.Gray,
+                    )
+                }
+            }
 
             val filteredOptions =
                 coffeeDrinks.filter { it.contains(selectedText, ignoreCase = true) }
@@ -133,16 +194,23 @@ fun SearchableExposedDropdownMenuBox() {
                     expanded = expanded,
                     onDismissRequest = {
                         // We shouldn't hide the menu when the user enters/removes any character
+                        keyboardController?.hide() // Hide the keyboard to remove focus
+                        focusManager.clearFocus()
+                        isClearButtonVisible = false
                     }
                 ) {
                     filteredOptions.forEach { item ->
                         DropdownMenuItem(
                             modifier = Modifier.fillMaxWidth(),
-                            text = { Text(text = item) },
+                            text = { Text(text = item, modifier = Modifier.fillMaxWidth()
+                            ) },
                             onClick = {
                                 selectedText = item
                                 expanded = false
                                 Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                                keyboardController?.hide() // Hide the keyboard to remove focus
+                                focusManager.clearFocus()
+                                isClearButtonVisible = false
                             }
                         )
                     }
@@ -256,23 +324,23 @@ fun FlowRowButtons(names: List<String>, completedList: MutableList<Boolean>) {
     }
 }
 
-//@Composable
-//@Preview
-//fun SearchableExposedDropdownMenuBoxPreview() {
-//    SearchableExposedDropdownMenuBox()
-//}
-
 @Composable
 @Preview
-fun PastilleButtonPreview(
-    completed: MutableList<Boolean> = remember {
-        mutableStateListOf<Boolean>().apply {
-            addAll(List(21) { true })
-        }
-    }
-) {
-    PastilleButton(name = "s", completedList = completed, index = 1)
+fun SearchableExposedDropdownMenuBoxPreview() {
+    SearchableExposedDropdownMenuBox()
 }
+
+//@Composable
+//@Preview
+//fun PastilleButtonPreview(
+//    completed: MutableList<Boolean> = remember {
+//        mutableStateListOf<Boolean>().apply {
+//            addAll(List(21) { true })
+//        }
+//    }
+//) {
+//    PastilleButton(name = "s", completedList = completed, index = 1)
+//}
 
 //@Composable
 //@Preview
@@ -286,20 +354,20 @@ fun PastilleButtonPreview(
 //    PillButtonGrid(names = names, completed = completed)
 //}
 
-@Composable
-@Preview
-fun FlowRowButtonsPreview(
-    names: List<String> = listOf(
-        "All", "Fruits", "Vegetables", "Dairy", "Meat", "Grains",
-        "Sweets", "Beverages", "Snacks", "Seafood", "Condiments",
-        "Desserts", "Pasta", "Canned Goods", "Frozen Foods", "Bakery",
-        "Cereals", "Nuts", "Herbs and Spices", "Oils and Sauces", "Baby Food"
-    ),
-    completed: MutableList<Boolean> = remember {
-        mutableStateListOf<Boolean>().apply {
-            addAll(List(21) { true })
-        }
-    }
-) {
-    FlowRowButtons(names = names, completedList = completed)
-}
+//@Composable
+//@Preview
+//fun FlowRowButtonsPreview(
+//    names: List<String> = listOf(
+//        "All", "Fruits", "Vegetables", "Dairy", "Meat", "Grains",
+//        "Sweets", "Beverages", "Snacks", "Seafood", "Condiments",
+//        "Desserts", "Pasta", "Canned Goods", "Frozen Foods", "Bakery",
+//        "Cereals", "Nuts", "Herbs and Spices", "Oils and Sauces", "Baby Food"
+//    ),
+//    completed: MutableList<Boolean> = remember {
+//        mutableStateListOf<Boolean>().apply {
+//            addAll(List(21) { true })
+//        }
+//    }
+//) {
+//    FlowRowButtons(names = names, completedList = completed)
+//}

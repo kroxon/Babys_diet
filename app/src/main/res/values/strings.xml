@@ -11,6 +11,39 @@
     <string name="close_diary">Close diary</string>
     <string name="delete_diary">Delete diary</string>
     <string name="arrow_back">Arrow Back</string>
+    <string name="search">Search...</string>
+
+
+    // Categories
+    <string name="all">All</string>
+    <string name="vegetables">Vegetables</string>
+    <string name="fruits">Friuts</string>
+    <string name="dried_fruits">Dried fruits</string>
+    <string name="dairy_and_eggs">Diary and eggs</string>
+    <string name="spieces">Spices</string>
+    <string name="legumes">Legumes</string>
+    <string name="meat">Meat</string>
+    <string name="fish_and_seafood">Fish and seafood</string>
+    <string name="grain_products">Grain products</string>
+    <string name="mushrooms">Mushrooms</string>
+    <string name="other">Other</string>
+
+
+
+        <string-array name="categories_array">
+            <item>All</item>
+            <item>Vegetables</item>
+            <item>Fruits</item>
+            <item>Dried fruits</item>
+            <item>Dairy and eggs</item>
+            <item>Spices</item>
+            <item>Legumes</item>
+            <item>Meat</item>
+            <item>Fish and seafood</item>
+            <item>Grain products</item>
+            <item>Mushrooms</item>
+            <item>Other</item>
+        </string-array>
 
 
 </resources>
