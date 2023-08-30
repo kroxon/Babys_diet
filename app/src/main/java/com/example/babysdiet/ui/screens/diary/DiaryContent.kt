@@ -1,5 +1,6 @@
 package com.example.babysdiet.ui.screens.diary
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
@@ -40,6 +41,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -58,6 +60,7 @@ import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
+import com.example.babysdiet.ui.viewmodels.SharedViewModel
 
 @Composable
 fun DiaryContent(
@@ -71,6 +74,24 @@ fun DiaryContent(
             .padding(top = SMALL_PADDING)
     ) {
         SearchableExposedDropdownMenuBox()
+        val names: List<String> = listOf(
+            "All", "Fruits", "Vegetables", "Dairy", "Meat", "Grains",
+            "Sweets", "Beverages", "Snacks", "Seafood", "Condiments",
+            "Desserts", "Pasta", "Canned Goods", "Frozen Foods", "Bakery",
+            "Cereals", "Nuts", "Herbs and Spices", "Oils and Sauces", "Baby Food"
+        )
+        var completed = remember {
+            mutableStateListOf<Boolean>().apply {
+                addAll(List(21) { true })
+            }
+        }
+
+        FlowRowButtons(names = names, completedList = completed)
+
+        var s: String = ""
+        for (e in completed)
+            s += e.toString() + ", "
+        Log.d("Boolean main", s)
     }
 }
 
@@ -131,21 +152,22 @@ fun SearchableExposedDropdownMenuBox() {
     }
 }
 
-@Composable
-fun PillButtonGrid(names: List<String>, completed: MutableList<Boolean>) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 50.dp)
-    ) {
-        itemsIndexed(items = names) { index: Int, item: String ->
-            PastilleButton(name = item, completedList = completed, index = index)
-        }
-    }
-}
+//@Composable
+//fun PillButtonGrid(names: List<String>, sharedViewModel: SharedViewModel) {
+//    LazyVerticalGrid(
+//        columns = GridCells.Adaptive(minSize = 50.dp)
+//    ) {
+//        itemsIndexed(items = names) { index: Int, item: String ->
+//            PastilleButton(name = item, completedList = completed, index = index)
+//        }
+//    }
+//}
 
 
 @Composable
 fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int) {
-    var isSelected by rememberSaveable { mutableStateOf(completedList[index]) }
+//    var isSelected by rememberSaveable { mutableStateOf(completedList[index]) }
+    var isSelected = completedList[index]
 
     val backgroundColor by animateColorAsState(
         if (isSelected)
@@ -171,10 +193,14 @@ fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int
         OutlinedButton(
             onClick = {
                 isSelected = !isSelected
-                completedList[index] = !isSelected
-//                if (index == 0 && completedList.drop(1).all { it })
-                if (index == 0 && isSelected)
-                    completedList.map { true }
+                completedList[index] = isSelected
+                if (index == 0 && isSelected) {
+                    completedList.replaceAll { true }
+                }
+                var s: String = ""
+                for (e in completedList)
+                    s += e.toString() + ", "
+                Log.d("Boolean", s)
             },
             contentPadding = PaddingValues(
                 start = 8.dp,
@@ -233,7 +259,11 @@ fun FlowRowButtons(names: List<String>, completedList: MutableList<Boolean>) {
 @Composable
 @Preview
 fun PastilleButtonPreview(
-    completed: MutableList<Boolean> = MutableList(15) { false }
+    completed: MutableList<Boolean> = remember {
+        mutableStateListOf<Boolean>().apply {
+            addAll(List(21) { true })
+        }
+    }
 ) {
     PastilleButton(name = "s", completedList = completed, index = 1)
 }
@@ -259,7 +289,11 @@ fun FlowRowButtonsPreview(
         "Desserts", "Pasta", "Canned Goods", "Frozen Foods", "Bakery",
         "Cereals", "Nuts", "Herbs and Spices", "Oils and Sauces", "Baby Food"
     ),
-    completed: MutableState<List<Boolean>> = remember { mutableStateOf(List(names.size) { false }) }
+    completed: MutableList<Boolean> = remember {
+        mutableStateListOf<Boolean>().apply {
+            addAll(List(21) { true })
+        }
+    }
 ) {
-    FlowRowButtons(names = names, completedList = completed.value.toMutableList())
+    FlowRowButtons(names = names, completedList = completed)
 }

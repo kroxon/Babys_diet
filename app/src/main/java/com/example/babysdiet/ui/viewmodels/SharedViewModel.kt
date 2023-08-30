@@ -27,6 +27,8 @@ class SharedViewModel @Inject constructor(
     private val _allDiaries = MutableStateFlow<RequestState<List<Diary>>>(RequestState.Idle)
     val allDiaries: StateFlow<RequestState<List<Diary>>> = _allDiaries
 
+    //
+
     fun getAllProducts() {
         _allProducts.value = RequestState.Loading
         try {
