@@ -45,5 +45,282 @@
             <item>Other</item>
         </string-array>
 
+    <!-- Warzywa -->
+    <string-array name="vegetables">
+        <item>Bakłażan</item>
+        <item>Batat</item>
+        <item>Botwinka</item>
+        <item>Brokuł</item>
+        <item>Brukselka</item>
+        <item>Burak</item>
+        <item>Cebula</item>
+        <item>Czosnek</item>
+        <item>Cukinia</item>
+        <item>Dynia</item>
+        <item>Jarmuż</item>
+        <item>Kalafior</item>
+        <item>Kalarepa</item>
+        <item>Kapusta biała</item>
+        <item>Kapusta czerwona</item>
+        <item>Koper</item>
+        <item>Marchewka</item>
+        <item>Ogórek</item>
+        <item>Papryka</item>
+        <item>Pietruszka – korzeń</item>
+        <item>Pomidor</item>
+        <item>Pomidor koktajlowy</item>
+        <item>Por</item>
+        <item>Rabarbar</item>
+        <item>Rzodkiewka</item>
+        <item>Sałata</item>
+        <item>Seler – korzeń</item>
+        <item>Seler naciowy</item>
+        <item>Szczypiorek</item>
+        <item>Szparag</item>
+        <item>Szpinak</item>
+        <item>Ziemniak</item>
+    </string-array>
+
+    <!-- Owoce -->
+    <string-array name="fruits">
+        <item>Agrest</item>
+        <item>Ananas</item>
+        <item>Arbuz</item>
+        <item>Aronia</item>
+        <item>Awokado</item>
+        <item>Banan</item>
+        <item>Borówka</item>
+        <item>Brzoskwinia</item>
+        <item>Cytryna</item>
+        <item>Czeresnia</item>
+        <item>Figa</item>
+        <item>Granat</item>
+        <item>Grejpfrut</item>
+        <item>Gruszka</item>
+        <item>Jabłko</item>
+        <item>Jagoda</item>
+        <item>Jeżyna</item>
+        <item>Kiwi</item>
+        <item>Kaki</item>
+        <item>Limonka</item>
+        <item>Malina</item>
+        <item>Mango</item>
+        <item>Mandarynka</item>
+        <item>Melon</item>
+        <item>Morela</item>
+        <item>Nektarynka</item>
+        <item>Pomarańcza</item>
+        <item>Porzeczka (czarna)</item>
+        <item>Porzeczka (czerwona)</item>
+        <item>Śliwka</item>
+        <item>Truskawka</item>
+        <item>Winogrono</item>
+        <item>Wiśnia</item>
+        <item>Żurawina</item>
+    </string-array>
+
+    <!-- Owoce suszone -->
+    <string-array name="dried_fruits">
+        <item>Banan</item>
+        <item>Daktyl</item>
+        <item>Figa</item>
+        <item>Gruszka</item>
+        <item>Jabłko</item>
+        <item>Mango</item>
+        <item>Morela</item>
+        <item>Śliwka</item>
+        <item>Truskawka</item>
+        <item>Żurawina</item>
+    </string-array>
+
+    <!-- Grzyby hodowlane -->
+    <string-array name="mushrooms">
+        <item>Boczniak</item>
+        <item>Kania</item>
+        <item>Kurka</item>
+        <item>Pieczarka</item>
+        <item>Shiitake</item>
+    </string-array>
+
+    <!-- Nabiał i Jaja -->
+    <string-array name="dairy_and_eggs">
+        <item>Jajko kurze</item>
+        <item>Jajko przepiórcze</item>
+        <item>Jajko kacze</item>
+        <item>Jogurt naturalny</item>
+        <item>Jogurt grecki</item>
+        <item>Kefir</item>
+        <item>Labneh</item>
+        <item>Mascarpone</item>
+        <item>Maślanka</item>
+        <item>Mleko krowie</item>
+        <item>Mozarella</item>
+        <item>Ricotta</item>
+        <item>Serek naturalny</item>
+        <item>Ser źółty (inny)</item>
+        <item>Ser parmezan</item>
+        <item>Śmietana</item>
+        <item>Twaróg</item>
+    </string-array>
+
+    <!-- Przyprawy -->
+    <string-array name="spices">
+        <item>Bazylia</item>
+        <item>Chili suszone</item>
+        <item>Czosnek</item>
+        <item>Cynamon</item>
+        <item>Curry</item>
+        <item>Gałka muszkatołowa</item>
+        <item>Imbir</item>
+        <item>Kardamon</item>
+        <item>Kmin rzymski</item>
+        <item>Koper</item>
+        <item>Kolendra</item>
+        <item>Kurkuma</item>
+        <item>Lubczyk</item>
+        <item>Liść laurowy</item>
+        <item>Majeranek</item>
+        <item>Natka pietruszki</item>
+        <item>Oregano</item>
+        <item>Papryka słodka</item>
+        <item>Papryka wędzona</item>
+        <item>Papryka ostra</item>
+        <item>Pieprz</item>
+        <item>Szałwia</item>
+        <item>Tyminanek</item>
+    </string-array>
+
+    <!-- Strączki -->
+    <string-array name="legumes">
+        <item>Bób</item>
+        <item>Ciecierzyca</item>
+        <item>Fasola adzuki</item>
+        <item>Fasola jaś</item>
+        <item>Fasola cannellini</item>
+        <item>Fasola czarna</item>
+        <item>Fasola czerwona</item>
+        <item>Fasolka edamame</item>
+        <item>Fasolka szparagowa</item>
+        <item>Groszek zielony</item>
+        <item>Groch</item>
+        <item>Makaron z ciecierzycy</item>
+        <item>Makaron z soczewicy</item>
+        <item>Makaron z groszku</item>
+        <item>Soczewica czerwona</item>
+        <item>Soczewica zielona</item>
+        <item>Soja</item>
+        <item>Tofu twarde</item>
+        <item>Tofu silken</item>
+        <item>Tempeh</item>
+    </string-array>
+
+    <!-- Mięso -->
+    <string-array name="meat">
+        <item>Baranina</item>
+        <item>Cielęcina</item>
+        <item>Dziczyzna</item>
+        <item>Indyk</item>
+        <item>Jagnięcina</item>
+        <item>Kaczka</item>
+        <item>Królik</item>
+        <item>Kurczak</item>
+        <item>Wieprzowina</item>
+        <item>Wołowina</item>
+    </string-array>
+
+
+    <!-- Ryby i owoce morza -->
+    <string-array name="fish_and_seafood">
+        <item>Anchois</item>
+        <item>Dorsz</item>
+        <item>Dorsz czarny</item>
+        <item>Flądra</item>
+        <item>Halibut</item>
+        <item>Homar</item>
+        <item>Kałamarnica</item>
+        <item>Karp</item>
+        <item>Krab</item>
+        <item>Krewetka</item>
+        <item>Langusta</item>
+        <item>Morszczuk</item>
+        <item>Okoń</item>
+        <item>Ostryga</item>
+        <item>Przeźbier</item>
+        <item>Łosoś</item>
+        <item>Makrela atlantycka</item>
+        <item>Pstrąg hodowlany</item>
+        <item>Pstrąg tęczowy</item>
+        <item>Sum</item>
+    </string-array>
+
+    <!-- Produkty zbożowe -->
+    <string-array name="cereal_products">
+        <item>Amarantus</item>
+        <item>Amarantus eksp.</item>
+        <item>Gryka eksp.</item>
+        <item>Kasza bulgur</item>
+        <item>Kasza gryczana</item>
+        <item>Kasza jaglana</item>
+        <item>Kasza jęczmienna</item>
+        <item>Kasza kuskus</item>
+        <item>Kasza kuskus (gruba)</item>
+        <item>Kasza manna</item>
+        <item>Kasza orkiszowa</item>
+        <item>Kasza pęczak</item>
+        <item>Komosa ryżowa</item>
+        <item>Makaron jajeczny</item>
+        <item>Makaron orkiszowy</item>
+        <item>Makaron orkiszowy pełnoziarnisty</item>
+        <item>Makaron żytni</item>
+        <item>Makaron pszenny</item>
+        <item>Makaron pszenny pełnoziarnisty</item>
+        <item>Makaron gryczany</item>
+        <item>Mąka gryczana</item>
+        <item>Mąka jaglana</item>
+        <item>Mąka kukurydziana</item>
+        <item>Mąka owsiana</item>
+        <item>Mąka orkiszowa</item>
+        <item>Mąka orkiszowa pełnoziarnista</item>
+        <item>Mąka pszenna</item>
+        <item>Mąka pszenna pełnoziarnista</item>
+        <item>Mąka żytnia</item>
+        <item>Pieczywo orkiszowe</item>
+        <item>Pieczywo pszenne</item>
+        <item>Pieczywo żytnie</item>
+        <item>Płatki jaglane</item>
+        <item>Płatki gryczane</item>
+        <item>Proso ekspandowane</item>
+        <item>Polenta</item>
+        <item>Ryż biały</item>
+        <item>Ryż brązowy</item>
+        <item>Ryż dziki</item>
+        <item>Ryżowy makaron</item>
+    </string-array>
+
+    <!-- Inne -->
+    <string-array name="other">
+        <item>Kakao</item>
+        <item>Karob</item>
+        <item>Kokos</item>
+        <item>Migdał</item>
+        <item>Masło</item>
+        <item>Nasiona chia</item>
+        <item>Orzech brazylijski</item>
+        <item>Orzech włoski</item>
+        <item>Orzech laskowy</item>
+        <item>Orzech nerkowca</item>
+        <item>Orzeszek piniowy</item>
+        <item>Orzech pecan</item>
+        <item>Orzech arachidowy</item>
+        <item>Olej lniany</item>
+        <item>Olej rzepakowy</item>
+        <item>Oliwa z oliwek</item>
+        <item>Pestka dyni</item>
+        <item>Pistacja</item>
+        <item>Sezam</item>
+        <item>Siemie lniane</item>
+        <item>Słonecznik</item>
+        <item>Tahini</item>
+    </string-array>
 
 </resources>
