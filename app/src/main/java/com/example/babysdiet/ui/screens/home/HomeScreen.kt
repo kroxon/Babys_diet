@@ -38,10 +38,7 @@ fun HomeScreen(
     val allProducts by sharedViewModel.allProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
-    val productsList = sharedViewModel.vegetables
-    for (p in productsList){
-        Log.d("vegetables: ", p)
-    }
+
 
 //    if ((allProducts as RequestState.Success<List<Product>>).data.isEmpty()) {
 //        val context = LocalContext.current
@@ -58,7 +55,7 @@ fun HomeScreen(
 //        val grains = context.resources.getStringArray(R.array.cereal_products)
 //        val mushrooms = context.resources.getStringArray(R.array.mushrooms)
 //        val others = context.resources.getStringArray(R.array.other)
-//
+
 //    }
 
     Scaffold(
