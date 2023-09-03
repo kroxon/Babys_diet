@@ -45,7 +45,7 @@
             <item>Other</item>
         </string-array>
 
-    <!-- Warzywa -->
+    <!-- Vegetables -->
     <string-array name="vegetables">
         <item>Bakłażan</item>
         <item>Batat</item>

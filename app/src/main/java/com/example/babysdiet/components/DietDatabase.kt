@@ -12,3 +12,4 @@ abstract class DietDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
     abstract fun diaryDao(): DiaryDao
 }
+
