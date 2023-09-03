@@ -1,11 +1,22 @@
 package com.example.babysdiet.ui.viewmodels
 
+import android.app.Application
+import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.components.data.repositories.DiaryRepository
 import com.example.babysdiet.components.data.repositories.ProductRepository
+import com.example.babysdiet.ui.screens.home.DisplayDiaries
+import com.example.babysdiet.ui.screens.home.EmptyContent
 import com.example.babysdiet.util.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,11 +24,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class SharedViewModel @Inject constructor(
     private val diaryRepository: DiaryRepository,
-    private val productRepository: ProductRepository
-) : ViewModel() {
+    private val productRepository: ProductRepository,
+    private val application: Application
+) : AndroidViewModel(application) {
+
 
     // getting all products using RequestState
     private val _allProducts = MutableStateFlow<RequestState<List<Product>>>(RequestState.Idle)
@@ -27,7 +41,15 @@ class SharedViewModel @Inject constructor(
     private val _allDiaries = MutableStateFlow<RequestState<List<Diary>>>(RequestState.Idle)
     val allDiaries: StateFlow<RequestState<List<Diary>>> = _allDiaries
 
-    //
+    // product list
+    val vegetables = application.resources.getStringArray(R.array.vegetables)
+    private var isProductListEmpty = true
+
+    // initial products
+    private var isAllProductsInitialized = false
+    init {
+            getAllProducts()
+    }
 
     fun getAllProducts() {
         _allProducts.value = RequestState.Loading
@@ -35,6 +57,11 @@ class SharedViewModel @Inject constructor(
             viewModelScope.launch {
                 productRepository.getAllProducts.collect {
                     _allProducts.value = RequestState.Success(it)
+                    if (!it.isEmpty() && isAllProductsInitialized == false) {
+                        isProductListEmpty = false
+                        initProducts()
+                        isAllProductsInitialized = true
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -76,5 +103,16 @@ class SharedViewModel @Inject constructor(
             }
         }
     }
+
+    fun addProduct(product: Product) {
+        viewModelScope.launch {
+            productRepository.addProduct(product)
+        }
+    }
+
+    fun initProducts() {
+        Log.d("empty", isProductListEmpty.toString())
+    }
+
 
 }
