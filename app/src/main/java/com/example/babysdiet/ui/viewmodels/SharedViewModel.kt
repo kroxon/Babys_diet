@@ -37,12 +37,22 @@ class SharedViewModel @Inject constructor(
     private val _allProducts = MutableStateFlow<RequestState<List<Product>>>(RequestState.Idle)
     val allProducts: StateFlow<RequestState<List<Product>>> = _allProducts
 
+    // getting selected by category products using RequestState
+    private val _selectedProducts = MutableStateFlow<RequestState<List<Product>>>(RequestState.Idle)
+    val selectedProducts: StateFlow<RequestState<List<Product>>> = _selectedProducts
+
     // getting all diaries using RequestState
     private val _allDiaries = MutableStateFlow<RequestState<List<Diary>>>(RequestState.Idle)
     val allDiaries: StateFlow<RequestState<List<Diary>>> = _allDiaries
 
     // initial products
     private var isAllProductsInitialized = false
+
+    // selected categories list
+    val categorySelection = MutableStateFlow<List<Boolean>>(List(12) { true })
+
+    var categoriesProducts: List<String> =
+        application.resources.getStringArray(R.array.categories_array).toList()
 
     init {
         getAllProducts()
@@ -64,6 +74,25 @@ class SharedViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             _allProducts.value = RequestState.Error(e)
+        }
+    }
+
+    fun getSelectedProducts() {
+        try {
+            _selectedProducts.value = RequestState.Loading
+            val selectedCategoryIds =
+                categorySelection.value.mapIndexedNotNull { index, isSelected ->
+                    if (index == 0 || !isSelected) null
+                    else index
+                }
+            viewModelScope.launch {
+                productRepository.getProductsInCategories(selectedCategoryIds).collect {
+                    _selectedProducts.value = RequestState.Success(it)
+                    isAllProductsInitialized = true
+                }
+            }
+        } catch (e: Exception) {
+            _selectedProducts.value = RequestState.Error(e)
         }
     }
 
