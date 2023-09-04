@@ -1,10 +1,8 @@
 package com.example.babysdiet.ui.screens.diary
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.getValue
@@ -13,11 +11,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,16 +20,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -45,44 +34,40 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
-import com.example.babysdiet.ui.theme.LARGE_PADDING
-import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
-import com.example.babysdiet.ui.theme.diaryItemTextColor
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
+import com.example.babysdiet.util.RequestState
 
 @Composable
 fun DiaryContent(
     selectedDiary: Diary?,
-    selectedProduct: Product?
+    selectedProduct: Product?,
+    allProducts: RequestState<List<Product>>,
+    sharedViewModel: SharedViewModel,
+    selectedProducts: RequestState<List<Product>>
 ) {
     Column(
         modifier = Modifier
@@ -90,32 +75,41 @@ fun DiaryContent(
     ) {
         Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
 
-        SearchableExposedDropdownMenuBox()
-        // get category board
-        val categoriesArray = stringArrayResource(id = R.array.categories_array)
+        SearchableExposedDropdownMenuBox(
+            allProductsRequest = selectedProducts
+        )
 
-        // assign the contents of the array to val names
-        val names: List<String> = categoriesArray.toList()
+        // mutable list of selected category
+        val categories: List<String> = stringArrayResource(id = R.array.categories_array).toList()
 
         // assign initial values
-        var completed = remember {
+//        var categorySelectedBtns by remember {
+//            mutableStateOf(sharedViewModel.categorySelection.value)
+//        }
+
+        var categorySelectedBtns = remember {
             mutableStateListOf<Boolean>().apply {
-                addAll(List(names.size) { true })
+                addAll(List(categories.size) { true })
             }
         }
 
-        FlowRowButtons(names = names, completedList = completed)
+        FlowRowButtons(
+            names = categories,
+            completedList = categorySelectedBtns,
+            sharedViewModel = sharedViewModel
+        )
 
-        var s: String = ""
-        for (e in completed)
-            s += e.toString() + ", "
-        Log.d("Boolean main", s)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SearchableExposedDropdownMenuBox() {
+fun SearchableExposedDropdownMenuBox(
+    allProductsRequest: RequestState<List<Product>>
+) {
+    var allProducts: List<Product> = emptyList()
+    if (allProductsRequest is RequestState.Success)
+        allProducts = allProductsRequest.data
     val context = LocalContext.current
     val coffeeDrinks = arrayOf("Americano", "Cappuccino", "Espresso", "Latte", "Mocha")
     var expanded by remember { mutableStateOf(false) }
@@ -187,7 +181,7 @@ fun SearchableExposedDropdownMenuBox() {
             }
 
             val filteredOptions =
-                coffeeDrinks.filter { it.contains(selectedText, ignoreCase = true) }
+                allProducts.filter { it.name.contains(selectedText, ignoreCase = true) }
             if (filteredOptions.isNotEmpty()) {
                 ExposedDropdownMenu(
                     modifier = Modifier.fillMaxWidth(),
@@ -202,12 +196,15 @@ fun SearchableExposedDropdownMenuBox() {
                     filteredOptions.forEach { item ->
                         DropdownMenuItem(
                             modifier = Modifier.fillMaxWidth(),
-                            text = { Text(text = item, modifier = Modifier.fillMaxWidth()
-                            ) },
+                            text = {
+                                Text(
+                                    text = item.name, modifier = Modifier.fillMaxWidth()
+                                )
+                            },
                             onClick = {
-                                selectedText = item
+                                selectedText = item.name
                                 expanded = false
-                                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
                                 keyboardController?.hide() // Hide the keyboard to remove focus
                                 focusManager.clearFocus()
                                 isClearButtonVisible = false
@@ -233,7 +230,12 @@ fun SearchableExposedDropdownMenuBox() {
 
 
 @Composable
-fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int) {
+fun PastilleButton(
+    name: String,
+    completedList: MutableList<Boolean>,
+    index: Int,
+    sharedViewModel: SharedViewModel
+) {
 //    var isSelected by rememberSaveable { mutableStateOf(completedList[index]) }
     var isSelected = completedList[index]
 
@@ -264,6 +266,7 @@ fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int
                 completedList[index] = isSelected
                 if (index == 0 && isSelected) {
                     completedList.replaceAll { true }
+
                 }
                 if (index == 0 && !isSelected) {
                     completedList.replaceAll { false }
@@ -274,7 +277,8 @@ fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int
                 if (index != 0 && !isSelected) {
                     completedList[0] = false
                 }
-
+                sharedViewModel.categorySelection.value = completedList
+                sharedViewModel.getSelectedProducts()
             },
             contentPadding = PaddingValues(
                 start = 8.dp,
@@ -310,7 +314,11 @@ fun PastilleButton(name: String, completedList: MutableList<Boolean>, index: Int
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FlowRowButtons(names: List<String>, completedList: MutableList<Boolean>) {
+fun FlowRowButtons(
+    names: List<String>,
+    completedList: MutableList<Boolean>,
+    sharedViewModel: SharedViewModel
+) {
     FlowRow(
         horizontalArrangement = Arrangement.Center,
     ) {
@@ -318,17 +326,28 @@ fun FlowRowButtons(names: List<String>, completedList: MutableList<Boolean>) {
             PastilleButton(
                 name = names.get(i),
                 completedList = completedList,
-                index = i
+                index = i,
+                sharedViewModel = sharedViewModel
             )
         }
     }
 }
 
-@Composable
-@Preview
-fun SearchableExposedDropdownMenuBoxPreview() {
-    SearchableExposedDropdownMenuBox()
-}
+//@Composable
+//@Preview
+//fun SearchableExposedDropdownMenuBoxPreview() {
+//    SearchableExposedDropdownMenuBox(
+//        allProductsRequest = arrayOf(
+//            Product(
+//                name = "milk",
+//                categoryId = 1,
+//                isAllergen = false,
+//                description = "description",
+//                productId = 1
+//            )
+//        ).toList()
+//    )
+//}
 
 //@Composable
 //@Preview
@@ -371,3 +390,4 @@ fun SearchableExposedDropdownMenuBoxPreview() {
 //) {
 //    FlowRowButtons(names = names, completedList = completed)
 //}
+

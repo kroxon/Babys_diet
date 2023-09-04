@@ -39,25 +39,6 @@ fun HomeScreen(
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
 
-
-//    if ((allProducts as RequestState.Success<List<Product>>).data.isEmpty()) {
-//        val context = LocalContext.current
-//        val vegetables = context.resources.getStringArray(R.array.vegetables)
-//        val fruits = context.resources.getStringArray(R.array.fruits)
-//        val dried_fruits =
-//            context.resources.getStringArray(R.array.dried_fruits)
-//        val dairy_and_eggs =
-//            context.resources.getStringArray(R.array.dairy_and_eggs)
-//        val spieces = context.resources.getStringArray(R.array.spices)
-//        val legumes = context.resources.getStringArray(R.array.legumes)
-//        val meats = context.resources.getStringArray(R.array.meat)
-//        val fishes = context.resources.getStringArray(R.array.fish_and_seafood)
-//        val grains = context.resources.getStringArray(R.array.cereal_products)
-//        val mushrooms = context.resources.getStringArray(R.array.mushrooms)
-//        val others = context.resources.getStringArray(R.array.other)
-
-//    }
-
     Scaffold(
         topBar = {
             HomeAppBar()
