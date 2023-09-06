@@ -3,7 +3,9 @@ package com.example.babysdiet.ui.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -47,6 +49,13 @@ class SharedViewModel @Inject constructor(
 
     // initial products
     private var isAllProductsInitialized = false
+
+    // product
+    val idProduct: MutableState<Int> = mutableStateOf(0)
+    val idCategoryProduct: MutableState<Int> = mutableStateOf(1)
+    val nameProduct: MutableState<String> = mutableStateOf("")
+    val descriptionProduct: MutableState<String> = mutableStateOf("")
+    val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
 
     // selected categories list
     val categorySelection = MutableStateFlow<List<Boolean>>(List(12) { true })

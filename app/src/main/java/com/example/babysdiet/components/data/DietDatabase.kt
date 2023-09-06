@@ -1,4 +1,4 @@
-package com.example.babysdiet.components
+package com.example.babysdiet.components.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
