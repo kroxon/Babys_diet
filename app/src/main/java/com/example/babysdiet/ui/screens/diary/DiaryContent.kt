@@ -3,6 +3,7 @@ package com.example.babysdiet.ui.screens.diary
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.getValue
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,11 +47,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
+import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
@@ -67,8 +73,15 @@ fun DiaryContent(
     selectedProduct: Product?,
     allProducts: RequestState<List<Product>>,
     sharedViewModel: SharedViewModel,
-    selectedProducts: RequestState<List<Product>>
+    selectedProducts: RequestState<List<Product>>,
+    onProductSelected: (Product) -> Unit,
+//    idProduct: Int,
+//    nameProduct: String,
+//    descriptionProduct: String,
+//    isAllergenProduct: Boolean
 ) {
+    var newSelectedProduct = selectedProduct
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,28 +89,26 @@ fun DiaryContent(
         Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
 
         SearchableExposedDropdownMenuBox(
-            allProductsRequest = selectedProducts
+            allProductsRequest = selectedProducts,
+            onProductSelected = onProductSelected
         )
 
         // mutable list of selected category
         val categories: List<String> = stringArrayResource(id = R.array.categories_array).toList()
-
-        // assign initial values
-//        var categorySelectedBtns by remember {
-//            mutableStateOf(sharedViewModel.categorySelection.value)
-//        }
-
         var categorySelectedBtns = remember {
             mutableStateListOf<Boolean>().apply {
                 addAll(List(categories.size) { true })
             }
         }
-
         FlowRowButtons(
             names = categories,
             completedList = categorySelectedBtns,
             sharedViewModel = sharedViewModel
         )
+
+        if (newSelectedProduct != null) {
+            TitleLabel(newSelectedProduct)
+        }
 
     }
 }
@@ -105,7 +116,8 @@ fun DiaryContent(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchableExposedDropdownMenuBox(
-    allProductsRequest: RequestState<List<Product>>
+    allProductsRequest: RequestState<List<Product>>,
+    onProductSelected: (Product) -> Unit
 ) {
     var allProducts: List<Product> = emptyList()
     if (allProductsRequest is RequestState.Success)
@@ -195,11 +207,12 @@ fun SearchableExposedDropdownMenuBox(
                 ) {
                     filteredOptions.forEach { item ->
                         DropdownMenuItem(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().height(36.dp),
                             text = {
-                                Text(
-                                    text = item.name, modifier = Modifier.fillMaxWidth()
-                                )
+                                item.name
+                            },
+                            leadingIcon = {
+                                ProductItem(product = item)
                             },
                             onClick = {
                                 selectedText = item.name
@@ -333,6 +346,35 @@ fun FlowRowButtons(
     }
 }
 
+@Composable
+fun TitleLabel(
+    product: Product
+) {
+    Column(Modifier.fillMaxWidth()) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = product.name,
+                style = TextStyle(
+                    fontSize = MaterialTheme.typography.displaySmall.fontSize,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                ),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            if (product.isAllergen) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_alert),
+                    contentDescription = "allergen alert",
+                    modifier = Modifier.padding(top = SMALL_PADDING, start = SMALL_PADDING)
+                )
+            }
+        }
+    }
+}
+
 //@Composable
 //@Preview
 //fun SearchableExposedDropdownMenuBoxPreview() {
@@ -390,4 +432,17 @@ fun FlowRowButtons(
 //) {
 //    FlowRowButtons(names = names, completedList = completed)
 //}
+
+@Composable
+@Preview
+fun TitleLabelPreview() {
+    TitleLabel(
+        product = Product(
+            name = "milk",
+            categoryId = 1,
+            description = "",
+            isAllergen = true
+        )
+    )
+}
 

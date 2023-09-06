@@ -2,7 +2,7 @@ package com.example.babysdiet.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.babysdiet.components.DietDatabase
+import com.example.babysdiet.components.data.DietDatabase
 import com.example.babysdiet.util.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
