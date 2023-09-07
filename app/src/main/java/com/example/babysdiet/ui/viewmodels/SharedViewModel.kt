@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
+import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.components.data.repositories.DiaryRepository
 import com.example.babysdiet.components.data.repositories.ProductRepository
@@ -56,6 +57,13 @@ class SharedViewModel @Inject constructor(
     val nameProduct: MutableState<String> = mutableStateOf("")
     val descriptionProduct: MutableState<String> = mutableStateOf("")
     val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
+
+    val selectedProduct: MutableState<Product?> = mutableStateOf(null)
+
+    // diary
+    val evaluationDiary: MutableState<Evaluation> = mutableStateOf(Evaluation.EXCELLENT)
+    val foodActivities: MutableState<List<Boolean>> = mutableStateOf(List(6) { false })
+
 
     // selected categories list
     val categorySelection = MutableStateFlow<List<Boolean>>(List(12) { true })
@@ -129,16 +137,16 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
-    val selectedProduct: StateFlow<Product?> = _selectedProduct
-
-    fun getSelectedProduct(productId: Int) {
-        viewModelScope.launch {
-            productRepository.getSelectedProduct(productId).collect { product ->
-                _selectedProduct.value = product
-            }
-        }
-    }
+//    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
+//    val selectedProduct: StateFlow<Product?> = _selectedProduct
+//
+//    fun getSelectedProduct(productId: Int) {
+//        viewModelScope.launch {
+//            productRepository.getSelectedProduct(productId).collect { product ->
+//                _selectedProduct.value = product
+//            }
+//        }
+//    }
 
     fun addProduct(product: Product) {
         viewModelScope.launch {

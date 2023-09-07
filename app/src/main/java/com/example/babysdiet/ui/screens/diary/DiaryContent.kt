@@ -22,10 +22,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -55,9 +58,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
+import com.example.babysdiet.components.EvaluationSelectingRow
 import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.data.models.Diary
+import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
+import com.example.babysdiet.ui.theme.FOOD_ACTIVITIES_HEIGHT
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
@@ -75,8 +81,9 @@ fun DiaryContent(
     sharedViewModel: SharedViewModel,
     selectedProducts: RequestState<List<Product>>,
     onProductSelected: (Product) -> Unit,
+    onEvaluationSelected: (Evaluation) -> Unit,
 //    idProduct: Int,
-//    nameProduct: String,
+    nameProduct: String,
 //    descriptionProduct: String,
 //    isAllergenProduct: Boolean
 ) {
@@ -110,6 +117,9 @@ fun DiaryContent(
             TitleLabel(newSelectedProduct)
         }
 
+        EvaluationSelectingRow(onEvaluationSelected = onEvaluationSelected)
+
+        FoodActivities()
     }
 }
 
@@ -207,7 +217,9 @@ fun SearchableExposedDropdownMenuBox(
                 ) {
                     filteredOptions.forEach { item ->
                         DropdownMenuItem(
-                            modifier = Modifier.fillMaxWidth().height(36.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(36.dp),
                             text = {
                                 item.name
                             },
@@ -221,6 +233,7 @@ fun SearchableExposedDropdownMenuBox(
                                 keyboardController?.hide() // Hide the keyboard to remove focus
                                 focusManager.clearFocus()
                                 isClearButtonVisible = false
+                                onProductSelected(item)
                             }
                         )
                     }
@@ -368,11 +381,67 @@ fun TitleLabel(
                 Image(
                     painter = painterResource(id = R.drawable.ic_alert),
                     contentDescription = "allergen alert",
-                    modifier = Modifier.padding(top = SMALL_PADDING, start = SMALL_PADDING)
+                    modifier = Modifier
+                        .padding(
+                            top = SMALL_PADDING,
+                            start = SMALL_PADDING
+                        )
+                        .size(36.dp)
                 )
             }
         }
     }
+}
+
+@Composable
+fun FoodActivities() {
+    var selectedActivities by remember { mutableStateOf<List<Boolean>>(List(6) { false }) }
+    val strings = listOf(
+        stringResource(id = R.string.touched),
+        stringResource(id = R.string.sniffed),
+        stringResource(id = R.string.licked),
+        stringResource(id = R.string.firstAttempt),
+        stringResource(id = R.string.secondAttempt),
+        stringResource(id = R.string.thirdAttempt)
+    )
+
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(3),
+        // content padding
+        contentPadding = PaddingValues(
+            start = 24.dp,
+            top = 16.dp,
+            end = 24.dp,
+            bottom = 16.dp
+        ),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .height(FOOD_ACTIVITIES_HEIGHT)
+            .fillMaxWidth(),
+        content = {
+            items(6) { index ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(checked = selectedActivities[index], onCheckedChange = {
+                        selectedActivities = selectedActivities
+                            .toMutableList()
+                            .apply {
+                                this[index] = !this[index]
+                            }
+                    })
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = strings[index],
+                        color = Color.LightGray
+                    )
+                }
+
+            }
+        }
+    )
 }
 
 //@Composable

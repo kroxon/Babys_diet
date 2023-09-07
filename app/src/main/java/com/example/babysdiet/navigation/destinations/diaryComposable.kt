@@ -37,14 +37,10 @@ fun NavGraphBuilder.diaryComposable(
         sharedViewModel.getSelectedDiary(diaryId = diaryId)
         val selectedDiary by sharedViewModel.selectedDiary.collectAsState()
 
-        sharedViewModel.getSelectedProduct(productId = productId)
-        val selectedProduct by sharedViewModel.selectedProduct.collectAsState()
-
         DiaryScreen(
             navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel,
             selectedDiary = selectedDiary,
-            selectedProduct = selectedProduct
         )
     }
 }
