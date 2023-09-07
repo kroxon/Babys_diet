@@ -14,6 +14,15 @@
     <string name="search">Search...</string>
 
 
+    // food activity
+    <string name="touched">Touched</string>
+    <string name="sniffed">Sniffed</string>
+    <string name="licked">Licked</string>
+    <string name="firstAttempt">1st attempt </string>
+    <string name="secondAttempt">2nd attempt</string>
+    <string name="thirdAttempt">3rd attempt</string>
+
+
     // Categories
     <string name="all">All</string>
     <string name="vegetables">Vegetables</string>
@@ -27,8 +36,6 @@
     <string name="grain_products">Grain products</string>
     <string name="mushrooms">Mushrooms</string>
     <string name="other">Other</string>
-
-
 
         <string-array name="categories_array">
             <item>All</item>

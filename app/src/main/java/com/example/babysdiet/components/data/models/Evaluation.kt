@@ -13,8 +13,4 @@ enum class Evaluation (val color: Color) {
     NEUTRAL(NeutralEvaluationColor),
     BAD(BadEvaluationColor),
     VERY_BAD(VeryBadEvaluationColor)
-//    HIGH(HighPriorityColor),
-//    LOW(LowPriorityColor),
-//    MEDIUM(MediumPriorityColor),
-//    NONE(NonePriorityColor)
 }
