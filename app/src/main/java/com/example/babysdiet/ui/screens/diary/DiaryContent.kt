@@ -1,5 +1,7 @@
 package com.example.babysdiet.ui.screens.diary
 
+import android.app.DatePickerDialog
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
@@ -68,6 +70,7 @@ import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.FOOD_ACTIVITIES_HEIGHT
 import com.example.babysdiet.ui.theme.LARGE_PADDING
+import com.example.babysdiet.ui.theme.MediumGrey
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
@@ -76,6 +79,10 @@ import com.example.babysdiet.ui.theme.buttonBackgroumdColor
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.RequestState
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,11 +99,33 @@ fun DiaryContent(
     onDescriptionChange: (String) -> Unit,
     diaryDescription: String,
 //    idProduct: Int,
-    nameProduct: String,
+//    nameProduct: String,
 //    descriptionProduct: String,
 //    isAllergenProduct: Boolean
 ) {
     var newSelectedProduct = selectedProduct
+
+    // for calendar
+    var currentDate by remember { mutableStateOf(LocalDate.now()) }
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+
+    var selectedDateText by remember {
+        mutableStateOf(currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+    }
+    // Fetching current year, month and day
+    val year = calendar[Calendar.YEAR]
+    val month = calendar[Calendar.MONTH]
+    val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
+
+    val datePicker = DatePickerDialog(
+        context,
+        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
+            selectedDateText = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
+            currentDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDayOfMonth)
+        }, year, month, dayOfMonth
+
+    )
 
     Column(
         modifier = Modifier
@@ -126,26 +155,29 @@ fun DiaryContent(
 
         if (newSelectedProduct != null) {
             TitleLabel(newSelectedProduct)
+
+            EvaluationSelectingRow(onEvaluationSelected = onEvaluationSelected)
+
+            FoodActivities(onActivitySelected = onActivitySelected)
+
+            AllergySymptomsOccured(onSelectedSymptoms = onSelectedSymptoms)
+
+            CalendarLabel(currentDate, datePicker)
+
+            OutlinedTextField(
+                value = diaryDescription,
+                onValueChange = { onDescriptionChange(it) },
+                modifier = Modifier
+                    .fillMaxSize(),
+                label = { Text(text = stringResource(id = R.string.description)) },
+                maxLines = 1,
+                textStyle = MaterialTheme.typography.bodyLarge,
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.34f)
+                )
+            )
         }
 
-        EvaluationSelectingRow(onEvaluationSelected = onEvaluationSelected)
-
-        FoodActivities(onActivitySelected = onActivitySelected)
-
-        AllergySymptomsOccured(onSelectedSymptoms = onSelectedSymptoms)
-
-        OutlinedTextField(
-            value = diaryDescription,
-            onValueChange = { onDescriptionChange(it) },
-            modifier = Modifier
-                .fillMaxSize(),
-            label = { Text(text = stringResource(id = R.string.description)) },
-            maxLines = 1,
-            textStyle = MaterialTheme.typography.bodyLarge,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.34f)
-            )
-        )
     }
 }
 
@@ -514,6 +546,31 @@ fun AllergySymptomsOccured(
     }
 }
 
+@Composable
+fun CalendarLabel(currentDate: LocalDate, datePicker: DatePickerDialog) {
+
+    Column(Modifier.fillMaxWidth()) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable { datePicker.show() },
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_calendar),
+                contentDescription = stringResource(id = R.string.description),
+                modifier = Modifier.size(24.dp),
+                tint = MediumGrey
+            )
+            Text(
+                text = currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize
+            )
+        }
+    }
+}
+
 
 //@Composable
 //@Preview
@@ -591,4 +648,10 @@ fun TitleLabelPreview() {
 fun AllergySymptomsOccuredPreview() {
     AllergySymptomsOccured(onSelectedSymptoms = {})
 }
+
+//@Composable
+//@Preview
+//fun CalendarLabelPreview() {
+//    CalendarLabel(LocalDate.now(), )
+//}
 

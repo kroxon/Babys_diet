@@ -15,6 +15,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="description">Description</string>
+    <string name="selectProduct">The product has not been selected</string>
+
+    // calendar
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
 
 
     // food activity

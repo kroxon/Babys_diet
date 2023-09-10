@@ -1,16 +1,9 @@
 package com.example.babysdiet.ui.viewmodels
 
 import android.app.Application
-import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
@@ -18,8 +11,7 @@ import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.components.data.repositories.DiaryRepository
 import com.example.babysdiet.components.data.repositories.ProductRepository
-import com.example.babysdiet.ui.screens.home.DisplayDiaries
-import com.example.babysdiet.ui.screens.home.EmptyContent
+import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +27,7 @@ class SharedViewModel @Inject constructor(
     private val application: Application
 ) : AndroidViewModel(application) {
 
+    val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
 
     // getting all products using RequestState
     private val _allProducts = MutableStateFlow<RequestState<List<Product>>>(RequestState.Idle)
@@ -52,19 +45,18 @@ class SharedViewModel @Inject constructor(
     private var isAllProductsInitialized = false
 
     // product
-    val idProduct: MutableState<Int> = mutableStateOf(0)
-    val idCategoryProduct: MutableState<Int> = mutableStateOf(1)
-    val nameProduct: MutableState<String> = mutableStateOf("")
-    val descriptionProduct: MutableState<String> = mutableStateOf("")
-    val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
-
-    val selectedProduct: MutableState<Product?> = mutableStateOf(null)
+//    val idProduct: MutableState<Int> = mutableStateOf(0)
+//    val idCategoryProduct: MutableState<Int> = mutableStateOf(1)
+//    val nameProduct: MutableState<String> = mutableStateOf("")
+//    val descriptionProduct: MutableState<String> = mutableStateOf("")
+//    val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
 
     // diary
     val evaluationDiary: MutableState<Evaluation> = mutableStateOf(Evaluation.EXCELLENT)
     val foodActivities: MutableState<List<Boolean>> = mutableStateOf(List(6) { false })
     val diarySympotomsOccured: MutableState<Boolean> = mutableStateOf(false)
     val diaryDescription: MutableState<String> = mutableStateOf("")
+    val selectedDiaryProduct: MutableState<Product?> = mutableStateOf(null)
 
 
 
@@ -156,6 +148,60 @@ class SharedViewModel @Inject constructor(
             productRepository.addProduct(product)
         }
     }
+
+    fun handleDatabaseActions(action: Action) {
+        when (action) {
+            Action.ADD_DIARY -> {
+//                addTask()
+            }
+
+            Action.DELETE_DIARY -> {
+//                deleteTask()
+            }
+
+            Action.DELETE_ALL_DIARIES-> {
+//                deleteAllTasks()
+            }
+
+            Action.UNDO_DIARY -> {
+//                addTask()
+            }
+
+            Action.UPDATE_DIARY -> {
+//                updateTask()
+            }
+
+            Action.ADD_PRODUCT -> {
+//                addTask()
+            }
+
+            Action.DELETE_PRODUCT -> {
+//                deleteTask()
+            }
+
+            Action.DELETE_ALL_PRODUCTS-> {
+//                deleteAllTasks()
+            }
+
+            Action.UNDO_PRODUCT -> {
+//                addTask()
+            }
+
+            Action.UPDATE_PRODUCT -> {
+//                updateTask()
+            }
+
+            else -> {
+
+            }
+        }
+        this.action.value = Action.NO_ACTION
+    }
+
+    fun validateDiaryFields(): Boolean {
+        return selectedDiaryProduct.value != null
+    }
+
 
     fun initProducts() {
         // product list
