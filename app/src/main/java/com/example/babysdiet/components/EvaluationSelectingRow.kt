@@ -35,7 +35,7 @@ import com.example.babysdiet.ui.viewmodels.SharedViewModel
 
 @Composable
 fun EvaluationSelectingRow(
-    onEvaluationSelected: (Evaluation) -> Unit
+    onEvaluationSelected: (Evaluation) -> Unit,
 ) {
     var selectedColor by remember { mutableStateOf<Color?>(ExcellentEvaluationColor) }
     Column(Modifier.fillMaxWidth()) {

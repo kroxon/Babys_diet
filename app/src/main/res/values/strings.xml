@@ -12,6 +12,9 @@
     <string name="delete_diary">Delete diary</string>
     <string name="arrow_back">Arrow Back</string>
     <string name="search">Search...</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="description">Description</string>
 
 
     // food activity
@@ -22,6 +25,7 @@
     <string name="secondAttempt">2nd attempt</string>
     <string name="thirdAttempt">3rd attempt</string>
 
+    <string name="alergenSymptoms">Have you noticed any allergy symptoms?</string>
 
     // Categories
     <string name="all">All</string>

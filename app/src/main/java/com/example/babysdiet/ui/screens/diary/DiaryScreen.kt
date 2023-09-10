@@ -41,12 +41,13 @@ fun DiaryScreen(
     val nameProduct by sharedViewModel.nameProduct
     val descriptionProduct by sharedViewModel.descriptionProduct
     val isAllergenProduct by sharedViewModel.isAllergenProduct
+    val diaryDescription by sharedViewModel.diaryDescription
 
     // evaluation
     val evaluation by sharedViewModel.evaluationDiary
 
     // food activities
-    val foodActivitiesList by sharedViewModel.foodActivities
+//    val foodActivitiesList by sharedViewModel.foodActivities
 
     Scaffold(
         topBar = {
@@ -74,7 +75,13 @@ fun DiaryScreen(
                     sharedViewModel.selectedProduct.value = it
                 },
                 nameProduct = nameProduct,
-                onEvaluationSelected = { sharedViewModel.evaluationDiary.value = it }
+                onEvaluationSelected = { sharedViewModel.evaluationDiary.value = it },
+                onActivitySelected = {
+                    sharedViewModel.foodActivities.value = it
+                },
+                onSelectedSymptoms = {sharedViewModel.diarySympotomsOccured.value = it},
+                diaryDescription = diaryDescription,
+                onDescriptionChange = {sharedViewModel.diaryDescription.value = it}
             )
 
         }

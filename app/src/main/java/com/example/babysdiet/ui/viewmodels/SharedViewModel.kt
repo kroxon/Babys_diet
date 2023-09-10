@@ -63,6 +63,9 @@ class SharedViewModel @Inject constructor(
     // diary
     val evaluationDiary: MutableState<Evaluation> = mutableStateOf(Evaluation.EXCELLENT)
     val foodActivities: MutableState<List<Boolean>> = mutableStateOf(List(6) { false })
+    val diarySympotomsOccured: MutableState<Boolean> = mutableStateOf(false)
+    val diaryDescription: MutableState<String> = mutableStateOf("")
+
 
 
     // selected categories list
