@@ -9,7 +9,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
@@ -36,7 +35,7 @@ fun DiaryScreen(
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
     val selectedProducts by sharedViewModel.selectedProducts.collectAsState()
 
-    val selectedProduct by sharedViewModel.selectedDiaryProduct
+    val selectedDiaryProduct by sharedViewModel.selectedDiaryProduct
 
     // product
 //    val idProduct by sharedViewModel.idProduct
@@ -66,7 +65,7 @@ fun DiaryScreen(
                     }
                 },
                 selectedDiary = selectedDiary,
-                selectedProduct = selectedProduct,
+                selectedProduct = selectedDiaryProduct,
                 sharedViewModel = sharedViewModel
             )
         },
@@ -74,7 +73,7 @@ fun DiaryScreen(
             DiaryContent(
                 allProducts = allProducts,
                 selectedDiary = selectedDiary,
-                selectedProduct = selectedProduct,
+                selectedProduct = selectedDiaryProduct,
                 sharedViewModel = sharedViewModel,
                 selectedProducts = selectedProducts,
                 onProductSelected = {
@@ -93,7 +92,8 @@ fun DiaryScreen(
                 },
                 onSelectedSymptoms = { sharedViewModel.diarySympotomsOccured.value = it },
                 diaryDescription = diaryDescription,
-                onDescriptionChange = { sharedViewModel.diaryDescription.value = it }
+                onDescriptionChange = { sharedViewModel.diaryDescription.value = it },
+                onDateSelected = { sharedViewModel.selectedDate.value = it }
             )
 
         }

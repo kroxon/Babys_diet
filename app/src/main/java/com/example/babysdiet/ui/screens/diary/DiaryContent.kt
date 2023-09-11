@@ -98,6 +98,7 @@ fun DiaryContent(
     onSelectedSymptoms: (Boolean) -> Unit,
     onDescriptionChange: (String) -> Unit,
     diaryDescription: String,
+    onDateSelected: (Long) -> Unit,
 //    idProduct: Int,
 //    nameProduct: String,
 //    descriptionProduct: String,
@@ -123,6 +124,7 @@ fun DiaryContent(
         { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
             selectedDateText = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
             currentDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDayOfMonth)
+            onDateSelected(currentDate.toEpochDay())
         }, year, month, dayOfMonth
 
     )
@@ -547,7 +549,10 @@ fun AllergySymptomsOccured(
 }
 
 @Composable
-fun CalendarLabel(currentDate: LocalDate, datePicker: DatePickerDialog) {
+fun CalendarLabel(
+    currentDate: LocalDate,
+    datePicker: DatePickerDialog
+) {
 
     Column(Modifier.fillMaxWidth()) {
         Row(

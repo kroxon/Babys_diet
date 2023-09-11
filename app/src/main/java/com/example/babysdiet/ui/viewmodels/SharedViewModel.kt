@@ -1,8 +1,12 @@
 package com.example.babysdiet.ui.viewmodels
 
 import android.app.Application
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.babysdiet.R
@@ -14,6 +18,7 @@ import com.example.babysdiet.components.data.repositories.ProductRepository
 import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -57,7 +62,7 @@ class SharedViewModel @Inject constructor(
     val diarySympotomsOccured: MutableState<Boolean> = mutableStateOf(false)
     val diaryDescription: MutableState<String> = mutableStateOf("")
     val selectedDiaryProduct: MutableState<Product?> = mutableStateOf(null)
-
+    val selectedDate: MutableState<Long> = mutableStateOf(0)
 
 
     // selected categories list
@@ -132,16 +137,16 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-//    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
-//    val selectedProduct: StateFlow<Product?> = _selectedProduct
-//
-//    fun getSelectedProduct(productId: Int) {
-//        viewModelScope.launch {
-//            productRepository.getSelectedProduct(productId).collect { product ->
-//                _selectedProduct.value = product
-//            }
-//        }
-//    }
+    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
+    val selectedProduct: StateFlow<Product?> = _selectedProduct
+
+    fun getSelectedProduct(productId: Int) {
+        viewModelScope.launch {
+            productRepository.getSelectedProduct(productId).collect { product ->
+                _selectedProduct.value = product
+            }
+        }
+    }
 
     fun addProduct(product: Product) {
         viewModelScope.launch {
@@ -149,17 +154,76 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun addDiary() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val diary = Diary(
+                timeEating = selectedDate.value,
+                productId = selectedDiaryProduct.value!!.productId,
+                reactionOccurred = diarySympotomsOccured.value,
+                description = diaryDescription.value,
+                evaluation = evaluationDiary.value,
+                touched = foodActivities.value[0],
+                sniffed = foodActivities.value[1],
+                licked = foodActivities.value[2],
+                attemptFirst = foodActivities.value[3],
+                attemptSecond = foodActivities.value[4],
+                attemptThird = foodActivities.value[5]
+            )
+            diaryRepository.addDiaryEntry(diary)
+        }
+    }
+
+    private fun updateDiary() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val diary = Diary(
+//                diaryId = ,
+                timeEating = selectedDate.value,
+                productId = selectedDiaryProduct.value!!.productId,
+                reactionOccurred = diarySympotomsOccured.value,
+                description = diaryDescription.value,
+                evaluation = evaluationDiary.value,
+                touched = foodActivities.value[0],
+                sniffed = foodActivities.value[1],
+                licked = foodActivities.value[2],
+                attemptFirst = foodActivities.value[3],
+                attemptSecond = foodActivities.value[4],
+                attemptThird = foodActivities.value[5]
+            )
+            diaryRepository.updateDiaryEntry(diary)
+        }
+    }
+
+    private fun deleteDiary() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val diary = Diary(
+//                diaryId = ,
+                timeEating = selectedDate.value,
+                productId = selectedDiaryProduct.value!!.productId,
+                reactionOccurred = diarySympotomsOccured.value,
+                description = diaryDescription.value,
+                evaluation = evaluationDiary.value,
+                touched = foodActivities.value[0],
+                sniffed = foodActivities.value[1],
+                licked = foodActivities.value[2],
+                attemptFirst = foodActivities.value[3],
+                attemptSecond = foodActivities.value[4],
+                attemptThird = foodActivities.value[5]
+            )
+            diaryRepository.deleteDiaryEntry(diary)
+        }
+    }
+
     fun handleDatabaseActions(action: Action) {
         when (action) {
             Action.ADD_DIARY -> {
-//                addTask()
+                addDiary()
             }
 
             Action.DELETE_DIARY -> {
 //                deleteTask()
             }
 
-            Action.DELETE_ALL_DIARIES-> {
+            Action.DELETE_ALL_DIARIES -> {
 //                deleteAllTasks()
             }
 
@@ -179,7 +243,7 @@ class SharedViewModel @Inject constructor(
 //                deleteTask()
             }
 
-            Action.DELETE_ALL_PRODUCTS-> {
+            Action.DELETE_ALL_PRODUCTS -> {
 //                deleteAllTasks()
             }
 
@@ -202,6 +266,42 @@ class SharedViewModel @Inject constructor(
         return selectedDiaryProduct.value != null
     }
 
+    @Composable
+    fun DisplaySnackbar(
+        onUndoClicked: (Action) -> Unit,
+        titleTask: String,
+        handleDatabaseAction: () -> Unit,
+        snackbarHostState: SnackbarHostState,
+        action: Action
+    ) {
+        handleDatabaseAction()
+        val scope = rememberCoroutineScope()
+        LaunchedEffect(key1 = action) {
+            if (action != Action.NO_ACTION) {
+                scope.launch {
+                    val snackBarResult = snackbarHostState.showSnackbar(
+                        message = setMessage(
+                            action = action,
+                            taskTitle = titleTask
+                        ),
+                        actionLabel = setActionLabel(action)
+                    )
+                    undoDeleteTesk(
+                        action = action,
+                        snackBarResult = snackBarResult,
+                        onUndoClicked = onUndoClicked
+                    )
+                }
+            }
+        }
+    }
+
+    private fun setMessage(action: Action, taskTitle: String): String {
+        return when (action) {
+            Action.DELETE_ALL_DIARIES -> "All diet diary entries deleted."
+            else -> "${action.name}: $taskTitle "
+        }
+    }
 
     fun initProducts() {
         // product list
