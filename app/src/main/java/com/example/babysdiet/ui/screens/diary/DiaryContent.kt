@@ -82,7 +82,6 @@ import com.example.babysdiet.util.RequestState
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,6 +97,7 @@ fun DiaryContent(
     onSelectedSymptoms: (Boolean) -> Unit,
     onDescriptionChange: (String) -> Unit,
     diaryDescription: String,
+    onDateSelected: (Long) -> Unit,
 //    idProduct: Int,
 //    nameProduct: String,
 //    descriptionProduct: String,
@@ -123,6 +123,7 @@ fun DiaryContent(
         { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
             selectedDateText = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
             currentDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDayOfMonth)
+            onDateSelected(currentDate.toEpochDay())
         }, year, month, dayOfMonth
 
     )
@@ -156,9 +157,15 @@ fun DiaryContent(
         if (newSelectedProduct != null) {
             TitleLabel(newSelectedProduct)
 
-            EvaluationSelectingRow(onEvaluationSelected = onEvaluationSelected)
+            EvaluationSelectingRow(
+                onEvaluationSelected = onEvaluationSelected,
+                diary = selectedDiary
+            )
 
-            FoodActivities(onActivitySelected = onActivitySelected)
+            FoodActivities(
+                onActivitySelected = onActivitySelected,
+                diary = selectedDiary
+            )
 
             AllergySymptomsOccured(onSelectedSymptoms = onSelectedSymptoms)
 
@@ -285,13 +292,13 @@ fun SearchableExposedDropdownMenuBox(
                                 ProductItem(product = item)
                             },
                             onClick = {
+                                onProductSelected(item)
                                 selectedText = item.name
                                 expanded = false
                                 Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
                                 keyboardController?.hide() // Hide the keyboard to remove focus
                                 focusManager.clearFocus()
                                 isClearButtonVisible = false
-                                onProductSelected(item)
                             }
                         )
                     }
@@ -453,9 +460,20 @@ fun TitleLabel(
 
 @Composable
 fun FoodActivities(
+    diary: Diary?,
     onActivitySelected: (List<Boolean>) -> Unit
 ) {
     var selectedActivities by remember { mutableStateOf<List<Boolean>>(List(6) { false }) }
+    if (diary != null) {
+        val newList = selectedActivities.toMutableList()
+        newList[0] = diary.touched
+        newList[1] = diary.sniffed
+        newList[2] = diary.licked
+        newList[3] = diary.attemptFirst
+        newList[4] = diary.attemptSecond
+        newList[5] = diary.attemptThird
+        selectedActivities = newList
+    }
     val strings = listOf(
         stringResource(id = R.string.touched),
         stringResource(id = R.string.sniffed),
@@ -547,7 +565,10 @@ fun AllergySymptomsOccured(
 }
 
 @Composable
-fun CalendarLabel(currentDate: LocalDate, datePicker: DatePickerDialog) {
+fun CalendarLabel(
+    currentDate: LocalDate,
+    datePicker: DatePickerDialog
+) {
 
     Column(Modifier.fillMaxWidth()) {
         Row(

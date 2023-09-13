@@ -16,6 +16,7 @@
     <string name="no">No</string>
     <string name="description">Description</string>
     <string name="selectProduct">The product has not been selected</string>
+    <string name="deleteAllDiary">All diet diary entries deleted.</string>
 
     // calendar
     <string name="today">Today</string>

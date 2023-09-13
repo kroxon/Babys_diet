@@ -3,6 +3,7 @@ package com.example.babysdiet.navigation.destinations
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -36,7 +37,9 @@ fun NavGraphBuilder.diaryComposable(
 
         sharedViewModel.getSelectedDiary(diaryId = diaryId)
         val selectedDiary by sharedViewModel.selectedDiary.collectAsState()
-
+        sharedViewModel.getSelectedProduct(productId)
+        val selectedProduct by remember { sharedViewModel.selectedProduct }.collectAsState()
+//        sharedViewModel.selectedDiaryProduct.value = selectedProduct
         DiaryScreen(
             navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel,
