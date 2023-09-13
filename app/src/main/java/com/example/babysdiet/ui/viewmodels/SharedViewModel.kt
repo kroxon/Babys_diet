@@ -2,6 +2,7 @@ package com.example.babysdiet.ui.viewmodels
 
 import android.app.Application
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -22,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 
@@ -62,7 +64,7 @@ class SharedViewModel @Inject constructor(
     val diarySympotomsOccured: MutableState<Boolean> = mutableStateOf(false)
     val diaryDescription: MutableState<String> = mutableStateOf("")
     val selectedDiaryProduct: MutableState<Product?> = mutableStateOf(null)
-    val selectedDate: MutableState<Long> = mutableStateOf(0)
+    val selectedDate: MutableState<Long> = mutableStateOf(LocalDate.now().toEpochDay())
 
 
     // selected categories list
@@ -266,42 +268,6 @@ class SharedViewModel @Inject constructor(
         return selectedDiaryProduct.value != null
     }
 
-    @Composable
-    fun DisplaySnackbar(
-        onUndoClicked: (Action) -> Unit,
-        titleTask: String,
-        handleDatabaseAction: () -> Unit,
-        snackbarHostState: SnackbarHostState,
-        action: Action
-    ) {
-        handleDatabaseAction()
-        val scope = rememberCoroutineScope()
-        LaunchedEffect(key1 = action) {
-            if (action != Action.NO_ACTION) {
-                scope.launch {
-                    val snackBarResult = snackbarHostState.showSnackbar(
-                        message = setMessage(
-                            action = action,
-                            taskTitle = titleTask
-                        ),
-                        actionLabel = setActionLabel(action)
-                    )
-                    undoDeleteTesk(
-                        action = action,
-                        snackBarResult = snackBarResult,
-                        onUndoClicked = onUndoClicked
-                    )
-                }
-            }
-        }
-    }
-
-    private fun setMessage(action: Action, taskTitle: String): String {
-        return when (action) {
-            Action.DELETE_ALL_DIARIES -> "All diet diary entries deleted."
-            else -> "${action.name}: $taskTitle "
-        }
-    }
 
     fun initProducts() {
         // product list

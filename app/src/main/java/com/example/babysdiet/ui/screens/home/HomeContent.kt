@@ -31,6 +31,8 @@ import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.diaryItemTextColor
 import com.example.babysdiet.ui.theme.diaryItembackgroudColor
 import com.example.babysdiet.util.RequestState
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun HomeContent(
@@ -111,8 +113,10 @@ fun DiaryItem(
                     maxLines = 1
                 )
                 Spacer(Modifier.weight(1f))
+                val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
+                val formattedDate: String = currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                 Text(
-                    text = diary.timeEating.toString(),
+                    text = formattedDate,
                     color = MaterialTheme.colorScheme.diaryItemTextColor,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Normal,

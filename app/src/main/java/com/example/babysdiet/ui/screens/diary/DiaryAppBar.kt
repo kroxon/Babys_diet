@@ -52,7 +52,7 @@ fun NewDiaryAppBar(
         },
         title = { Text(text = stringResource(id = R.string.add_diary)) },
         actions = {
-            AddAction(onBackClicked = navigateToHomeScreen)
+            AddAction(onAddDiaryClicked = navigateToHomeScreen)
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
@@ -108,9 +108,9 @@ fun BackAction(
 
 @Composable
 fun AddAction(
-    onBackClicked: (Action) -> Unit
+    onAddDiaryClicked: (Action) -> Unit
 ) {
-    IconButton(onClick = { onBackClicked(Action.ADD_DIARY) }) {
+    IconButton(onClick = { onAddDiaryClicked(Action.ADD_DIARY) }) {
         Icon(
             imageVector = Icons.Filled.Check,
             contentDescription = stringResource(id = R.string.add_diary),
