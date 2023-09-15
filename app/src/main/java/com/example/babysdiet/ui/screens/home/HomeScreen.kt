@@ -8,16 +8,19 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Product
+import com.example.babysdiet.ui.screens.diary.DisplaySnackbar
 import com.example.babysdiet.ui.theme.fabContentColor
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.RequestState
@@ -35,9 +38,22 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllDiaries()
     }
+
+    val action by sharedViewModel.action
+
     val allProducts by sharedViewModel.allProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    DisplaySnackbar(
+        handleDatabaseAction = { sharedViewModel.handleDatabaseActions(action = action) },
+        snackbarHostState = snackbarHostState,
+        action = action,
+        onUndoClicked = {
+            sharedViewModel.action.value = it
+        }
+    )
 
     Scaffold(
         topBar = {

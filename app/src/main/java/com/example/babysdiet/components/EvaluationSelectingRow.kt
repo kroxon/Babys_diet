@@ -27,12 +27,11 @@ import com.example.babysdiet.ui.theme.ExcellentEvaluationColor
 
 @Composable
 fun EvaluationSelectingRow(
-    diary: Diary?,
+//    diary: Diary?,
+    evaluation: Evaluation,
     onEvaluationSelected: (Evaluation) -> Unit,
 ) {
-    var selectedColor by remember { mutableStateOf<Color?>(ExcellentEvaluationColor) }
-    if (diary != null)
-        selectedColor = diary.evaluation.color
+    var selectedColor by remember { mutableStateOf<Color?>(evaluation.color) }
 
     Column(Modifier.fillMaxWidth()) {
         Row(

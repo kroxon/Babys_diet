@@ -264,6 +264,31 @@ class SharedViewModel @Inject constructor(
         this.action.value = Action.NO_ACTION
     }
 
+    fun updateDiaryFields(selectedDiary: Diary?, selectedProduct: Product?) {
+        if (selectedDiary != null) {
+            evaluationDiary.value = selectedDiary.evaluation
+            foodActivities.value = listOf(
+                selectedDiary.touched,
+                selectedDiary.sniffed,
+                selectedDiary.licked,
+                selectedDiary.attemptFirst,
+                selectedDiary.attemptSecond,
+                selectedDiary.attemptThird
+            )
+            diarySympotomsOccured.value = selectedDiary.reactionOccurred
+            diaryDescription.value = selectedDiary.description
+            selectedDiaryProduct.value = selectedProduct
+            selectedDate.value = selectedDiary.timeEating
+        } else {
+            evaluationDiary.value = Evaluation.EXCELLENT
+            foodActivities.value = listOf(false, false, false, false, false, false)
+            diarySympotomsOccured.value = false
+            diaryDescription.value = ""
+            selectedDiaryProduct.value = null
+            selectedDate.value = LocalDate.now().toEpochDay()
+        }
+    }
+
     fun validateDiaryFields(): Boolean {
         return selectedDiaryProduct.value != null
     }
