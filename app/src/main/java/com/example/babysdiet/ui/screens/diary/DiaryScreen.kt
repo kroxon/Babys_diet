@@ -15,9 +15,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
+import com.example.babysdiet.components.data.models.Evaluation
+import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -25,8 +28,16 @@ fun DiaryScreen(
     navigateToHomeScreen: (Action) -> Unit,
     sharedViewModel: SharedViewModel,
     selectedDiary: Diary?,
+    selectedProduct: Product?
 ) {
     val context = LocalContext.current
+
+    val evaluation: Evaluation by sharedViewModel.evaluationDiary
+    val foodActivities: List<Boolean> by sharedViewModel.foodActivities
+    val diarySympotomsOccured: Boolean by sharedViewModel.diarySympotomsOccured
+    val diaryDescription: String by sharedViewModel.diaryDescription
+    val selectedDiaryProduct: Product? by sharedViewModel.selectedDiaryProduct
+    val selectedDate: Long by sharedViewModel.selectedDate
 
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllProducts()
@@ -36,38 +47,11 @@ fun DiaryScreen(
     }
     sharedViewModel.getSelectedProducts()
 
-    val action by sharedViewModel.action
 
     val allProducts by sharedViewModel.allProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
     val selectedProducts by sharedViewModel.selectedProducts.collectAsState()
 
-    val selectedDiaryProduct by sharedViewModel.selectedDiaryProduct
-
-    // product
-//    val idProduct by sharedViewModel.idProduct
-//    val idCategoryProduct by sharedViewModel.idCategoryProduct
-//    val nameProduct by sharedViewModel.nameProduct
-//    val descriptionProduct by sharedViewModel.descriptionProduct
-//    val isAllergenProduct by sharedViewModel.isAllergenProduct
-    val diaryDescription by sharedViewModel.diaryDescription
-
-    // evaluation
-    val evaluation by sharedViewModel.evaluationDiary
-
-    // food activities
-//    val foodActivitiesList by sharedViewModel.foodActivities
-
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    DisplaySnackbar(
-        handleDatabaseAction = { sharedViewModel.handleDatabaseActions(action = action) },
-        snackbarHostState = snackbarHostState,
-        action = action,
-        onUndoClicked = {
-            sharedViewModel.action.value = it
-        }
-    )
 
     Scaffold(
         topBar = {
@@ -82,28 +66,21 @@ fun DiaryScreen(
                             displayToast(context = context)
                     }
                 },
-                selectedDiary = selectedDiary,
-                selectedProduct = selectedDiaryProduct,
-                sharedViewModel = sharedViewModel
+                selectedDiary = selectedDiary
             )
         },
         content = {
             DiaryContent(
-                allProducts = allProducts,
                 selectedDiary = selectedDiary,
+                evaluation = evaluation,
+                foodActivities = foodActivities,
                 selectedProduct = selectedDiaryProduct,
-                sharedViewModel = sharedViewModel,
+                selectedDate = selectedDate,
                 selectedProducts = selectedProducts,
+                diarySympotomsOccured = diarySympotomsOccured,
                 onProductSelected = {
-//                    sharedViewModel.idProduct.value = it.productId
-//                    sharedViewModel.idCategoryProduct.value = it.categoryId
-//                    sharedViewModel.nameProduct.value = it.name
-//                    sharedViewModel.descriptionProduct.value = it.description
-//                    sharedViewModel.isAllergenProduct.value = it.isAllergen
-
                     sharedViewModel.selectedDiaryProduct.value = it
                 },
-//                nameProduct = selectedProduct,
                 onEvaluationSelected = { sharedViewModel.evaluationDiary.value = it },
                 onActivitySelected = {
                     sharedViewModel.foodActivities.value = it
@@ -111,7 +88,11 @@ fun DiaryScreen(
                 onSelectedSymptoms = { sharedViewModel.diarySympotomsOccured.value = it },
                 diaryDescription = diaryDescription,
                 onDescriptionChange = { sharedViewModel.diaryDescription.value = it },
-                onDateSelected = { sharedViewModel.selectedDate.value = it }
+                onDateSelected = { sharedViewModel.selectedDate.value = it },
+                onButtonClickListener = {
+                    sharedViewModel.categorySelection.value = it
+                    sharedViewModel.getSelectedProducts()
+                }
             )
 
         }

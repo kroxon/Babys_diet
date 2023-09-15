@@ -1,5 +1,6 @@
 package com.example.babysdiet.navigation.destinations
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -35,15 +36,30 @@ fun NavGraphBuilder.diaryComposable(
         val diaryId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY)
         val productId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY_2)
 
-        sharedViewModel.getSelectedDiary(diaryId = diaryId)
+        LaunchedEffect(key1 = diaryId) {
+            sharedViewModel.getSelectedDiary(diaryId = diaryId)
+        }
         val selectedDiary by sharedViewModel.selectedDiary.collectAsState()
-        sharedViewModel.getSelectedProduct(productId)
+
+        LaunchedEffect(key1 = productId) {
+            sharedViewModel.getSelectedProduct(productId = productId)
+        }
         val selectedProduct by remember { sharedViewModel.selectedProduct }.collectAsState()
 //        sharedViewModel.selectedDiaryProduct.value = selectedProduct
+
+        LaunchedEffect(key1 = selectedDiary) {
+            if (selectedDiary != null || diaryId == -1)
+                sharedViewModel.updateDiaryFields(
+                    selectedDiary = selectedDiary,
+                    selectedProduct = selectedProduct
+                )
+        }
+
         DiaryScreen(
             navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel,
             selectedDiary = selectedDiary,
+            selectedProduct = selectedProduct
         )
     }
 }

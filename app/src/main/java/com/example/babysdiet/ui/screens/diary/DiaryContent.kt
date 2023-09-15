@@ -87,26 +87,26 @@ import java.util.Calendar
 @Composable
 fun DiaryContent(
     selectedDiary: Diary?,
+    evaluation: Evaluation,
+    foodActivities: List<Boolean>,
     selectedProduct: Product?,
-    allProducts: RequestState<List<Product>>,
-    sharedViewModel: SharedViewModel,
+    diarySympotomsOccured: Boolean,
+    diaryDescription: String,
+    selectedDate: Long,
     selectedProducts: RequestState<List<Product>>,
     onProductSelected: (Product) -> Unit,
     onEvaluationSelected: (Evaluation) -> Unit,
     onActivitySelected: (List<Boolean>) -> Unit,
     onSelectedSymptoms: (Boolean) -> Unit,
     onDescriptionChange: (String) -> Unit,
-    diaryDescription: String,
     onDateSelected: (Long) -> Unit,
-//    idProduct: Int,
-//    nameProduct: String,
-//    descriptionProduct: String,
-//    isAllergenProduct: Boolean
+    onButtonClickListener: (MutableList<Boolean>) -> Unit
+
 ) {
     var newSelectedProduct = selectedProduct
 
     // for calendar
-    var currentDate by remember { mutableStateOf(LocalDate.now()) }
+    var currentDate = LocalDate.ofEpochDay(selectedDate)
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
@@ -151,7 +151,7 @@ fun DiaryContent(
         FlowRowButtons(
             names = categories,
             completedList = categorySelectedBtns,
-            sharedViewModel = sharedViewModel
+            onButtonClickListener = onButtonClickListener
         )
 
         if (newSelectedProduct != null) {
@@ -159,15 +159,20 @@ fun DiaryContent(
 
             EvaluationSelectingRow(
                 onEvaluationSelected = onEvaluationSelected,
-                diary = selectedDiary
+                evaluation = evaluation
+//                diary = selectedDiary
             )
 
             FoodActivities(
                 onActivitySelected = onActivitySelected,
-                diary = selectedDiary
+                diary = selectedDiary,
+                foodActivities = foodActivities
             )
 
-            AllergySymptomsOccured(onSelectedSymptoms = onSelectedSymptoms)
+            AllergySymptomsOccured(
+                selectedSymptoms = diarySympotomsOccured,
+                onSelectedSymptoms = onSelectedSymptoms
+            )
 
             CalendarLabel(currentDate, datePicker)
 
@@ -325,7 +330,7 @@ fun PastilleButton(
     name: String,
     completedList: MutableList<Boolean>,
     index: Int,
-    sharedViewModel: SharedViewModel
+    onButtonClickListener: (MutableList<Boolean>) -> Unit
 ) {
 //    var isSelected by rememberSaveable { mutableStateOf(completedList[index]) }
     var isSelected = completedList[index]
@@ -368,8 +373,7 @@ fun PastilleButton(
                 if (index != 0 && !isSelected) {
                     completedList[0] = false
                 }
-                sharedViewModel.categorySelection.value = completedList
-                sharedViewModel.getSelectedProducts()
+                onButtonClickListener(completedList)
             },
             contentPadding = PaddingValues(
                 start = 8.dp,
@@ -408,7 +412,7 @@ fun PastilleButton(
 fun FlowRowButtons(
     names: List<String>,
     completedList: MutableList<Boolean>,
-    sharedViewModel: SharedViewModel
+    onButtonClickListener: (MutableList<Boolean>) -> Unit
 ) {
     FlowRow(
         horizontalArrangement = Arrangement.Center,
@@ -418,7 +422,7 @@ fun FlowRowButtons(
                 name = names.get(i),
                 completedList = completedList,
                 index = i,
-                sharedViewModel = sharedViewModel
+                onButtonClickListener = onButtonClickListener
             )
         }
     }
@@ -460,20 +464,21 @@ fun TitleLabel(
 
 @Composable
 fun FoodActivities(
+    foodActivities: List<Boolean>,
     diary: Diary?,
     onActivitySelected: (List<Boolean>) -> Unit
 ) {
-    var selectedActivities by remember { mutableStateOf<List<Boolean>>(List(6) { false }) }
-    if (diary != null) {
-        val newList = selectedActivities.toMutableList()
-        newList[0] = diary.touched
-        newList[1] = diary.sniffed
-        newList[2] = diary.licked
-        newList[3] = diary.attemptFirst
-        newList[4] = diary.attemptSecond
-        newList[5] = diary.attemptThird
-        selectedActivities = newList
-    }
+    var selectedActivities = foodActivities
+//    if (diary != null) {
+//        val newList = selectedActivities.toMutableList()
+//        newList[0] = diary.touched
+//        newList[1] = diary.sniffed
+//        newList[2] = diary.licked
+//        newList[3] = diary.attemptFirst
+//        newList[4] = diary.attemptSecond
+//        newList[5] = diary.attemptThird
+//        selectedActivities = newList
+//    }
     val strings = listOf(
         stringResource(id = R.string.touched),
         stringResource(id = R.string.sniffed),
@@ -525,9 +530,15 @@ fun FoodActivities(
 
 @Composable
 fun AllergySymptomsOccured(
+    selectedSymptoms: Boolean,
     onSelectedSymptoms: (Boolean) -> Unit
 ) {
-    var selectedSymptoms by remember { mutableStateOf(false) }
+//    var selectedSymptoms by remember {
+//        if (diary != null)
+//            diary.reactionOccurred
+//        else
+//            mutableStateOf(false)
+//    }
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -549,16 +560,14 @@ fun AllergySymptomsOccured(
                 fontSize = MaterialTheme.typography.labelLarge.fontSize
             )
             RadioButton(selected = selectedSymptoms, onClick = {
-                selectedSymptoms = !selectedSymptoms
-                onSelectedSymptoms(selectedSymptoms)
+                onSelectedSymptoms(true)
             })
             Text(
                 text = stringResource(id = R.string.no),
                 fontSize = MaterialTheme.typography.labelLarge.fontSize
             )
             RadioButton(selected = !selectedSymptoms, onClick = {
-                selectedSymptoms = !selectedSymptoms
-                onSelectedSymptoms(selectedSymptoms)
+                onSelectedSymptoms(false)
             })
         }
     }
@@ -667,7 +676,10 @@ fun TitleLabelPreview() {
 @Composable
 @Preview
 fun AllergySymptomsOccuredPreview() {
-    AllergySymptomsOccured(onSelectedSymptoms = {})
+    AllergySymptomsOccured(
+        onSelectedSymptoms = {},
+        selectedSymptoms = true
+    )
 }
 
 //@Composable
