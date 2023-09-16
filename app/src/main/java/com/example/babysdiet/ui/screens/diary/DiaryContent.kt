@@ -203,7 +203,6 @@ fun SearchableExposedDropdownMenuBox(
     if (allProductsRequest is RequestState.Success)
         allProducts = allProductsRequest.data
     val context = LocalContext.current
-    val coffeeDrinks = arrayOf("Americano", "Cappuccino", "Espresso", "Latte", "Mocha")
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -280,8 +279,8 @@ fun SearchableExposedDropdownMenuBox(
                     expanded = expanded,
                     onDismissRequest = {
                         // We shouldn't hide the menu when the user enters/removes any character
-                        keyboardController?.hide() // Hide the keyboard to remove focus
-                        focusManager.clearFocus()
+//                        keyboardController?.hide() // Hide the keyboard to remove focus
+//                        focusManager.clearFocus()
                         isClearButtonVisible = false
                     }
                 ) {
@@ -298,7 +297,7 @@ fun SearchableExposedDropdownMenuBox(
                             },
                             onClick = {
                                 onProductSelected(item)
-                                selectedText = item.name
+                                selectedText = ""
                                 expanded = false
                                 Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
                                 keyboardController?.hide() // Hide the keyboard to remove focus
