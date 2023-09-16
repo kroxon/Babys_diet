@@ -14,9 +14,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.babysdiet.R
+import com.example.babysdiet.components.DisplayAlertDialog
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
@@ -71,8 +76,9 @@ fun ExistindDiaryAppBar(
         },
         title = { Text(text = stringResource(id = R.string.edit_diary)) },
         actions = {
-            DeleteAction(onDeleteeClicked = navigateToHomeScreen)
-            UpdateAction(onUpdateClicked = navigateToHomeScreen)
+            ExistinDiaryAppBarAction(
+                navigateToHomeScreen = navigateToHomeScreen
+            )
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
@@ -81,6 +87,26 @@ fun ExistindDiaryAppBar(
             actionIconContentColor = MaterialTheme.colorScheme.onSecondary
         )
     )
+}
+
+@Composable
+fun ExistinDiaryAppBarAction(
+    navigateToHomeScreen: (Action) -> Unit
+) {
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_diary_ask_title),
+        message = stringResource(id = R.string.delete_diary_ask),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { navigateToHomeScreen(Action.DELETE_DIARY) })
+
+    DeleteAction(onDeleteeClicked = {
+        openDialog = true
+    })
+    UpdateAction(onUpdateClicked = navigateToHomeScreen)
 }
 
 @Composable

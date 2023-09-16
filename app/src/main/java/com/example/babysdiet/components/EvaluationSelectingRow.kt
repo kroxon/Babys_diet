@@ -31,7 +31,7 @@ fun EvaluationSelectingRow(
     evaluation: Evaluation,
     onEvaluationSelected: (Evaluation) -> Unit,
 ) {
-    var selectedColor by remember { mutableStateOf<Color?>(evaluation.color) }
+    var selectedColor = evaluation.color
 
     Column(Modifier.fillMaxWidth()) {
         Row(
@@ -46,14 +46,14 @@ fun EvaluationSelectingRow(
                     Evaluation.BAD,
                     Evaluation.VERY_BAD
                 )
-            evaluations.forEach { evaluation ->
+            evaluations.forEach { newEvaluation ->
                 Box(
                     modifier = Modifier
                         .size(40.dp)
                         .background(Color.Transparent, shape = CircleShape)
                         .clickable {
-                            selectedColor = evaluation.color
-                            onEvaluationSelected(evaluation)
+                            selectedColor = newEvaluation.color
+                            onEvaluationSelected(newEvaluation)
                         }
                 ) {
                     Canvas(
@@ -65,7 +65,7 @@ fun EvaluationSelectingRow(
                         val innerCircleRadius =
                             size.minDimension / 3 - 1.dp.toPx() // Inner wheel size
 
-                        if (selectedColor == evaluation.color) {
+                        if (selectedColor == newEvaluation.color) {
                             drawCircle(
                                 color = Color.DarkGray,
                                 center = Offset(size.width / 2, size.height / 2),
@@ -75,7 +75,7 @@ fun EvaluationSelectingRow(
                         }
 
                         drawCircle(
-                            color = evaluation.color,
+                            color = newEvaluation.color,
                             center = Offset(size.width / 2, size.height / 2),
                             radius = innerCircleRadius
                         )

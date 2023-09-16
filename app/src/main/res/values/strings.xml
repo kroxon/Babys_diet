@@ -17,6 +17,8 @@
     <string name="description">Description</string>
     <string name="selectProduct">The product has not been selected</string>
     <string name="deleteAllDiary">All diet diary entries deleted.</string>
+    <string name="delete_diary_ask_title">Delete diary entry</string>
+    <string name="delete_diary_ask">Are you sure you want to delete this diary entry?</string>
 
     // calendar
     <string name="today">Today</string>
