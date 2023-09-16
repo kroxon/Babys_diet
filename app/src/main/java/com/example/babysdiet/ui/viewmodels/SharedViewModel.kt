@@ -59,11 +59,13 @@ class SharedViewModel @Inject constructor(
 //    val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
 
     // diary
+    val selectedDiaryId: MutableState<Int> = mutableStateOf(0)
     val evaluationDiary: MutableState<Evaluation> = mutableStateOf(Evaluation.EXCELLENT)
     val foodActivities: MutableState<List<Boolean>> = mutableStateOf(List(6) { false })
     val diarySympotomsOccured: MutableState<Boolean> = mutableStateOf(false)
     val diaryDescription: MutableState<String> = mutableStateOf("")
     val selectedDiaryProduct: MutableState<Product?> = mutableStateOf(null)
+    val selectedDiaryProductId: MutableState<Int> = mutableStateOf(0)
     val selectedDate: MutableState<Long> = mutableStateOf(LocalDate.now().toEpochDay())
 
 
@@ -178,7 +180,7 @@ class SharedViewModel @Inject constructor(
     private fun updateDiary() {
         viewModelScope.launch(Dispatchers.IO) {
             val diary = Diary(
-//                diaryId = ,
+                diaryId = selectedDiaryId.value,
                 timeEating = selectedDate.value,
                 productId = selectedDiaryProduct.value!!.productId,
                 reactionOccurred = diarySympotomsOccured.value,
@@ -198,9 +200,9 @@ class SharedViewModel @Inject constructor(
     private fun deleteDiary() {
         viewModelScope.launch(Dispatchers.IO) {
             val diary = Diary(
-//                diaryId = ,
+                diaryId = selectedDiaryId.value,
                 timeEating = selectedDate.value,
-                productId = selectedDiaryProduct.value!!.productId,
+                productId = selectedDiaryProductId.value,
                 reactionOccurred = diarySympotomsOccured.value,
                 description = diaryDescription.value,
                 evaluation = evaluationDiary.value,
@@ -222,7 +224,7 @@ class SharedViewModel @Inject constructor(
             }
 
             Action.DELETE_DIARY -> {
-//                deleteTask()
+                deleteDiary()
             }
 
             Action.DELETE_ALL_DIARIES -> {
@@ -230,11 +232,11 @@ class SharedViewModel @Inject constructor(
             }
 
             Action.UNDO_DIARY -> {
-//                addTask()
+                addDiary()
             }
 
             Action.UPDATE_DIARY -> {
-//                updateTask()
+                updateDiary()
             }
 
             Action.ADD_PRODUCT -> {
@@ -266,6 +268,8 @@ class SharedViewModel @Inject constructor(
 
     fun updateDiaryFields(selectedDiary: Diary?, selectedProduct: Product?) {
         if (selectedDiary != null) {
+            selectedDiaryId.value = selectedDiary.diaryId
+            selectedDiaryProductId.value = selectedProduct!!.productId
             evaluationDiary.value = selectedDiary.evaluation
             foodActivities.value = listOf(
                 selectedDiary.touched,
@@ -280,6 +284,8 @@ class SharedViewModel @Inject constructor(
             selectedDiaryProduct.value = selectedProduct
             selectedDate.value = selectedDiary.timeEating
         } else {
+            selectedDiaryId.value = 0
+            selectedDiaryProductId.value = 0
             evaluationDiary.value = Evaluation.EXCELLENT
             foodActivities.value = listOf(false, false, false, false, false, false)
             diarySympotomsOccured.value = false
