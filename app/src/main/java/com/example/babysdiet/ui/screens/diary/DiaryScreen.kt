@@ -85,14 +85,16 @@ fun DiaryScreen(
                 onActivitySelected = {
                     sharedViewModel.foodActivities.value = it
                 },
-                onSelectedSymptoms = { sharedViewModel.diarySympotomsOccured.value = it },
+                onSelectedSymptoms = {
+                    sharedViewModel.diarySympotomsOccured.value = it },
                 diaryDescription = diaryDescription,
                 onDescriptionChange = { sharedViewModel.diaryDescription.value = it },
                 onDateSelected = { sharedViewModel.selectedDate.value = it },
                 onButtonClickListener = {
                     sharedViewModel.categorySelection.value = it
                     sharedViewModel.getSelectedProducts()
-                }
+                },
+                onSaveAsAllergen = {sharedViewModel.saveProductAsAllergen.value = it}
             )
 
         }
