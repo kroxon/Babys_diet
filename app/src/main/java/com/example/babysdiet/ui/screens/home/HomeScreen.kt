@@ -1,7 +1,6 @@
 package com.example.babysdiet.ui.screens.home
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.FloatingActionButton
@@ -16,15 +15,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import com.example.babysdiet.R
-import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.screens.diary.DisplaySnackbar
 import com.example.babysdiet.ui.theme.fabContentColor
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
-import com.example.babysdiet.util.RequestState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -35,6 +30,7 @@ fun HomeScreen(
 ) {
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllProducts()
+        sharedViewModel.getAllergenProducts()
     }
     LaunchedEffect(key1 = true) {
         sharedViewModel.getAllDiaries()
@@ -43,6 +39,7 @@ fun HomeScreen(
     val action by sharedViewModel.action
 
     val allProducts by sharedViewModel.allProducts.collectAsState()
+    val allergens by sharedViewModel.allegrenProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -65,7 +62,10 @@ fun HomeScreen(
             HomeContent(
                 diaries = allDiaries,
                 products = allProducts,
-                navigateToDiaryScreen = navigateToDiaryScreen
+                allergens = allergens,
+                navigateToDiaryScreen = navigateToDiaryScreen,
+                onCategoryClickListener = {},
+                onAllegrenClickListener = {}
             )
         },
         floatingActionButton = {

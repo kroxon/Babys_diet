@@ -44,6 +44,10 @@ class SharedViewModel @Inject constructor(
     private val _selectedProducts = MutableStateFlow<RequestState<List<Product>>>(RequestState.Idle)
     val selectedProducts: StateFlow<RequestState<List<Product>>> = _selectedProducts
 
+    // getting allegrens by using RequestState
+    private val _allegrenProducts = MutableStateFlow<RequestState<List<Product>>>(RequestState.Idle)
+    val allegrenProducts: StateFlow<RequestState<List<Product>>> = _allegrenProducts
+
     // getting all diaries using RequestState
     private val _allDiaries = MutableStateFlow<RequestState<List<Diary>>>(RequestState.Idle)
     val allDiaries: StateFlow<RequestState<List<Diary>>> = _allDiaries
@@ -67,6 +71,7 @@ class SharedViewModel @Inject constructor(
     val selectedDiaryProduct: MutableState<Product?> = mutableStateOf(null)
     val selectedDiaryProductId: MutableState<Int> = mutableStateOf(0)
     val selectedDate: MutableState<Long> = mutableStateOf(LocalDate.now().toEpochDay())
+    val saveProductAsAllergen: MutableState<Boolean> = mutableStateOf(false)
 
 
     // selected categories list
@@ -101,19 +106,32 @@ class SharedViewModel @Inject constructor(
     fun getSelectedProducts() {
         try {
             _selectedProducts.value = RequestState.Loading
-            val selectedCategoryIds =
+            val selectedProductsIds =
                 categorySelection.value.mapIndexedNotNull { index, isSelected ->
                     if (index == 0 || !isSelected) null
                     else index
                 }
             viewModelScope.launch {
-                productRepository.getProductsInCategories(selectedCategoryIds).collect {
+                productRepository.getProductsInCategories(selectedProductsIds).collect {
                     _selectedProducts.value = RequestState.Success(it)
                     isAllProductsInitialized = true
                 }
             }
         } catch (e: Exception) {
             _selectedProducts.value = RequestState.Error(e)
+        }
+    }
+
+    fun getAllergenProducts() {
+        _allegrenProducts.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                productRepository.getAllergenProducts.collect {
+                    _allegrenProducts.value = RequestState.Success(it)
+                }
+            }
+        } catch (e: Exception) {
+            _allegrenProducts.value = RequestState.Error(e)
         }
     }
 
@@ -174,6 +192,17 @@ class SharedViewModel @Inject constructor(
                 attemptThird = foodActivities.value[5]
             )
             diaryRepository.addDiaryEntry(diary)
+            if (saveProductAsAllergen.value) {
+                val product = Product(
+                    productId = selectedDiaryProduct.value!!.productId,
+                    name = selectedDiaryProduct.value!!.name,
+                    categoryId = selectedDiaryProduct.value!!.categoryId,
+                    description = selectedDiaryProduct.value!!.description,
+                    isAllergen = true
+                )
+                productRepository.updateProduct(product = product)
+                saveProductAsAllergen.value = false
+            }
         }
     }
 
@@ -194,6 +223,17 @@ class SharedViewModel @Inject constructor(
                 attemptThird = foodActivities.value[5]
             )
             diaryRepository.updateDiaryEntry(diary)
+            if (saveProductAsAllergen.value) {
+                val product = Product(
+                    productId = selectedDiaryProduct.value!!.productId,
+                    name = selectedDiaryProduct.value!!.name,
+                    categoryId = selectedDiaryProduct.value!!.categoryId,
+                    description = selectedDiaryProduct.value!!.description,
+                    isAllergen = true
+                )
+                productRepository.updateProduct(product = product)
+                saveProductAsAllergen.value = false
+            }
         }
     }
 
@@ -283,6 +323,7 @@ class SharedViewModel @Inject constructor(
             diaryDescription.value = selectedDiary.description
             selectedDiaryProduct.value = selectedProduct
             selectedDate.value = selectedDiary.timeEating
+            saveProductAsAllergen.value = selectedProduct.isAllergen
         } else {
             selectedDiaryId.value = 0
             selectedDiaryProductId.value = 0
@@ -292,6 +333,7 @@ class SharedViewModel @Inject constructor(
             diaryDescription.value = ""
             selectedDiaryProduct.value = null
             selectedDate.value = LocalDate.now().toEpochDay()
+            saveProductAsAllergen.value = false
         }
     }
 

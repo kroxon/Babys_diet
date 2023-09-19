@@ -63,6 +63,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
+import com.example.babysdiet.components.DisplayAlertDialog
 import com.example.babysdiet.components.EvaluationSelectingRow
 import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.data.models.Diary
@@ -98,6 +99,7 @@ fun DiaryContent(
     onEvaluationSelected: (Evaluation) -> Unit,
     onActivitySelected: (List<Boolean>) -> Unit,
     onSelectedSymptoms: (Boolean) -> Unit,
+    onSaveAsAllergen: (Boolean) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onDateSelected: (Long) -> Unit,
     onButtonClickListener: (MutableList<Boolean>) -> Unit
@@ -171,7 +173,9 @@ fun DiaryContent(
 
             AllergySymptomsOccured(
                 selectedSymptoms = diarySympotomsOccured,
-                onSelectedSymptoms = onSelectedSymptoms
+                selectedProduct = newSelectedProduct,
+                onSelectedSymptoms = onSelectedSymptoms,
+                onSaveAsAllergen = onSaveAsAllergen
             )
 
             CalendarLabel(currentDate, datePicker)
@@ -530,14 +534,24 @@ fun FoodActivities(
 @Composable
 fun AllergySymptomsOccured(
     selectedSymptoms: Boolean,
-    onSelectedSymptoms: (Boolean) -> Unit
+    selectedProduct: Product,
+    onSelectedSymptoms: (Boolean) -> Unit,
+    onSaveAsAllergen: (Boolean) -> Unit
 ) {
-//    var selectedSymptoms by remember {
-//        if (diary != null)
-//            diary.reactionOccurred
-//        else
-//            mutableStateOf(false)
-//    }
+
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.set_as_allergen_title),
+        message = stringResource(id = R.string.set_as_allergen, selectedProduct.name),
+        openDialog = openDialog,
+        closeDialog = {
+            openDialog = false
+        },
+        onYesClicked = { onSaveAsAllergen(true) })
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -560,6 +574,7 @@ fun AllergySymptomsOccured(
             )
             RadioButton(selected = selectedSymptoms, onClick = {
                 onSelectedSymptoms(true)
+                openDialog = true
             })
             Text(
                 text = stringResource(id = R.string.no),
@@ -677,7 +692,9 @@ fun TitleLabelPreview() {
 fun AllergySymptomsOccuredPreview() {
     AllergySymptomsOccured(
         onSelectedSymptoms = {},
-        selectedSymptoms = true
+        selectedSymptoms = true,
+        selectedProduct = Product(0, "name", 1, "desc", true),
+        onSaveAsAllergen = {}
     )
 }
 

@@ -19,6 +19,10 @@
     <string name="deleteAllDiary">All diet diary entries deleted.</string>
     <string name="delete_diary_ask_title">Delete diary entry</string>
     <string name="delete_diary_ask">Are you sure you want to delete this diary entry?</string>
+    <string name="allergens">Allergens</string>
+    <string name="set_as_allergen_title">Set as allergen</string>
+    <string name="set_as_allergen">Do you want to set \'%1$s\' as an allergen?</string>
+
 
     // calendar
     <string name="today">Today</string>
