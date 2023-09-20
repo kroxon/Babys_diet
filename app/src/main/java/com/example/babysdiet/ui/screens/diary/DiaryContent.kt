@@ -550,7 +550,8 @@ fun AllergySymptomsOccured(
         closeDialog = {
             openDialog = false
         },
-        onYesClicked = { onSaveAsAllergen(true) })
+        onYesClicked = { onSaveAsAllergen(true) },
+        onNoClicked = { onSaveAsAllergen(false) })
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -592,7 +593,6 @@ fun CalendarLabel(
     currentDate: LocalDate,
     datePicker: DatePickerDialog
 ) {
-
     Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier

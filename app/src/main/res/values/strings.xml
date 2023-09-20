@@ -22,6 +22,8 @@
     <string name="allergens">Allergens</string>
     <string name="set_as_allergen_title">Set as allergen</string>
     <string name="set_as_allergen">Do you want to set \'%1$s\' as an allergen?</string>
+    <string name="history">History</string>
+    <string name="products">Products</string>
 
 
     // calendar

@@ -17,7 +17,8 @@ fun DisplayAlertDialog(
     message: String,
     openDialog: Boolean,
     closeDialog: () -> Unit,
-    onYesClicked: () -> Unit
+    onYesClicked: () -> Unit,
+    onNoClicked: () -> Unit
 ) {
     if (openDialog) {
         AlertDialog(
@@ -46,8 +47,14 @@ fun DisplayAlertDialog(
                 }
             },
             dismissButton = {
-                OutlinedButton(onClick = { closeDialog() })
-                { Text(text = stringResource(id = R.string.no)) }
+                Button(
+                    onClick = {
+                        onNoClicked()
+                        closeDialog()
+                    }
+                ) {
+                    Text(text = stringResource(id = R.string.no))
+                }
             },
             onDismissRequest = { closeDialog() }
         )
@@ -61,7 +68,7 @@ private fun DisplayAlertDialogPreview() {
         title = "Do you wat delete all tasks?",
         message = "Do you want to permanently delete all tasks?",
         openDialog = true,
-        closeDialog = { /*TODO*/ }) {
-
-    }
+        closeDialog = { /*TODO*/ },
+        onYesClicked = {},
+        onNoClicked = {})
 }

@@ -101,7 +101,8 @@ fun ExistinDiaryAppBarAction(
         message = stringResource(id = R.string.delete_diary_ask),
         openDialog = openDialog,
         closeDialog = { openDialog = false },
-        onYesClicked = { navigateToHomeScreen(Action.DELETE_DIARY) })
+        onYesClicked = { navigateToHomeScreen(Action.DELETE_DIARY) },
+        onNoClicked = {})
 
     DeleteAction(onDeleteeClicked = {
         openDialog = true
