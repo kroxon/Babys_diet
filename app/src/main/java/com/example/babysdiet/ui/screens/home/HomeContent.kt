@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,9 +16,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
@@ -35,6 +40,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
@@ -43,6 +49,8 @@ import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.DIARY_ITEM_ELEVATION
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
+import com.example.babysdiet.ui.theme.LAZY_GRID_COLUMN_WIDTH
+import com.example.babysdiet.ui.theme.LAZY_GRID_HEIGHT
 import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
@@ -103,6 +111,15 @@ fun DisplayDiaries(
     products: List<Product>,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit
 ) {
+    Column(Modifier.fillMaxWidth()) {
+        Row(Modifier.fillMaxWidth()) {
+            Text(
+                text = stringResource(id = R.string.history),
+                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp),
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+            )
+        }
+    }
     LazyColumn {
 
         items(
@@ -188,6 +205,15 @@ fun DisplayCategories(
     names: List<String>,
     onCategoryClickListener: (Int) -> Unit
 ) {
+    Column(Modifier.fillMaxWidth()) {
+        Row(Modifier.fillMaxWidth()) {
+            Text(
+                text = stringResource(id = R.string.products),
+                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp),
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+            )
+        }
+    }
     Card(
         //shape = MaterialTheme.shapes.medium,
         shape = RoundedCornerShape(8.dp),
@@ -268,7 +294,6 @@ fun PastilleButton(
 
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun DisplayAllergens(
     allergens: List<Product>,
@@ -278,7 +303,9 @@ fun DisplayAllergens(
         //shape = MaterialTheme.shapes.medium,
         shape = RoundedCornerShape(8.dp),
         // modifier = modifier.size(280.dp, 240.dp)
-        modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
+        modifier = Modifier
+            .padding(10.dp, 5.dp, 10.dp, 10.dp)
+            .wrapContentHeight(),
         //set card elevation of the card
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp,
@@ -288,20 +315,48 @@ fun DisplayAllergens(
         ),
     ) {
 
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(SMALL_PADDING),
+                .padding(SMALL_PADDING)
+                .wrapContentHeight()
         ) {
-            Text(text = stringResource(id = R.string.allergens))
-            allergens.forEachIndexed { index, product ->
-                Row(modifier = Modifier.clickable { onAllegrenClickListener(index) }) {
-                    Text(text = product.name)
+            Text(
+                text = stringResource(id = R.string.allergens),
+                color = Color.Red,
+                modifier = Modifier.padding(bottom = 8.dp, start = 8.dp),
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                fontWeight = FontWeight.Bold
+            )
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(3),
+                modifier = Modifier
+                    .height(LAZY_GRID_HEIGHT)
+                    .fillMaxWidth()
+            ) {
+                items(allergens.size) { index ->
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .height(TOP_APP_BAR_HEIGHT)
+                            .clickable { onAllegrenClickListener(allergens[index].productId) }
+                    ) {
+                        Text(
+                            text = allergens[index].name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = MaterialTheme.typography.labelLarge.fontSize,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
         }
     }
+
 }
+
 
 @Composable
 @Preview
@@ -325,12 +380,32 @@ fun DiaryItemPreview() {
         navigateToDiaryScreen = { _, _ -> }
     )
 }
+//
+//@Composable
+//@Preview
+//fun DisplayCategoriesPreview() {
+//    DisplayCategories(
+//        names = listOf("vegetables", "fruits", "vegetables", "fruits", "vegetables", "fruits"),
+//        onCategoryClickListener = {}
+//    )
+//}
 
-@Composable
-@Preview
-fun DisplayCategoriesPreview() {
-    DisplayCategories(
-        names = listOf("vegetables", "fruits", "vegetables", "fruits", "vegetables", "fruits"),
-        onCategoryClickListener = {}
-    )
-}
+//@Composable
+//@Preview
+//fun DisplayAllergensPreview() {
+//    DisplayAllergens(
+//        allergens = listOf(
+//            Product(0, "Milk", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(3, "Orzeszki ziemne", 1, "milk", true)
+//        ), onAllegrenClickListener = {}
+//    )
+//}
