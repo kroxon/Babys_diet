@@ -354,7 +354,6 @@ fun DisplayAllergens(
             }
         }
     }
-
 }
 
 
