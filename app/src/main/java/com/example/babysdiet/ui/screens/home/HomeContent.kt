@@ -28,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
@@ -49,12 +50,15 @@ import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.DIARY_ITEM_ELEVATION
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
+import com.example.babysdiet.ui.theme.ExcellentEvaluationColor
+import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.LAZY_GRID_COLUMN_WIDTH
 import com.example.babysdiet.ui.theme.LAZY_GRID_HEIGHT
 import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
+import com.example.babysdiet.ui.theme.ULTRA_LARGE_PADDING
 import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
 import com.example.babysdiet.ui.theme.diaryItemTextColor
@@ -69,7 +73,7 @@ fun HomeContent(
     products: RequestState<List<Product>>,
     allergens: RequestState<List<Product>>,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
-    onCategoryClickListener: (Int) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
     onAllegrenClickListener: (Int) -> Unit
 ) {
 
@@ -80,8 +84,8 @@ fun HomeContent(
     ) {
 
         DisplayCategories(
-            names = (stringArrayResource(id = R.array.categories_array)).toList(),
-            onCategoryClickListener = onCategoryClickListener
+            names = ((stringArrayResource(id = R.array.categories_array)).toList()).drop(1),
+            navigateToCategoryScreen = navigateToCategoryScreen
         )
 
         if (allergens is RequestState.Success) {
@@ -131,7 +135,12 @@ fun DisplayDiaries(
             // Find a product by diary.productId
             val product = products.find { it.productId == diary.productId }
 
-            DiaryItem(
+//            DiaryItem(
+//                diary = diary,
+//                product = product!!,
+//                navigateToDiaryScreen = navigateToDiaryScreen
+//            )
+            DiaryCard(
                 diary = diary,
                 product = product!!,
                 navigateToDiaryScreen = navigateToDiaryScreen
@@ -140,59 +149,138 @@ fun DisplayDiaries(
     }
 }
 
+//@Composable
+//fun DiaryItem(
+//    diary: Diary,
+//    product: Product,
+//    navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit
+//
+//) {
+//    Surface(
+//        modifier = Modifier.fillMaxWidth(),
+//        color = MaterialTheme.colorScheme.diaryItembackgroudColor,
+//        shape = RectangleShape,
+//        tonalElevation = DIARY_ITEM_ELEVATION,
+//        onClick = {
+//            navigateToDiaryScreen(diary.diaryId, diary.productId)
+//        }
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .padding(all = MEDIUM_PADDING)
+//                .fillMaxWidth(),
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = product.name,
+//                    color = MaterialTheme.colorScheme.diaryItemTextColor,
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    fontWeight = FontWeight.Bold,
+//                    maxLines = 1
+//                )
+//                Spacer(Modifier.weight(1f))
+//                val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
+//                val formattedDate: String =
+//                    currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+//                Text(
+//                    text = formattedDate,
+//                    color = MaterialTheme.colorScheme.diaryItemTextColor,
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    fontWeight = FontWeight.Normal,
+//                    maxLines = 1,
+//                    modifier = Modifier.padding(end = 16.dp)
+//                )
+//                Box {
+//                    Canvas(
+//                        modifier = Modifier
+//                            .size(EVALUATOIN_INDICATOR_SIZE)
+//                    ) {
+//                        drawCircle(
+//                            color = diary.evaluation.color
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiaryItem(
+fun DiaryCard(
     diary: Diary,
     product: Product,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit
 
 ) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.diaryItembackgroudColor,
-        shape = RectangleShape,
-        tonalElevation = DIARY_ITEM_ELEVATION,
+    Card(
+        //shape = MaterialTheme.shapes.medium,
+        shape = RoundedCornerShape(8.dp),
+        // modifier = modifier.size(280.dp, 240.dp)
+        modifier = Modifier.padding(
+            start = 10.dp,
+            top = SMALL_PADDING,
+            bottom = SMALL_PADDING,
+            end = 10.dp
+        ),
+        //set card elevation of the card
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = SMALL_PADDING,
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+        ),
         onClick = {
             navigateToDiaryScreen(diary.diaryId, diary.productId)
         }
     ) {
-        Column(
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(all = MEDIUM_PADDING)
+                .padding(all = LARGE_PADDING)
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+            Text(
+                text = product.name,
+//                text = "product.name",
+                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                color = MaterialTheme.colorScheme.diaryItemTextColor,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.weight(1f))
+            val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
+            val formattedDate: String =
+                currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            Text(
+                text = formattedDate,
+//                text = "formattedDate",
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                color = MaterialTheme.colorScheme.diaryItemTextColor,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Normal,
+                maxLines = 1,
+                modifier = Modifier.padding(end = ULTRA_LARGE_PADDING)
+            )
+            Box(
+                modifier = Modifier
+                    .padding(start = SMALL_PADDING)
+                    .wrapContentWidth()
             ) {
-                Text(
-                    text = product.name,
-                    color = MaterialTheme.colorScheme.diaryItemTextColor,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1
-                )
-                Spacer(Modifier.weight(1f))
-                val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
-                val formattedDate: String =
-                    currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                Text(
-                    text = formattedDate,
-                    color = MaterialTheme.colorScheme.diaryItemTextColor,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Normal,
-                    maxLines = 1,
-                    modifier = Modifier.padding(end = 16.dp)
-                )
-                Box {
-                    Canvas(
-                        modifier = Modifier
-                            .size(EVALUATOIN_INDICATOR_SIZE)
-                    ) {
-                        drawCircle(
-                            color = diary.evaluation.color
-                        )
-                    }
+                Canvas(
+                    modifier = Modifier
+                        .size(EVALUATOIN_INDICATOR_SIZE)
+//                        .wrapContentWidth()
+                ) {
+                    drawCircle(
+                        color = diary.evaluation.color
+                    )
                 }
             }
         }
@@ -203,8 +291,8 @@ fun DiaryItem(
 @Composable
 fun DisplayCategories(
     names: List<String>,
-    onCategoryClickListener: (Int) -> Unit
-) {
+    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit
+    ) {
     Column(Modifier.fillMaxWidth()) {
         Row(Modifier.fillMaxWidth()) {
             Text(
@@ -237,7 +325,7 @@ fun DisplayCategories(
                 PastilleButton(
                     name = names.get(index),
                     index = index,
-                    onCategoryClickListener = onCategoryClickListener
+                    navigateToCategoryScreen = navigateToCategoryScreen
                 )
             }
         }
@@ -248,7 +336,7 @@ fun DisplayCategories(
 fun PastilleButton(
     name: String,
     index: Int,
-    onCategoryClickListener: (Int) -> Unit
+    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit
 ) {
     val backgroundColor = MaterialTheme.colorScheme.buttonBackgroumdColor
     val textColor = Color.White
@@ -260,7 +348,7 @@ fun PastilleButton(
     ) {
         OutlinedButton(
             onClick = {
-                onCategoryClickListener(index)
+                navigateToCategoryScreen(index + 1, 0)
             },
             contentPadding = PaddingValues(
                 start = 8.dp,
@@ -357,28 +445,35 @@ fun DisplayAllergens(
 }
 
 
-@Composable
-@Preview
-fun DiaryItemPreview() {
-    DiaryItem(
-        diary = Diary(
-            0,
-            54435464234325,
-            2,
-            true,
-            "desc",
-            Evaluation.EXCELLENT,
-            true,
-            true,
-            true,
-            true,
-            true,
-            true
-        ),
-        product = Product(0, "Milk", 1, "milk", true),
-        navigateToDiaryScreen = { _, _ -> }
-    )
-}
+//@Composable
+//@Preview
+//fun DiaryItemPreview() {
+//    DiaryItem(
+//        diary = Diary(
+//            0,
+//            54435464234325,
+//            2,
+//            true,
+//            "desc",
+//            Evaluation.EXCELLENT,
+//            true,
+//            true,
+//            true,
+//            true,
+//            true,
+//            true
+//        ),
+//        product = Product(0, "Milk", 1, "milk", true),
+//        navigateToDiaryScreen = { _, _ -> }
+//    )
+//}
+
+//@Composable
+//@Preview
+//fun DiaryCardPreview() {
+//    DiaryCard()
+//}
+
 //
 //@Composable
 //@Preview

@@ -24,7 +24,7 @@ import com.example.babysdiet.ui.viewmodels.SharedViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    navigateToCategoryScreen: (categoryId: Int) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
@@ -64,7 +64,7 @@ fun HomeScreen(
                 products = allProducts,
                 allergens = allergens,
                 navigateToDiaryScreen = navigateToDiaryScreen,
-                onCategoryClickListener = {},
+                navigateToCategoryScreen = navigateToCategoryScreen,
                 onAllegrenClickListener = {}
             )
         },

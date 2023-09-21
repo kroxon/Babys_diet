@@ -14,8 +14,8 @@ class Screens(navController: NavHostController) {
 
     }
 
-    val categories: (Int) -> Unit = { categoryId ->
-        navController.navigate(route = "categories_screen/$categoryId")
+    val categories: (Int, Int) -> Unit = { categoryId, productId ->
+        navController.navigate(route = "categories_screen/$categoryId/$productId")
     }
 
 //    val product: (Int) -> Unit = { productId ->
