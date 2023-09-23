@@ -48,8 +48,8 @@ import com.example.babysdiet.util.RequestState
 
 @Composable
 fun CategoriesContent(
-//    selectedProducts: RequestState<List<Product>>,
-//    onProductSelected: (Product) -> Unit,
+    selectedProducts: RequestState<List<Product>>,
+    onProductSelected: (Product) -> Unit,
     selectedCategoryId: Int,
     selectedProductId: Int
 ) {
@@ -61,6 +61,11 @@ fun CategoriesContent(
             .padding(LARGE_PADDING)
     ) {
         Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
+
+        SearchableExposedDropdownMenuBox(
+            allProductsRequest = selectedProducts,
+            onProductSelected = onProductSelected
+        )
 
         Column(Modifier.fillMaxWidth()) {
             Text(
@@ -76,11 +81,6 @@ fun CategoriesContent(
                     .padding(SMALL_PADDING)
             )
         }
-
-//        SearchableExposedDropdownMenuBox(
-//            allProductsRequest = selectedProducts,
-//            onProductSelected = onProductSelected
-//        )
     }
 }
 

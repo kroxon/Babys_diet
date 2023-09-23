@@ -15,8 +15,8 @@ interface DiaryDao {
     @Query("SELECT * FROM diary_table ORDER BY timeEating DESC")
     fun getAllDiaryEntries(): Flow<List<Diary>>
 
-    @Query("SELECT * FROM diary_table WHERE productId=:productId  ORDER BY timeEating DESC")
-    fun getDiaryByProduct(productId: Int): Flow<List<Diary>>
+    @Query("SELECT * FROM diary_table WHERE productId IN (:productIds)  ORDER BY timeEating DESC")
+    fun getDiariesByProducts(productIds: List<Int>): Flow<List<Diary>>
 
     @Query("SELECT * FROM diary_table WHERE diaryId=:idDiary")
     fun getSelectedDiary(idDiary: Int): Flow<Diary>
