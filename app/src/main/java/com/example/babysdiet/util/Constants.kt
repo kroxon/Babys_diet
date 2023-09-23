@@ -9,13 +9,14 @@ object Constants {
 
     const val HOME_SCREEN = "home_screen/{action}"
     const val CATEGORY_SCREEN = "categories_screen/{categoryId}/{productId}"
-//    const val PRODUCT_SCREEN = "product_screen/{productId}"
+    const val PRODUCT_SCREEN = "product_screen/{categoryId}/{productId}"
     const val DIARY_SCREEN = "diary_screen/{diaryId}/{productId}"
 
     const val HOME_ARGUMENT_KEY = "action"
     const val CATEGORY_ARGUMENT_KEY = "categoryId"
     const val CATEGORY_ARGUMENT_KEY_2 = "productId"
-    const val PRODUCT_ARGUMENT_KEY = "productId"
+    const val PRODUCT_ARGUMENT_KEY = "categoryId"
+    const val PRODUCT_ARGUMENT_KEY_2 = "productId"
     const val DIARY_ARGUMENT_KEY = "diaryId"
     const val DIARY_ARGUMENT_KEY_2 = "productId"
 

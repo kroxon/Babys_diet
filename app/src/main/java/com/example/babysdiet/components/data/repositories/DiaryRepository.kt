@@ -13,8 +13,8 @@ class DiaryRepository @Inject constructor(private val diaryDao: DiaryDao) {
     fun getSelectedDiary(idDiary: Int): Flow<Diary> {
         return diaryDao.getSelectedDiary(idDiary = idDiary)
     }
-    fun getDiaryByProduct(productId: Int): Flow<List<Diary>> {
-        return diaryDao.getDiaryByProduct(productId = productId)
+    fun getDiaryByProduct(productIds: List<Int>): Flow<List<Diary>> {
+        return diaryDao.getDiariesByProducts(productIds = productIds)
     }
 
     suspend fun addDiaryEntry(diary: Diary) {

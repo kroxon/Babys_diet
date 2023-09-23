@@ -17,10 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.babysdiet.ui.screens.Screen
+import com.example.babysdiet.ui.viewmodels.SharedViewModel
+import com.example.babysdiet.util.Action
 
 @Composable
 fun ProductsScreen(
-    navController: NavController
+    navigateToHomeScreen: (Action) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
+    sharedViewModel: SharedViewModel,
+    selectedProductId: Int,
+    selectedCategoryId: Int
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -37,22 +43,7 @@ fun ProductsScreen(
                 text = "Product"
             )
             Spacer(modifier = Modifier.height(200.dp))
-            Text(
-                modifier = Modifier.clickable {
-                    navController.navigate(Screen.Categories.route) {
-                        popUpTo(Screen.Categories.route) {
-                            inclusive = true
-                        }
-                    }
-                },
-                text = "Categories"
-            )
+
         }
     }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun ProductsScreenPreview() {
-    ProductsScreen(navController = rememberNavController())
 }
