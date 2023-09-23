@@ -72,6 +72,7 @@ fun CategoriesScreen(
     }
 
     val selectedProducts by sharedViewModel.selectedProducts.collectAsState()
+    val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
     Scaffold(
         topBar = {
@@ -92,6 +93,7 @@ fun CategoriesScreen(
         content = {
             CategoriesContent(
                 selectedProducts = selectedProducts,
+                allDiaries = allDiaries,
                 onProductSelected = {
 //                    sharedViewModel.selectedProduct.value = it
                 },
