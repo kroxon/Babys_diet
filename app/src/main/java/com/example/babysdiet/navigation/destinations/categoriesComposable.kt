@@ -17,7 +17,7 @@ import com.example.babysdiet.util.Constants.HOME_SCREEN
 
 fun NavGraphBuilder.categoriesComposable(
     navigateToHomeScreen: (Action) -> Unit,
-    navigateToProductScreen: (productId: Int) -> Unit,
+    navigateToProductScreen: (categoryId: Int, productId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
     composable(
@@ -38,7 +38,8 @@ fun NavGraphBuilder.categoriesComposable(
             navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel,
             selectedProductId = productId,
-            selectedCategoryId = categoryId
+            selectedCategoryId = categoryId,
+            navigateToProductScreen = navigateToProductScreen
         )
     }
 }
