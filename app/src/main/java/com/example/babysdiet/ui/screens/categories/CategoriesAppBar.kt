@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,14 +33,15 @@ import com.example.babysdiet.util.Action
 
 @Composable
 fun CategoriesAppBar(
-    selectedCategory: String,
+    categoryId: Int,
     navigateToHomeScreen: (Action) -> Unit,
-    navigateToProductScreen: (productId: Int) -> Unit
+    navigateToProductScreen: (categoryId: Int, productId: Int) -> Unit
 ) {
+
     CategoriesTopAppBar(
         navigateToHomeScreen = navigateToHomeScreen,
         navigateToProductScreen = navigateToProductScreen,
-        selectedCategory = selectedCategory
+        categoryId = categoryId
     )
 }
 
@@ -47,22 +49,27 @@ fun CategoriesAppBar(
 @Composable
 fun CategoriesTopAppBar(
     navigateToHomeScreen: (Action) -> Unit,
-    navigateToProductScreen: (productId: Int) -> Unit,
-    selectedCategory: String
+    navigateToProductScreen: (categoryId: Int, productId: Int) -> Unit,
+    categoryId: Int
 ) {
+    val categories = stringArrayResource(id = R.array.categories_array)
+
     TopAppBar(
         navigationIcon = {
             BackAction(onBackClicked = navigateToHomeScreen)
         },
         title = {
             Text(
-                text = selectedCategory,
+                text = categories[categoryId],
                 modifier = Modifier.fillMaxWidth(1f),
                 textAlign = TextAlign.Center
             )
         },
         actions = {
-            AddNewProduct(onAddProductClicked = navigateToProductScreen)
+            AddNewProduct(
+                categoryId = categoryId,
+                onAddProductClicked = navigateToProductScreen
+            )
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
@@ -110,9 +117,10 @@ fun BackAction(
 
 @Composable
 fun AddNewProduct(
-    onAddProductClicked: (productId: Int) -> Unit
+    categoryId: Int,
+    onAddProductClicked: (categoryId: Int, productId: Int) -> Unit
 ) {
-    IconButton(onClick = { onAddProductClicked(-1) }) {
+    IconButton(onClick = { onAddProductClicked(categoryId, -1) }) {
         Icon(
             imageVector = Icons.Filled.Add,
             contentDescription = stringResource(id = R.string.add_product),
@@ -165,8 +173,8 @@ fun DeleteAction(
 fun NewProductAppBarPrewiew() {
     CategoriesAppBar(
         navigateToHomeScreen = {},
-        navigateToProductScreen = {},
-        selectedCategory = "Fruits"
+        navigateToProductScreen = { _, _ -> },
+        categoryId = 1
     )
 }
 

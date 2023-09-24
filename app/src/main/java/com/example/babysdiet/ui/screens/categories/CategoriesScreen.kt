@@ -18,7 +18,7 @@ import com.example.babysdiet.util.Action
 @Composable
 fun CategoriesScreen(
     navigateToHomeScreen: (Action) -> Unit,
-    navigateToProductScreen: (productId: Int) -> Unit,
+    navigateToProductScreen: (categoryId: Int, productId: Int) -> Unit,
     sharedViewModel: SharedViewModel,
     selectedProductId: Int,
     selectedCategoryId: Int
@@ -32,27 +32,12 @@ fun CategoriesScreen(
         sharedViewModel.getSelectedProducts()
     }
 
-    val categories = stringArrayResource(id = R.array.categories_array)
 
     val selectedProducts by sharedViewModel.selectedProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
     Scaffold(
         topBar = {
-//            CategoriesAppBar(
-//                selectedCategory = categories[selectedCategoryId],
-//                navigateToHomeScreen = { action ->
-//                    if (action == Action.NO_ACTION)
-//                        navigateToHomeScreen(action)
-//                    else {
-//                        if (sharedViewModel.validateDiaryFields())
-//                            navigateToHomeScreen(action)
-//                        else
-//                            displayToast(context = context)
-//                    }
-//                },
-//                navigateToProductScreen = navigateToProductScreen,
-//            )
             CategoriesAppBar(
                 navigateToHomeScreen = { action ->
                     if (action == Action.NO_ACTION)
@@ -65,7 +50,7 @@ fun CategoriesScreen(
                     }
                 },
                 navigateToProductScreen = navigateToProductScreen,
-                selectedCategory = categories[selectedCategoryId]
+                categoryId = selectedCategoryId
             )
         },
         content = {

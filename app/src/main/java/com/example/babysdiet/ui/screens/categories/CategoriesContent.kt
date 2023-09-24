@@ -47,6 +47,7 @@ import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.LARGE_PADDING
+import com.example.babysdiet.ui.theme.LAZY_GRID_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
@@ -69,12 +70,12 @@ fun CategoriesContent(
     if (allDiaries is RequestState.Success)
         diaries = allDiaries.data
 
-    Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
+//    Spacer(modifier = Modifier.padding(top = LARGE_PADDING))
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(SMALL_PADDING)
+            .padding(top = LAZY_GRID_HEIGHT, start = LARGE_PADDING, end = LARGE_PADDING)
             .shadow(ambientColor = Color.Blue, elevation = 15.dp)
     ) {
 
