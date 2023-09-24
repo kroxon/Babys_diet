@@ -38,7 +38,8 @@ fun NavGraphBuilder.categoriesComposable(
             navigateToHomeScreen = navigateToHomeScreen,
             sharedViewModel = sharedViewModel,
             selectedProductId = productId,
-            selectedCategoryId = categoryId
+            selectedCategoryId = categoryId,
+            navigateToProductScreen = navigateToProductScreen
         )
     }
 }

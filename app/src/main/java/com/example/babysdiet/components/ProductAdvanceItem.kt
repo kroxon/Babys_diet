@@ -38,12 +38,22 @@ import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.ULTRA_LARGE_PADDING
 
 @Composable
-fun ProductAdvanceItem(product: Product, diaries: List<Diary>) {
+fun ProductAdvanceItem(
+    product: Product,
+    diaries: List<Diary>,
+    navigateToProductScreen: (productId: Int) -> Unit,
+
+    ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
         modifier = Modifier
-            .padding(start = SMALL_PADDING, end = ULTRA_LARGE_PADDING, top = SMALL_PADDING, bottom = SMALL_PADDING)
+            .padding(
+                start = SMALL_PADDING,
+                end = ULTRA_LARGE_PADDING,
+                top = SMALL_PADDING,
+                bottom = SMALL_PADDING
+            )
             .fillMaxWidth()
     ) {
         Text(
@@ -132,7 +142,8 @@ fun ProductAdvanceItemPreview() {
                 0, 2, 1, true, "", Evaluation.NEUTRAL,
                 true, true, true, true, true, true
             )
-        )
+        ),
+        navigateToProductScreen = {}
     )
 }
 

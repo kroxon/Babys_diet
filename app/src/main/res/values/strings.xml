@@ -6,10 +6,15 @@
     <string name="sad_icon">Sad Face Icon</string>
     <string name="no_tasks_found">No meals were found.</string>
     <string name="add_diary">Add a new entry</string>
+    <string name="add_product">Add a new product</string>
     <string name="edit_diary">Edit entry</string>
+    <string name="edit_product">Edit product</string>
     <string name="update_diary">Update entry</string>
+    <string name="update_product">Update product</string>
     <string name="close_diary">Close diary</string>
+    <string name="close_product">Close product</string>
     <string name="delete_diary">Delete diary</string>
+    <string name="delete_product">Delete product</string>
     <string name="arrow_back">Arrow Back</string>
     <string name="search">Search...</string>
     <string name="yes">Yes</string>
@@ -18,7 +23,9 @@
     <string name="selectProduct">The product has not been selected</string>
     <string name="deleteAllDiary">All diet diary entries deleted.</string>
     <string name="delete_diary_ask_title">Delete diary entry</string>
+    <string name="delete_product_ask_title">Delete product</string>
     <string name="delete_diary_ask">Are you sure you want to delete this diary entry?</string>
+    <string name="delete_product_ask">Are you sure you want to delete this product?</string>
     <string name="allergens">Allergens</string>
     <string name="set_as_allergen_title">Set as allergen</string>
     <string name="set_as_allergen">Do you want to set \'%1$s\' as an allergen?</string>
