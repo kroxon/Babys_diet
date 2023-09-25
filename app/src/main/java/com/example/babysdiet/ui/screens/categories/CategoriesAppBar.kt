@@ -81,26 +81,26 @@ fun CategoriesTopAppBar(
 }
 
 
-@Composable
-fun ExistigCategoriesAppBarAction(
-    navigateToHomeScreen: (Action) -> Unit
-) {
-    var openDialog by remember {
-        mutableStateOf(false)
-    }
-    DisplayAlertDialog(
-        title = stringResource(id = R.string.delete_product_ask_title),
-        message = stringResource(id = R.string.delete_product_ask),
-        openDialog = openDialog,
-        closeDialog = { openDialog = false },
-        onYesClicked = { navigateToHomeScreen(Action.DELETE_PRODUCT) },
-        onNoClicked = {})
-
-    DeleteAction(onDeleteeClicked = {
-        openDialog = true
-    })
-    UpdateAction(onUpdateClicked = navigateToHomeScreen)
-}
+//@Composable
+//fun ExistigCategoriesAppBarAction(
+//    navigateToHomeScreen: (Action) -> Unit
+//) {
+//    var openDialog by remember {
+//        mutableStateOf(false)
+//    }
+//    DisplayAlertDialog(
+//        title = stringResource(id = R.string.delete_product_ask_title),
+//        message = stringResource(id = R.string.delete_product_ask),
+//        openDialog = openDialog,
+//        closeDialog = { openDialog = false },
+//        onYesClicked = { navigateToHomeScreen(Action.DELETE_PRODUCT) },
+//        onNoClicked = {})
+//
+//    DeleteAction(onDeleteeClicked = {
+//        openDialog = true
+//    })
+//    UpdateAction(onUpdateClicked = navigateToHomeScreen)
+//}
 
 @Composable
 fun BackAction(
@@ -129,54 +129,54 @@ fun AddNewProduct(
     }
 }
 
-@Composable
-fun UpdateAction(
-    onUpdateClicked: (Action) -> Unit
-) {
-    IconButton(onClick = { onUpdateClicked(Action.UPDATE_PRODUCT) }) {
-        Icon(
-            imageVector = Icons.Filled.Check,
-            contentDescription = stringResource(id = R.string.update_product),
-            tint = MaterialTheme.colorScheme.topAppBarContentColor
-        )
-    }
-}
-
-@Composable
-fun CloseeAction(
-    onCloseClicked: (Action) -> Unit
-) {
-    IconButton(onClick = { onCloseClicked(Action.NO_ACTION) }) {
-        Icon(
-            imageVector = Icons.Filled.Close,
-            contentDescription = stringResource(id = R.string.close_product),
-            tint = MaterialTheme.colorScheme.topAppBarContentColor
-        )
-    }
-}
-
-@Composable
-fun DeleteAction(
-    onDeleteeClicked: (Action) -> Unit
-) {
-    IconButton(onClick = { onDeleteeClicked(Action.DELETE_PRODUCT) }) {
-        Icon(
-            imageVector = Icons.Filled.Delete,
-            contentDescription = stringResource(id = R.string.delete_product),
-            tint = MaterialTheme.colorScheme.topAppBarContentColor
-        )
-    }
-}
-
-@Composable
-@Preview
-fun NewProductAppBarPrewiew() {
-    CategoriesAppBar(
-        navigateToHomeScreen = {},
-        navigateToProductScreen = { _, _ -> },
-        categoryId = 1
-    )
-}
+//@Composable
+//fun UpdateAction(
+//    onUpdateClicked: (Action) -> Unit
+//) {
+//    IconButton(onClick = { onUpdateClicked(Action.UPDATE_PRODUCT) }) {
+//        Icon(
+//            imageVector = Icons.Filled.Check,
+//            contentDescription = stringResource(id = R.string.update_product),
+//            tint = MaterialTheme.colorScheme.topAppBarContentColor
+//        )
+//    }
+//}
+//
+//@Composable
+//fun CloseeAction(
+//    onCloseClicked: (Action) -> Unit
+//) {
+//    IconButton(onClick = { onCloseClicked(Action.NO_ACTION) }) {
+//        Icon(
+//            imageVector = Icons.Filled.Close,
+//            contentDescription = stringResource(id = R.string.close_product),
+//            tint = MaterialTheme.colorScheme.topAppBarContentColor
+//        )
+//    }
+//}
+//
+//@Composable
+//fun DeleteAction(
+//    onDeleteeClicked: (Action) -> Unit
+//) {
+//    IconButton(onClick = { onDeleteeClicked(Action.DELETE_PRODUCT) }) {
+//        Icon(
+//            imageVector = Icons.Filled.Delete,
+//            contentDescription = stringResource(id = R.string.delete_product),
+//            tint = MaterialTheme.colorScheme.topAppBarContentColor
+//        )
+//    }
+//}
+//
+//@Composable
+//@Preview
+//fun NewProductAppBarPrewiew() {
+//    CategoriesAppBar(
+//        navigateToHomeScreen = {},
+//        navigateToProductScreen = { _, _ -> },
+//        categoryId = 1
+//    )
+//}
 
 //@Composable
 //@Preview
