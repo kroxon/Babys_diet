@@ -57,8 +57,8 @@ fun CategoriesScreen(
             CategoriesContent(
                 selectedProducts = selectedProducts,
                 allDiaries = allDiaries,
-                navigateToProductScreen = {
-//                    sharedViewModel.selectedProduct.value = it
+                navigateToProductScreen = { productId ->
+                    navigateToProductScreen(selectedCategoryId, productId)
                 },
                 selectedCategoryId = selectedCategoryId,
                 selectedProductId = selectedProductId

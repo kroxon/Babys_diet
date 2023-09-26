@@ -56,11 +56,11 @@ class SharedViewModel @Inject constructor(
     private var isAllProductsInitialized = false
 
     // product
-//    val idProduct: MutableState<Int> = mutableStateOf(0)
-//    val idCategoryProduct: MutableState<Int> = mutableStateOf(1)
-//    val nameProduct: MutableState<String> = mutableStateOf("")
-//    val descriptionProduct: MutableState<String> = mutableStateOf("")
-//    val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
+    val idProduct: MutableState<Int> = mutableStateOf(0)
+    val idCategoryProduct: MutableState<Int> = mutableStateOf(1)
+    val nameProduct: MutableState<String> = mutableStateOf("")
+    val descriptionProduct: MutableState<String> = mutableStateOf("")
+    val isAllergenProduct: MutableState<Boolean> = mutableStateOf(value = false)
 
     // diary
     val selectedDiaryId: MutableState<Int> = mutableStateOf(0)
@@ -339,6 +339,22 @@ class SharedViewModel @Inject constructor(
 
     fun validateDiaryFields(): Boolean {
         return selectedDiaryProduct.value != null
+    }
+
+    fun updateProductFields(selectedProduct: Product?) {
+        if (selectedProduct != null) {
+            idProduct.value = selectedProduct.productId
+            idCategoryProduct.value = selectedProduct.categoryId
+            nameProduct.value = selectedProduct.name
+            descriptionProduct.value = selectedProduct.description
+            isAllergenProduct.value = selectedProduct.isAllergen
+        } else {
+            idProduct.value = 0
+            idCategoryProduct.value = 1
+            nameProduct.value = ""
+            descriptionProduct.value = ""
+            isAllergenProduct.value = false
+        }
     }
 
 
