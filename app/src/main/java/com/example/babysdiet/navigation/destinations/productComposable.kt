@@ -3,6 +3,9 @@ package com.example.babysdiet.navigation.destinations
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -39,8 +42,19 @@ fun NavGraphBuilder.productComposable(
         }
         val selectedProduct by sharedViewModel.selectedProduct.collectAsState()
 
+//        LaunchedEffect(key1 = productId) {
+//            sharedViewModel.getSelectedProduct(productId = productId)
+//        }
+
+//        var isCodeExecuted by remember { mutableStateOf(false) }
+//        if (!isCodeExecuted) {
+//            sharedViewModel.getSelectedProduct(productId = productId)
+//            isCodeExecuted = true
+//        }
+//        val selectedProduct by remember { sharedViewModel.selectedProduct }.collectAsState()
+
         LaunchedEffect(key1 = selectedProduct) {
-            if (selectedProduct != null || productId == -1)
+            if ((selectedProduct != null) || productId == -1)
                 sharedViewModel.updateProductFields(selectedProduct = selectedProduct)
         }
 

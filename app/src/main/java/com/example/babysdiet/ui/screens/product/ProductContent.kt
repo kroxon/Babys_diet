@@ -112,11 +112,13 @@ fun ProductContent(
         if (diaries.isEmpty() || productId < 1) {
             EmptyContent()
         } else
-            DisplayDiaries(
-                diaries = diaries.filter { it.productId == productId },
-                product = selectedProduct!!,
-                navigateToDiaryScreen = navigateToDiaryScreen
-            )
+            selectedProduct?.let {
+                DisplayDiaries(
+                    diaries = diaries.filter { it.productId == productId },
+                    product = it,
+                    navigateToDiaryScreen = navigateToDiaryScreen
+                )
+            }
     }
 }
 
