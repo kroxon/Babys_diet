@@ -108,53 +108,6 @@ fun displayToast(context: Context) {
     ).show()
 }
 
-@Composable
-fun DisplaySnackbar(
-    onUndoClicked: (Action) -> Unit,
-    handleDatabaseAction: () -> Unit,
-    snackbarHostState: SnackbarHostState,
-    action: Action
-) {
-    handleDatabaseAction()
-    val scope = rememberCoroutineScope()
-    LaunchedEffect(key1 = action) {
-        if (action != Action.NO_ACTION) {
-            scope.launch {
-                val snackBarResult = snackbarHostState.showSnackbar(
-                    message = setMessage(
-                        action = action
-                    ),
-                    actionLabel = setActionLabel(action)
-                )
-                undoDeleteDiary(
-                    action = action,
-                    snackBarResult = snackBarResult,
-                    onUndoClicked = onUndoClicked
-                )
-            }
-        }
-    }
-}
 
-private fun setMessage(action: Action): String {
-    return when (action) {
-        Action.DELETE_ALL_DIARIES -> "All diet diary entries deleted."
-        else -> "${action.name}"
-    }
-}
 
-private fun setActionLabel(action: Action): String {
-    return if (action == Action.DELETE_DIARY) "UNDO" else "OK"
-}
-
-private fun undoDeleteDiary(
-    action: Action,
-    snackBarResult: SnackbarResult,
-    onUndoClicked: (Action) -> Unit
-) {
-    if (snackBarResult == SnackbarResult.ActionPerformed &&
-        action == Action.DELETE_DIARY
-    )
-        onUndoClicked(Action.UNDO_DIARY)
-}
 

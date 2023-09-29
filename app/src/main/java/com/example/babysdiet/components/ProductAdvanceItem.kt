@@ -55,6 +55,7 @@ fun ProductAdvanceItem(
                 bottom = SMALL_PADDING
             )
             .fillMaxWidth()
+            .clickable { navigateToProductScreen(product.productId) }
     ) {
         Text(
 //            modifier = Modifier
