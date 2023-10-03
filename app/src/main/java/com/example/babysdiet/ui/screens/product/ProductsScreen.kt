@@ -20,14 +20,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProductsScreen(
     navigateToHomeScreen: (Action) -> Unit,
-    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     sharedViewModel: SharedViewModel,
     selectedProductId: Int,
     selectedCategoryId: Int,
     selectedProduct: Product?
 ) {
-    val action by sharedViewModel.action
 
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
 
@@ -36,50 +35,39 @@ fun ProductsScreen(
     val productDescription: String by sharedViewModel.descriptionProduct
     val productIsAllergen: Boolean by sharedViewModel.isAllergenProduct
 
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    DisplaySnackbar(
-        handleDatabaseAction = { sharedViewModel.handleDatabaseActions(action = action) },
-        snackbarHostState = snackbarHostState,
-        action = action,
-        onUndoClicked = {
-            sharedViewModel.action.value = it
-        }
-    )
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ProductAppBar(
                 selectedProductId = selectedProductId,
                 onAddProductClicked = { action ->
-                    sharedViewModel.action.value = action
-                    navigateToCategoryScreen(selectedCategoryId, selectedProductId)
+//                    sharedViewModel.action.value = action
+                    navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.ADD_PRODUCT)
                 },
                 onBackNewProductClicked = { action ->
-                    sharedViewModel.action.value = action
-                    navigateToCategoryScreen(selectedCategoryId, selectedProductId)
+//                    sharedViewModel.action.value = action
+                    navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.NO_ACTION)
                 },
                 onBackClicked = { action ->
-                    sharedViewModel.action.value = action
+//                    sharedViewModel.action.value = action
                     if (selectedCategoryId == -1)
                         navigateToHomeScreen(action)
                     else
-                        navigateToCategoryScreen(selectedCategoryId, selectedProductId)
+                        navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.NO_ACTION)
                 },
                 onDeleteClicked = { action ->
-                    sharedViewModel.action.value = action
+//                    sharedViewModel.action.value = action
                     if (selectedCategoryId == -1)
                         navigateToHomeScreen(action)
                     else
-                        navigateToCategoryScreen(selectedCategoryId, selectedProductId)
+                        navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.DELETE_PRODUCT)
                 },
                 onUpdateClicked = { action ->
-                    sharedViewModel.action.value = action
+//                    sharedViewModel.action.value = action
                     if (selectedCategoryId == -1)
                         navigateToHomeScreen(action)
                     else
-                        navigateToCategoryScreen(selectedCategoryId, selectedProductId)
+                        navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.UPDATE_PRODUCT)
                 }
 
             )
@@ -93,9 +81,9 @@ fun ProductsScreen(
                 categoryId = selectedCategoryId,
                 selectedProduct = selectedProduct,
                 allDiaries = allDiaries,
-                onTitleChange = {},
-                onDescriptionChange = {},
-                onIsAllergenChange = {},
+                onTitleChange = {sharedViewModel.nameProduct.value = it},
+                onDescriptionChange = {sharedViewModel.descriptionProduct.value = it},
+                onIsAllergenChange = {sharedViewModel.isAllergenProduct.value = it},
                 navigateToDiaryScreen = navigateToDiaryScreen
             )
 
@@ -103,54 +91,5 @@ fun ProductsScreen(
     )
 }
 
-@Composable
-fun DisplaySnackbar(
-    onUndoClicked: (Action) -> Unit,
-    handleDatabaseAction: () -> Unit,
-    snackbarHostState: SnackbarHostState,
-    action: Action
-) {
-    handleDatabaseAction()
-    val scope = rememberCoroutineScope()
-    LaunchedEffect(key1 = action) {
-        if (action != Action.NO_ACTION) {
-            scope.launch {
-                val snackBarResult = snackbarHostState.showSnackbar(
-                    message = setMessage(
-                        action = action
-                    ),
-                    actionLabel = setActionLabel(action)
-                )
-                undoDeleteProduct(
-                    action = action,
-                    snackBarResult = snackBarResult,
-                    onUndoClicked = onUndoClicked
-                )
-            }
-        }
-    }
-}
 
-
-private fun setMessage(action: Action): String {
-    return when (action) {
-        Action.DELETE_ALL_PRODUCTS -> "All products deleted."
-        else -> "${action.name}"
-    }
-}
-
-private fun setActionLabel(action: Action): String {
-    return if (action == Action.DELETE_PRODUCT) "UNDO" else "OK"
-}
-
-private fun undoDeleteProduct(
-    action: Action,
-    snackBarResult: SnackbarResult,
-    onUndoClicked: (Action) -> Unit
-) {
-    if (snackBarResult == SnackbarResult.ActionPerformed &&
-        action == Action.DELETE_PRODUCT
-    )
-        onUndoClicked(Action.UNDO_PRODUCT)
-}
 

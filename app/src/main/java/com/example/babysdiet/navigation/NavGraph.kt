@@ -31,6 +31,7 @@ fun SetupNavGraph(
         homeComposable(
             navigateToCategoryScreen = screen.categories,
             navigateToDiaryScreen = screen.diary,
+            navigateToProductScreen = screen.product,
             sharedViewModel = sharedViewModel
         )
         diaryComposable(

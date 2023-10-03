@@ -11,19 +11,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM product_table ORDER BY name ASC")
+    @Query("SELECT * FROM product_table ORDER BY name COLLATE NOCASE ASC")
     fun getAllProducts(): Flow<List<Product>>
 
-    @Query("SELECT * FROM product_table WHERE categoryId=:category ORDER BY name ASC")
+    @Query("SELECT * FROM product_table WHERE categoryId=:category ORDER BY name COLLATE NOCASE ASC")
     fun getProductCategory(category: String): Flow<List<Product>>
 
-    @Query("SELECT * FROM product_table WHERE categoryId IN (:categoryIds) ORDER BY name ASC")
+    @Query("SELECT * FROM product_table WHERE categoryId IN (:categoryIds) ORDER BY name COLLATE NOCASE ASC")
     fun getProductsInCategories(categoryIds: List<Int>): Flow<List<Product>>
 
     @Query("SELECT * FROM product_table WHERE productId=:productId")
     fun getSelectedProduct(productId: Int): Flow<Product>
 
-    @Query("SELECT * FROM product_table WHERE isAllergen = :isAllergenValue ORDER BY name ASC")
+    @Query("SELECT * FROM product_table WHERE isAllergen = :isAllergenValue ORDER BY name COLLATE NOCASE ASC")
     fun getAllergens(isAllergenValue: Boolean = true): Flow<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

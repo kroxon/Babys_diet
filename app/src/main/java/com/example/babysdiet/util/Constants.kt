@@ -8,13 +8,14 @@ object Constants {
     const val DATABASE_NAME = "diet_database"
 
     const val HOME_SCREEN = "home_screen/{action}"
-    const val CATEGORY_SCREEN = "categories_screen/{categoryId}/{productId}"
+    const val CATEGORY_SCREEN = "categories_screen/{categoryId}/{productId}/{action}"
     const val PRODUCT_SCREEN = "product_screen/{categoryId}/{productId}"
     const val DIARY_SCREEN = "diary_screen/{diaryId}/{productId}"
 
     const val HOME_ARGUMENT_KEY = "action"
     const val CATEGORY_ARGUMENT_KEY = "categoryId"
     const val CATEGORY_ARGUMENT_KEY_2 = "productId"
+    const val CATEGORY_ARGUMENT_KEY_3 = "action"
     const val PRODUCT_ARGUMENT_KEY = "categoryId"
     const val PRODUCT_ARGUMENT_KEY_2 = "productId"
     const val DIARY_ARGUMENT_KEY = "diaryId"
