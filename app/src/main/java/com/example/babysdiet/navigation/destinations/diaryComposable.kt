@@ -38,6 +38,7 @@ fun NavGraphBuilder.diaryComposable(
 
         LaunchedEffect(key1 = diaryId) {
             sharedViewModel.getSelectedDiary(diaryId = diaryId)
+            sharedViewModel.categorySelection.value = List(12) { true }
         }
         val selectedDiary by sharedViewModel.selectedDiary.collectAsState()
 

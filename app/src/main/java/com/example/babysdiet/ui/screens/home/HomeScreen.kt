@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
-    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {

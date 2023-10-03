@@ -78,7 +78,6 @@ import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
-import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.RequestState
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

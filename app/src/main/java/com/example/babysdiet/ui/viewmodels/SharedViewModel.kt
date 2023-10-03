@@ -1,6 +1,7 @@
 package com.example.babysdiet.ui.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -206,6 +207,18 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun addProduct() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val product = Product(
+                name = nameProduct.value,
+                categoryId = idCategoryProduct.value,
+                description = descriptionProduct.value,
+                isAllergen = isAllergenProduct.value
+            )
+            productRepository.addProduct(product)
+        }
+    }
+
     private fun updateDiary() {
         viewModelScope.launch(Dispatchers.IO) {
             val diary = Diary(
@@ -237,6 +250,19 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun updateProduct() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val product = Product(
+                productId = idProduct.value,
+                name = nameProduct.value,
+                categoryId = idCategoryProduct.value,
+                description = descriptionProduct.value,
+                isAllergen = isAllergenProduct.value
+            )
+            productRepository.updateProduct(product)
+        }
+    }
+
     private fun deleteDiary() {
         viewModelScope.launch(Dispatchers.IO) {
             val diary = Diary(
@@ -254,6 +280,19 @@ class SharedViewModel @Inject constructor(
                 attemptThird = foodActivities.value[5]
             )
             diaryRepository.deleteDiaryEntry(diary)
+        }
+    }
+
+    private fun deleteProduct() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val product = Product(
+                productId = idProduct.value,
+                name = nameProduct.value,
+                categoryId = idCategoryProduct.value,
+                description = descriptionProduct.value,
+                isAllergen = isAllergenProduct.value
+            )
+            productRepository.deleteProduct(product)
         }
     }
 
@@ -280,11 +319,13 @@ class SharedViewModel @Inject constructor(
             }
 
             Action.ADD_PRODUCT -> {
-//                addTask()
+                Log.d("add_product: ", "added")
+                addProduct()
             }
 
             Action.DELETE_PRODUCT -> {
-//                deleteTask()
+                Log.d("delete_product: ", "deleted")
+                deleteProduct()
             }
 
             Action.DELETE_ALL_PRODUCTS -> {
@@ -296,7 +337,8 @@ class SharedViewModel @Inject constructor(
             }
 
             Action.UPDATE_PRODUCT -> {
-//                updateTask()
+                Log.d("updated_product: ", "updated")
+                updateProduct()
             }
 
             else -> {
@@ -341,7 +383,7 @@ class SharedViewModel @Inject constructor(
         return selectedDiaryProduct.value != null
     }
 
-    fun updateProductFields(selectedProduct: Product?) {
+    fun updateProductFields(selectedProduct: Product?, categoryId: Int) {
         if (selectedProduct != null) {
             idProduct.value = selectedProduct.productId
             idCategoryProduct.value = selectedProduct.categoryId
@@ -350,7 +392,7 @@ class SharedViewModel @Inject constructor(
             isAllergenProduct.value = selectedProduct.isAllergen
         } else {
             idProduct.value = 0
-            idCategoryProduct.value = 1
+            idCategoryProduct.value = categoryId
             nameProduct.value = ""
             descriptionProduct.value = ""
             isAllergenProduct.value = false

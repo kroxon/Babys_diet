@@ -19,7 +19,7 @@ import com.example.babysdiet.util.Constants.PRODUCT_SCREEN
 
 fun NavGraphBuilder.productComposable(
     navigateToHomeScreen: (Action) -> Unit,
-    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
@@ -55,7 +55,10 @@ fun NavGraphBuilder.productComposable(
 
         LaunchedEffect(key1 = selectedProduct) {
             if ((selectedProduct != null) || productId == -1)
-                sharedViewModel.updateProductFields(selectedProduct = selectedProduct)
+                sharedViewModel.updateProductFields(
+                    selectedProduct = selectedProduct,
+                    categoryId = categoryId
+                )
         }
 
         ProductsScreen(

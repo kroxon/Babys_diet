@@ -63,6 +63,7 @@ import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
 import com.example.babysdiet.ui.theme.diaryItemTextColor
 import com.example.babysdiet.ui.theme.diaryItembackgroudColor
+import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.RequestState
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -73,7 +74,7 @@ fun HomeContent(
     products: RequestState<List<Product>>,
     allergens: RequestState<List<Product>>,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
-    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit,
+    navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     onAllegrenClickListener: (Int) -> Unit
 ) {
 
@@ -291,7 +292,7 @@ fun DiaryCard(
 @Composable
 fun DisplayCategories(
     names: List<String>,
-    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit
+    navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit
     ) {
     Column(Modifier.fillMaxWidth()) {
         Row(Modifier.fillMaxWidth()) {
@@ -336,7 +337,7 @@ fun DisplayCategories(
 fun PastilleButton(
     name: String,
     index: Int,
-    navigateToCategoryScreen: (categoryId: Int, productId: Int) -> Unit
+    navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit
 ) {
     val backgroundColor = MaterialTheme.colorScheme.buttonBackgroumdColor
     val textColor = Color.White
@@ -348,7 +349,7 @@ fun PastilleButton(
     ) {
         OutlinedButton(
             onClick = {
-                navigateToCategoryScreen(index + 1, 0)
+                navigateToCategoryScreen(index + 1, 0, Action.NO_ACTION)
             },
             contentPadding = PaddingValues(
                 start = 8.dp,

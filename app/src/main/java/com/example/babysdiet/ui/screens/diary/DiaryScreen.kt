@@ -4,14 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
@@ -19,8 +15,6 @@ import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
-import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -51,6 +45,7 @@ fun DiaryScreen(
     val allProducts by sharedViewModel.allProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
     val selectedProducts by sharedViewModel.selectedProducts.collectAsState()
+//    val selectedCategories by sharedViewModel.categorySelection.collectAsState()
 
 
     Scaffold(
