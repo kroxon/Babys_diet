@@ -15,6 +15,7 @@ import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.Constants
 import com.example.babysdiet.util.Constants.PRODUCT_SCREEN
+import kotlin.math.absoluteValue
 
 
 fun NavGraphBuilder.productComposable(
@@ -57,7 +58,7 @@ fun NavGraphBuilder.productComposable(
             if ((selectedProduct != null) || productId == -1)
                 sharedViewModel.updateProductFields(
                     selectedProduct = selectedProduct,
-                    categoryId = categoryId
+                    categoryId = categoryId.absoluteValue
                 )
         }
 

@@ -15,6 +15,7 @@ import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -50,21 +51,21 @@ fun ProductsScreen(
                 },
                 onBackClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    if (selectedCategoryId == -1)
+                    if (selectedCategoryId < 0 )
                         navigateToHomeScreen(action)
                     else
                         navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.NO_ACTION)
                 },
                 onDeleteClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    if (selectedCategoryId == -1)
+                    if (selectedCategoryId < 0 )
                         navigateToHomeScreen(action)
                     else
                         navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.DELETE_PRODUCT)
                 },
                 onUpdateClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    if (selectedCategoryId == -1)
+                    if (selectedCategoryId < 0 )
                         navigateToHomeScreen(action)
                     else
                         navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.UPDATE_PRODUCT)
