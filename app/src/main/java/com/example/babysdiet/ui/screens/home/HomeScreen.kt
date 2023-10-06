@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
+    navigateToProductScreen:  (productId: Int, categoryId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
@@ -68,7 +69,7 @@ fun HomeScreen(
                 allergens = allergens,
                 navigateToDiaryScreen = navigateToDiaryScreen,
                 navigateToCategoryScreen = navigateToCategoryScreen,
-                onAllegrenClickListener = {}
+                onAllegrenClickListener = navigateToProductScreen
             )
         },
         floatingActionButton = {

@@ -75,7 +75,7 @@ fun HomeContent(
     allergens: RequestState<List<Product>>,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
-    onAllegrenClickListener: (Int) -> Unit
+    onAllegrenClickListener: (categoryId: Int, productId: Int) -> Unit
 ) {
 
     Column(
@@ -293,7 +293,7 @@ fun DiaryCard(
 fun DisplayCategories(
     names: List<String>,
     navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit
-    ) {
+) {
     Column(Modifier.fillMaxWidth()) {
         Row(Modifier.fillMaxWidth()) {
             Text(
@@ -386,7 +386,7 @@ fun PastilleButton(
 @Composable
 fun DisplayAllergens(
     allergens: List<Product>,
-    onAllegrenClickListener: (Int) -> Unit
+    onAllegrenClickListener: (categoryId: Int, productId: Int) -> Unit
 ) {
     Card(
         //shape = MaterialTheme.shapes.medium,
@@ -429,7 +429,12 @@ fun DisplayAllergens(
                         modifier = Modifier
                             .padding(8.dp)
                             .height(TOP_APP_BAR_HEIGHT)
-                            .clickable { onAllegrenClickListener(allergens[index].productId) }
+                            .clickable {
+                                onAllegrenClickListener(
+                                    (-1) * allergens[index].categoryId,
+                                    allergens[index].productId
+                                )
+                            }
                     ) {
                         Text(
                             text = allergens[index].name,

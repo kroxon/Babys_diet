@@ -33,6 +33,7 @@ fun NavGraphBuilder.homeComposable(
         HomeScreen(
             navigateToCategoryScreen = navigateToCategoryScreen,
             navigateToDiaryScreen = navigateToDiaryScreen,
+            navigateToProductScreen = navigateToProductScreen,
             sharedViewModel = sharedViewModel
         )
     }
