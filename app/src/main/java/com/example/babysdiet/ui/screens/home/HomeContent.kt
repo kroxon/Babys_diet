@@ -2,6 +2,7 @@ package com.example.babysdiet.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -255,6 +257,17 @@ fun DiaryCard(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+            if (product.isAllergen) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_alert),
+                    contentDescription = "allergen alert",
+                    modifier = Modifier
+                        .padding(
+                            start = LARGE_PADDING
+                        )
+                        .size(EVALUATOIN_INDICATOR_SIZE)
+                )
+            }
             Spacer(Modifier.weight(1f))
             val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
             val formattedDate: String =
@@ -440,8 +453,8 @@ fun DisplayAllergens(
                             text = allergens[index].name,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            fontSize = MaterialTheme.typography.labelLarge.fontSize,
-                            fontWeight = FontWeight.Bold
+                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+//                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -474,13 +487,20 @@ fun DisplayAllergens(
 //    )
 //}
 
-//@Composable
-//@Preview
-//fun DiaryCardPreview() {
-//    DiaryCard()
-//}
+@Composable
+@Preview
+fun DiaryCardPreview() {
+    DiaryCard(
+        diary = Diary(
+            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
+            true, true, true, true, true, true
+        ),
+        product = Product(1, "banana", 1, "description", true),
+        navigateToDiaryScreen = { _, _ -> }
+    )
+}
 
-//
+
 //@Composable
 //@Preview
 //fun DisplayCategoriesPreview() {
@@ -506,6 +526,6 @@ fun DisplayAllergens(
 //            Product(2, "Jaja na twardo", 1, "milk", true),
 //            Product(2, "Jaja na twardo", 1, "milk", true),
 //            Product(3, "Orzeszki ziemne", 1, "milk", true)
-//        ), onAllegrenClickListener = {}
+//        ), onAllegrenClickListener = { _, _ -> }
 //    )
 //}
