@@ -1,16 +1,21 @@
 package com.example.babysdiet.ui.screens.product
 
 import android.annotation.SuppressLint
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.viewmodels.SharedViewModel
 import com.example.babysdiet.util.Action
@@ -36,6 +41,19 @@ fun ProductsScreen(
     val productDescription: String by sharedViewModel.descriptionProduct
     val productIsAllergen: Boolean by sharedViewModel.isAllergenProduct
 
+    BackHandler(onBackPressed = {
+        if (selectedCategoryId < 0) {
+            navigateToHomeScreen(
+                Action.NO_ACTION
+            )
+        } else {
+            navigateToCategoryScreen(
+                selectedCategoryId,
+                selectedProductId,
+                Action.NO_ACTION
+            )
+        }
+    })
 
     Scaffold(
         topBar = {
@@ -43,32 +61,52 @@ fun ProductsScreen(
                 selectedProductId = selectedProductId,
                 onAddProductClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.ADD_PRODUCT)
+                    navigateToCategoryScreen(
+                        selectedCategoryId,
+                        selectedProductId,
+                        Action.ADD_PRODUCT
+                    )
                 },
                 onBackNewProductClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.NO_ACTION)
+                    navigateToCategoryScreen(
+                        selectedCategoryId,
+                        selectedProductId,
+                        Action.NO_ACTION
+                    )
                 },
                 onBackClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    if (selectedCategoryId < 0 )
+                    if (selectedCategoryId < 0)
                         navigateToHomeScreen(action)
                     else
-                        navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.NO_ACTION)
+                        navigateToCategoryScreen(
+                            selectedCategoryId,
+                            selectedProductId,
+                            Action.NO_ACTION
+                        )
                 },
                 onDeleteClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    if (selectedCategoryId < 0 )
+                    if (selectedCategoryId < 0)
                         navigateToHomeScreen(action)
                     else
-                        navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.DELETE_PRODUCT)
+                        navigateToCategoryScreen(
+                            selectedCategoryId,
+                            selectedProductId,
+                            Action.DELETE_PRODUCT
+                        )
                 },
                 onUpdateClicked = { action ->
 //                    sharedViewModel.action.value = action
-                    if (selectedCategoryId < 0 )
+                    if (selectedCategoryId < 0)
                         navigateToHomeScreen(action)
                     else
-                        navigateToCategoryScreen(selectedCategoryId, selectedProductId, Action.UPDATE_PRODUCT)
+                        navigateToCategoryScreen(
+                            selectedCategoryId,
+                            selectedProductId,
+                            Action.UPDATE_PRODUCT
+                        )
                 }
 
             )
@@ -82,14 +120,35 @@ fun ProductsScreen(
                 categoryId = selectedCategoryId,
                 selectedProduct = selectedProduct,
                 allDiaries = allDiaries,
-                onTitleChange = {sharedViewModel.nameProduct.value = it},
-                onDescriptionChange = {sharedViewModel.descriptionProduct.value = it},
-                onIsAllergenChange = {sharedViewModel.isAllergenProduct.value = it},
+                onTitleChange = { sharedViewModel.nameProduct.value = it },
+                onDescriptionChange = { sharedViewModel.descriptionProduct.value = it },
+                onIsAllergenChange = { sharedViewModel.isAllergenProduct.value = it },
                 navigateToDiaryScreen = navigateToDiaryScreen
             )
 
         }
     )
+}
+
+@Composable
+fun BackHandler(
+    backDispatcher: OnBackPressedDispatcher? = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+    DisposableEffect(key1 = backDispatcher) {
+        backDispatcher?.addCallback(backCallback)
+        onDispose {
+            backCallback.remove()
+        }
+    }
 }
 
 

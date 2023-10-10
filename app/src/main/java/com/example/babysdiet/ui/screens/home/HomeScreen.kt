@@ -1,6 +1,9 @@
 package com.example.babysdiet.ui.screens.home
 
 import android.annotation.SuppressLint
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.FloatingActionButton
@@ -11,11 +14,13 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.babysdiet.R
@@ -45,6 +50,7 @@ fun HomeScreen(
     val allProducts by sharedViewModel.allProducts.collectAsState()
     val allergens by sharedViewModel.allegrenProducts.collectAsState()
     val allDiaries by sharedViewModel.allDiaries.collectAsState()
+
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -146,6 +152,8 @@ private fun undoDeleteDiary(
     )
         onUndoClicked(Action.UNDO_DIARY)
 }
+
+
 
 //@Composable
 //@Preview(showBackground = true)
