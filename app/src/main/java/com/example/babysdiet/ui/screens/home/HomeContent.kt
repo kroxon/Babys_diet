@@ -307,15 +307,7 @@ fun DisplayCategories(
     names: List<String>,
     navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit
 ) {
-    Column(Modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth()) {
-            Text(
-                text = stringResource(id = R.string.products),
-                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp),
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-            )
-        }
-    }
+
     Card(
         //shape = MaterialTheme.shapes.medium,
         shape = RoundedCornerShape(8.dp),
@@ -329,6 +321,20 @@ fun DisplayCategories(
             containerColor = Color.White,
         ),
     ) {
+        Column(Modifier.fillMaxWidth()) {
+            Row(Modifier.fillMaxWidth()) {
+                Text(
+                    text = stringResource(id = R.string.products),
+                    modifier = Modifier.padding(
+                        bottom = MEDIUM_PADDING,
+                        start = LARGE_PADDING,
+                        top = SMALL_PADDING
+                    ),
+                    fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                )
+            }
+        }
+
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -440,8 +446,13 @@ fun DisplayAllergens(
                 items(allergens.size) { index ->
                     Box(
                         modifier = Modifier
-                            .padding(8.dp)
-                            .height(TOP_APP_BAR_HEIGHT)
+                            .padding(
+                                top = SMALL_PADDING,
+                                bottom = SMALL_PADDING,
+                                start = SMALL_PADDING,
+                                end = LARGE_PADDING
+                            )
+                            .height(LAZY_GRID_HEIGHT)
                             .clickable {
                                 onAllegrenClickListener(
                                     (-1) * allergens[index].categoryId,
@@ -453,7 +464,7 @@ fun DisplayAllergens(
                             text = allergens[index].name,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
 //                            fontWeight = FontWeight.Bold
                         )
                     }
@@ -487,45 +498,45 @@ fun DisplayAllergens(
 //    )
 //}
 
+//@Composable
+//@Preview
+//fun DiaryCardPreview() {
+//    DiaryCard(
+//        diary = Diary(
+//            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
+//            true, true, true, true, true, true
+//        ),
+//        product = Product(1, "banana", 1, "description", true),
+//        navigateToDiaryScreen = { _, _ -> }
+//    )
+//}
+
+
 @Composable
 @Preview
-fun DiaryCardPreview() {
-    DiaryCard(
-        diary = Diary(
-            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
-            true, true, true, true, true, true
-        ),
-        product = Product(1, "banana", 1, "description", true),
-        navigateToDiaryScreen = { _, _ -> }
+fun DisplayCategoriesPreview() {
+    DisplayCategories(
+        names = listOf("vegetables", "fruits", "vegetables", "fruits", "vegetables", "fruits"),
+        navigateToCategoryScreen = { _, _, _ -> }
     )
 }
 
-
-//@Composable
-//@Preview
-//fun DisplayCategoriesPreview() {
-//    DisplayCategories(
-//        names = listOf("vegetables", "fruits", "vegetables", "fruits", "vegetables", "fruits"),
-//        onCategoryClickListener = {}
-//    )
-//}
-
-//@Composable
-//@Preview
-//fun DisplayAllergensPreview() {
-//    DisplayAllergens(
-//        allergens = listOf(
-//            Product(0, "Milk", 1, "milk", true),
-//            Product(1, "Mleko kokosowe", 1, "milk", true),
-//            Product(1, "Mleko kokosowe", 1, "milk", true),
-//            Product(1, "Mleko kokosowe", 1, "milk", true),
-//            Product(1, "Mleko kokosowe", 1, "milk", true),
-//            Product(2, "Jaja na twardo", 1, "milk", true),
-//            Product(2, "Jaja na twardo", 1, "milk", true),
-//            Product(2, "Jaja na twardo", 1, "milk", true),
-//            Product(2, "Jaja na twardo", 1, "milk", true),
-//            Product(2, "Jaja na twardo", 1, "milk", true),
-//            Product(3, "Orzeszki ziemne", 1, "milk", true)
-//        ), onAllegrenClickListener = { _, _ -> }
-//    )
-//}
+@Composable
+@Preview
+fun DisplayAllergensPreview() {
+    DisplayAllergens(
+        allergens = listOf(
+            Product(0, "Milk", 1, "milk", true),
+            Product(1, "Mleko kokosowe", 1, "milk", true),
+            Product(1, "Mleko kokosowe", 1, "milk", true),
+            Product(1, "Mleko kokosowe", 1, "milk", true),
+            Product(1, "Mleko kokosowe", 1, "milk", true),
+            Product(2, "Jaja na twardo", 1, "milk", true),
+            Product(2, "Jaja na twardo", 1, "milk", true),
+            Product(2, "Jaja na twardo", 1, "milk", true),
+            Product(2, "Jaja na twardo", 1, "milk", true),
+            Product(2, "Jaja na twardo", 1, "milk", true),
+            Product(3, "Orzeszki ziemne", 1, "milk", true)
+        ), onAllegrenClickListener = { _, _ -> }
+    )
+}

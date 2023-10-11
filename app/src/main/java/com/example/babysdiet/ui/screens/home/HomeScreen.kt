@@ -65,9 +65,9 @@ fun HomeScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = {
-            HomeAppBar()
-        },
+//        topBar = {
+//            HomeAppBar()
+//        },
         content = {
             HomeContent(
                 diaries = allDiaries,
