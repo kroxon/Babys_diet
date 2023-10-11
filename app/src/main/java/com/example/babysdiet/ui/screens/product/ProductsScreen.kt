@@ -41,6 +41,7 @@ fun ProductsScreen(
     val productDescription: String by sharedViewModel.descriptionProduct
     val productIsAllergen: Boolean by sharedViewModel.isAllergenProduct
 
+
     BackHandler(onBackPressed = {
         if (selectedCategoryId < 0) {
             navigateToHomeScreen(
