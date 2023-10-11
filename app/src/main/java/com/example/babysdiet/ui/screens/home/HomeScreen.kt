@@ -65,9 +65,9 @@ fun HomeScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = {
-            HomeAppBar()
-        },
+//        topBar = {
+//            HomeAppBar()
+//        },
         content = {
             HomeContent(
                 diaries = allDiaries,
@@ -75,7 +75,12 @@ fun HomeScreen(
                 allergens = allergens,
                 navigateToDiaryScreen = navigateToDiaryScreen,
                 navigateToCategoryScreen = navigateToCategoryScreen,
-                onAllegrenClickListener = navigateToProductScreen
+                onAllegrenClickListener = navigateToProductScreen,
+                onSwipeToDelete = { action, diary, product ->
+                    sharedViewModel.action.value = action
+                    sharedViewModel.updateDiaryFields(selectedDiary = diary, selectedProduct = product)
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                }
             )
         },
         floatingActionButton = {

@@ -30,6 +30,7 @@ import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
+import com.example.babysdiet.ui.theme.BIG_EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
@@ -41,21 +42,22 @@ import com.example.babysdiet.ui.theme.ULTRA_LARGE_PADDING
 fun ProductAdvanceItem(
     product: Product,
     diaries: List<Diary>,
-    navigateToProductScreen: (productId: Int) -> Unit,
-
-    ) {
+    navigateToProductScreen: (productId: Int) -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
         modifier = Modifier
+            .fillMaxWidth()
+            .clickable { navigateToProductScreen(product.productId) }
+            .background(Color.White)
             .padding(
                 start = SMALL_PADDING,
                 end = ULTRA_LARGE_PADDING,
                 top = SMALL_PADDING,
                 bottom = SMALL_PADDING
             )
-            .fillMaxWidth()
-            .clickable { navigateToProductScreen(product.productId) }
+            .height(BIG_EVALUATOIN_INDICATOR_SIZE)
     ) {
         Text(
 //            modifier = Modifier
@@ -63,7 +65,7 @@ fun ProductAdvanceItem(
             text = product.name,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
-            fontSize = MaterialTheme.typography.titleLarge.fontSize
+            fontSize = MaterialTheme.typography.headlineSmall.fontSize
         )
         if (product.isAllergen) {
             Image(

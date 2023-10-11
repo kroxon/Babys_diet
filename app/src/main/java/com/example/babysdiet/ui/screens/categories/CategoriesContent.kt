@@ -46,10 +46,12 @@ import com.example.babysdiet.components.ProductAdvanceItem
 import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
+import com.example.babysdiet.ui.theme.BIG_EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.LAZY_GRID_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
+import com.example.babysdiet.ui.theme.ULTRA_LARGE_PADDING
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
 import com.example.babysdiet.util.RequestState
 
@@ -63,36 +65,38 @@ fun CategoriesContent(
 ) {
 
     var allProducts: List<Product> = emptyList()
-    if (selectedProducts is RequestState.Success)
-        allProducts = selectedProducts.data
+    if (selectedProducts is RequestState.Success) allProducts = selectedProducts.data
 
     var diaries: List<Diary> = emptyList()
-    if (allDiaries is RequestState.Success)
-        diaries = allDiaries.data
+    if (allDiaries is RequestState.Success) diaries = allDiaries.data
 
-//    Spacer(modifier = Modifier.padding(top = LARGE_PADDING))
-
-    Card(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = LAZY_GRID_HEIGHT, start = LARGE_PADDING, end = LARGE_PADDING)
-            .shadow(ambientColor = Color.Blue, elevation = 15.dp)
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(LARGE_PADDING)
     ) {
-
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth()
+        Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = SMALL_PADDING, start = SMALL_PADDING, end = SMALL_PADDING)
+                .shadow(ambientColor = Color.Blue, elevation = 15.dp)
         ) {
-            items(allProducts) { product ->
-                ProductAdvanceItem(
-                    product = product,
-                    diaries = diaries.filter { it.productId == product.productId },
-                    navigateToProductScreen = navigateToProductScreen
-                )
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(allProducts) { product ->
+                    ProductAdvanceItem(
+                        product = product,
+                        diaries = diaries.filter { it.productId == product.productId },
+                        navigateToProductScreen = navigateToProductScreen
+                    )
+                }
             }
         }
     }
-
-
 }
 
 //@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
