@@ -1,5 +1,7 @@
 package com.example.babysdiet.navigation.destinations
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -31,7 +33,15 @@ fun NavGraphBuilder.diaryComposable(
             navArgument(DIARY_ARGUMENT_KEY_2) {
                 type = NavType.IntType
             },
-        )
+        ),
+        enterTransition = {
+            slideInHorizontally(
+                animationSpec = tween(
+                    durationMillis = 300
+                ),
+                initialOffsetX = { fullWidth -> fullWidth }
+            )
+        }
     ) { navBackStackEntry ->
         val diaryId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY)
         val productId = navBackStackEntry.arguments!!.getInt(DIARY_ARGUMENT_KEY_2)

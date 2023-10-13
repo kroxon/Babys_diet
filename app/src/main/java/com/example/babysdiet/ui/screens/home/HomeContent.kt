@@ -105,7 +105,7 @@ fun HomeContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-//            .padding(top = TOP_APP_BAR_HEIGHT)
+            .padding(top = MEDIUM_PADDING)
     ) {
 
         DisplayCategories(
