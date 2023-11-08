@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.babysdiet.R
 import com.example.babysdiet.ui.theme.fabContentColor
@@ -117,7 +118,7 @@ fun DisplaySnackbar(
     handleDatabaseAction()
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = action) {
-        if (action != Action.NO_ACTION) {
+        if (action == Action.DELETE_DIARY) {
             scope.launch {
                 val snackBarResult = snackbarHostState.showSnackbar(
                     message = setMessage(
