@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
+import com.example.babysdiet.components.SpacerTopAppBar
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.screens.home.EmptyContent
@@ -73,7 +74,7 @@ fun ProductContent(
             .background(MaterialTheme.colorScheme.background)
             .padding(LARGE_PADDING)
     ) {
-        Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
+        SpacerTopAppBar()
 
         OutlinedTextField(
             value = name,
@@ -88,7 +89,12 @@ fun ProductContent(
             )
         )
 
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = SMALL_PADDING),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(text = stringResource(id = R.string.name_as_allergen))
             Checkbox(checked = isAllergen, onCheckedChange = { newIsAllergen ->
                 onIsAllergenChange(newIsAllergen)
@@ -109,7 +115,8 @@ fun ProductContent(
             )
         )
 
-        if (diaries.isEmpty() || productId < 1) {
+//        if (diaries.isEmpty() || productId < 1) {
+        if ((diaries.filter { it.productId == productId }).isEmpty() || productId < 1) {
             EmptyContent()
         } else
             selectedProduct?.let {
@@ -119,6 +126,8 @@ fun ProductContent(
                     navigateToDiaryScreen = navigateToDiaryScreen
                 )
             }
+
+
     }
 }
 

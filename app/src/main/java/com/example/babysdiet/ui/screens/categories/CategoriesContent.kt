@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
 import com.example.babysdiet.components.ProductAdvanceItem
 import com.example.babysdiet.components.ProductItem
+import com.example.babysdiet.components.SpacerTopAppBar
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.BIG_EVALUATOIN_INDICATOR_SIZE
@@ -76,26 +77,29 @@ fun CategoriesContent(
             .background(MaterialTheme.colorScheme.background)
             .padding(LARGE_PADDING)
     ) {
-        Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
-        Card(
+        SpacerTopAppBar()
+//        Card(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = SMALL_PADDING, start = SMALL_PADDING, end = SMALL_PADDING)
+//                .shadow(ambientColor = Color.Blue, elevation = 15.dp)
+//        ) {
+
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = SMALL_PADDING, start = SMALL_PADDING, end = SMALL_PADDING)
                 .shadow(ambientColor = Color.Blue, elevation = 15.dp)
         ) {
-
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(allProducts) { product ->
-                    ProductAdvanceItem(
-                        product = product,
-                        diaries = diaries.filter { it.productId == product.productId },
-                        navigateToProductScreen = navigateToProductScreen
-                    )
-                }
+            items(allProducts) { product ->
+                ProductAdvanceItem(
+                    product = product,
+                    diaries = diaries.filter { it.productId == product.productId },
+                    navigateToProductScreen = navigateToProductScreen
+                )
             }
         }
+//        }
     }
 }
 
