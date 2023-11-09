@@ -1,6 +1,7 @@
 package com.example.babysdiet.ui.screens.home
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -35,7 +36,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
-    navigateToProductScreen:  (productId: Int, categoryId: Int) -> Unit,
+    navigateToProductScreen: (productId: Int, categoryId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
@@ -59,6 +60,7 @@ fun HomeScreen(
         handleDatabaseAction = { sharedViewModel.handleDatabaseActions(action = action) },
         snackbarHostState = snackbarHostState,
         action = action,
+        context = LocalContext.current,
         onUndoClicked = {
             sharedViewModel.action.value = it
         }
@@ -79,7 +81,10 @@ fun HomeScreen(
                 onAllegrenClickListener = navigateToProductScreen,
                 onSwipeToDelete = { action, diary, product ->
                     sharedViewModel.action.value = action
-                    sharedViewModel.updateDiaryFields(selectedDiary = diary, selectedProduct = product)
+                    sharedViewModel.updateDiaryFields(
+                        selectedDiary = diary,
+                        selectedProduct = product
+                    )
                     snackbarHostState.currentSnackbarData?.dismiss()
                 }
             )
@@ -113,7 +118,8 @@ fun DisplaySnackbar(
     onUndoClicked: (Action) -> Unit,
     handleDatabaseAction: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    action: Action
+    action: Action,
+    context: Context
 ) {
     handleDatabaseAction()
     val scope = rememberCoroutineScope()
@@ -122,7 +128,8 @@ fun DisplaySnackbar(
             scope.launch {
                 val snackBarResult = snackbarHostState.showSnackbar(
                     message = setMessage(
-                        action = action
+                        action = action,
+                        context = context
                     ),
                     actionLabel = setActionLabel(action)
                 )
@@ -137,9 +144,10 @@ fun DisplaySnackbar(
 }
 
 
-private fun setMessage(action: Action): String {
+private fun setMessage(action: Action, context: Context): String {
     return when (action) {
         Action.DELETE_ALL_DIARIES -> "All diet diary entries deleted."
+        Action.DELETE_DIARY -> context.getString(R.string.delete_diary)
         else -> "${action.name}"
     }
 }
@@ -158,7 +166,6 @@ private fun undoDeleteDiary(
     )
         onUndoClicked(Action.UNDO_DIARY)
 }
-
 
 
 //@Composable
