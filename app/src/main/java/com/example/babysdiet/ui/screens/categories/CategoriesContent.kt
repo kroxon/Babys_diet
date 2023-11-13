@@ -75,7 +75,7 @@ fun CategoriesContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(LARGE_PADDING)
+//            .padding(LARGE_PADDING)
     ) {
         SpacerTopAppBar()
 //        Card(
@@ -88,8 +88,9 @@ fun CategoriesContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = SMALL_PADDING, start = SMALL_PADDING, end = SMALL_PADDING)
-                .shadow(ambientColor = Color.Blue, elevation = 15.dp)
+//                .padding(top = SMALL_PADDING, start = SMALL_PADDING, end = SMALL_PADDING)
+//                .shadow(ambientColor = Color.Blue, elevation = 15.dp)
+                .padding(LARGE_PADDING)
         ) {
             items(allProducts) { product ->
                 ProductAdvanceItem(
