@@ -16,7 +16,7 @@ val Pink40 = Color(0xFF7D5260)
 val Blue1 = Color(0XFF1565C0)
 val Blue2 = Color(0xFF698FBB)
 
-val ExcellentEvaluationColor = Color(0xFF00FF00)
+val ExcellentEvaluationColor = Color(0xFF078107)
 val FineEvaluationColor = Color(0xFF66FF33)
 val NeutralEvaluationColor = Color(0xFFFFFF00)
 val BadEvaluationColor = Color(0xFFFF6600)

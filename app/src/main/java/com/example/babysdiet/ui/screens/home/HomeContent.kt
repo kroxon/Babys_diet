@@ -67,6 +67,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
+import com.example.babysdiet.components.SpacerTop
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
@@ -107,6 +108,8 @@ fun HomeContent(
             .fillMaxWidth()
             .padding(top = MEDIUM_PADDING)
     ) {
+
+        SpacerTop()
 
         DisplayCategories(
             names = ((stringArrayResource(id = R.array.categories_array)).toList()).drop(1),

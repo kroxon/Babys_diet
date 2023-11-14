@@ -66,6 +66,7 @@ import com.example.babysdiet.R
 import com.example.babysdiet.components.DisplayAlertDialog
 import com.example.babysdiet.components.EvaluationSelectingRow
 import com.example.babysdiet.components.ProductItem
+import com.example.babysdiet.components.SpacerTopAppBar
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
@@ -135,7 +136,7 @@ fun DiaryContent(
             .background(MaterialTheme.colorScheme.background)
             .padding(LARGE_PADDING)
     ) {
-        Spacer(modifier = Modifier.padding(top = TOP_APP_BAR_HEIGHT))
+        SpacerTopAppBar()
 
         SearchableExposedDropdownMenuBox(
             allProductsRequest = selectedProducts,
