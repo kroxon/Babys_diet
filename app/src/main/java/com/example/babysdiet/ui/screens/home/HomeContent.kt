@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -79,6 +80,7 @@ import com.example.babysdiet.ui.theme.LAZY_GRID_COLUMN_WIDTH
 import com.example.babysdiet.ui.theme.LAZY_GRID_HEIGHT
 import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
+import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT_SMALL
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.ULTRA_LARGE_PADDING
@@ -117,10 +119,11 @@ fun HomeContent(
         )
 
         if (allergens is RequestState.Success) {
-            DisplayAllergens(
-                allergens = allergens.data,
-                onAllegrenClickListener = onAllegrenClickListener
-            )
+            if (!allergens.data.isEmpty())
+                DisplayAllergens(
+                    allergens = allergens.data,
+                    onAllegrenClickListener = onAllegrenClickListener
+                )
         }
 
         if (diaries is RequestState.Success && products is RequestState.Success) {
@@ -453,7 +456,7 @@ fun PastilleButton(
                 color = outlineColor
             ),
             modifier = Modifier
-                .height(OUTLINEDBUTTON_HEIGHT)
+                .height(OUTLINEDBUTTON_HEIGHT_SMALL)
                 .wrapContentWidth()
                 .widthIn(min = 32.dp)
         ) {
@@ -503,11 +506,17 @@ fun DisplayAllergens(
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
                 fontWeight = FontWeight.Bold
             )
+            val cells = when {
+                allergens.size == 2 -> 2
+                allergens.size == 1 -> 1
+                else -> 3
+            }
             LazyHorizontalGrid(
-                rows = GridCells.Fixed(3),
+                rows = GridCells.Fixed(cells),
                 modifier = Modifier
-                    .height(LAZY_GRID_HEIGHT)
+                    .heightIn(0.dp, LAZY_GRID_HEIGHT / 3 * cells)
                     .fillMaxWidth()
+                    .wrapContentHeight()
             ) {
                 items(allergens.size) { index ->
                     Box(
@@ -518,7 +527,7 @@ fun DisplayAllergens(
                                 start = SMALL_PADDING,
                                 end = LARGE_PADDING
                             )
-                            .height(LAZY_GRID_HEIGHT)
+                            .heightIn(0.dp, LAZY_GRID_HEIGHT)
                             .clickable {
                                 onAllegrenClickListener(
                                     (-1) * allergens[index].categoryId,
