@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -74,6 +76,7 @@ import com.example.babysdiet.ui.theme.FOOD_ACTIVITIES_HEIGHT
 import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.MediumGrey
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
+import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT_SMALL
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
@@ -134,6 +137,7 @@ fun DiaryContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .navigationBarsPadding().imePadding()
             .padding(LARGE_PADDING)
     ) {
         SpacerTopAppBar()
@@ -186,7 +190,6 @@ fun DiaryContent(
                 modifier = Modifier
                     .fillMaxSize(),
                 label = { Text(text = stringResource(id = R.string.description)) },
-                maxLines = 1,
                 textStyle = MaterialTheme.typography.bodyLarge,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.34f)
@@ -395,7 +398,7 @@ fun PastilleButton(
                 color = outlineColor
             ),
             modifier = Modifier
-                .height(OUTLINEDBUTTON_HEIGHT)
+                .height(OUTLINEDBUTTON_HEIGHT_SMALL)
                 .wrapContentWidth()
                 .widthIn(min = 32.dp)
         ) {
@@ -674,29 +677,29 @@ fun CalendarLabel(
 //    FlowRowButtons(names = names, completedList = completed)
 //}
 
-@Composable
-@Preview
-fun TitleLabelPreview() {
-    TitleLabel(
-        product = Product(
-            name = "milk",
-            categoryId = 1,
-            description = "",
-            isAllergen = true
-        )
-    )
-}
-
-@Composable
-@Preview
-fun AllergySymptomsOccuredPreview() {
-    AllergySymptomsOccured(
-        onSelectedSymptoms = {},
-        selectedSymptoms = true,
-        selectedProduct = Product(0, "name", 1, "desc", true),
-        onSaveAsAllergen = {}
-    )
-}
+//@Composable
+//@Preview
+//fun TitleLabelPreview() {
+//    TitleLabel(
+//        product = Product(
+//            name = "milk",
+//            categoryId = 1,
+//            description = "",
+//            isAllergen = true
+//        )
+//    )
+//}
+//
+//@Composable
+//@Preview
+//fun AllergySymptomsOccuredPreview() {
+//    AllergySymptomsOccured(
+//        onSelectedSymptoms = {},
+//        selectedSymptoms = true,
+//        selectedProduct = Product(0, "name", 1, "desc", true),
+//        onSaveAsAllergen = {}
+//    )
+//}
 
 //@Composable
 //@Preview
@@ -704,3 +707,25 @@ fun AllergySymptomsOccuredPreview() {
 //    CalendarLabel(LocalDate.now(), )
 //}
 
+@Composable
+@Preview
+fun DiaryContentPreview(){
+    DiaryContent(
+        selectedDiary = null,
+        evaluation = Evaluation.BAD,
+        foodActivities = List(6) { true },
+        selectedProduct = Product(productId = 887, name = "gg", categoryId = 1, description = "", isAllergen = true),
+        diarySympotomsOccured = true,
+        diaryDescription = "feuiw fhewiu  fewui hfehwiu ffewui iff ewuif hfiewu fhfhuie",
+        selectedDate = 473248,
+        selectedProducts = RequestState.Success(emptyList()),
+        onProductSelected = {},
+        onEvaluationSelected = {},
+        onActivitySelected = {},
+        onSelectedSymptoms = {},
+        onSaveAsAllergen = {},
+        onDescriptionChange = {},
+        onDateSelected = {},
+        onButtonClickListener = {}
+    )
+}

@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             BabysDietTheme {
-                SetStatusBarColor(color = MaterialTheme.colorScheme.topAppBarBackgroumdColor)
+//                SetStatusBarColor(color = MaterialTheme.colorScheme.topAppBarBackgroumdColor)
                 navController = rememberNavController()
                 SetupNavGraph(
                     navController = navController,
