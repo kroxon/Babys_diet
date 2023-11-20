@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,7 +30,9 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ButtonDefaults
@@ -47,6 +50,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,8 +76,13 @@ import com.example.babysdiet.components.SpacerTopAppBar
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
+import com.example.babysdiet.components.rememberImeState
+import com.example.babysdiet.ui.theme.Blue1
+import com.example.babysdiet.ui.theme.DATE_PICKER_HEIGTH
 import com.example.babysdiet.ui.theme.FOOD_ACTIVITIES_HEIGHT
 import com.example.babysdiet.ui.theme.LARGE_PADDING
+import com.example.babysdiet.ui.theme.LAZY_GRID_COLUMN_WIDTH
+import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.MediumGrey
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT_SMALL
@@ -83,9 +92,13 @@ import com.example.babysdiet.ui.theme.VERY_SMALL_PADDING
 import com.example.babysdiet.ui.theme.buttonBackgroumdColor
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
 import com.example.babysdiet.util.RequestState
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -133,11 +146,22 @@ fun DiaryContent(
 
     )
 
+    val imeState = rememberImeState()
+    val scrollState = rememberScrollState()
+
+    LaunchedEffect(key1 = imeState.value) {
+        if (imeState.value) {
+            scrollState.animateScrollTo(scrollState.maxValue, tween(300))
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(scrollState)
             .background(MaterialTheme.colorScheme.background)
-            .navigationBarsPadding().imePadding()
+            .navigationBarsPadding()
+            .imePadding()
             .padding(LARGE_PADDING)
     ) {
         SpacerTopAppBar()
@@ -186,9 +210,11 @@ fun DiaryContent(
 
             OutlinedTextField(
                 value = diaryDescription,
-                onValueChange = { onDescriptionChange(it) },
+                onValueChange = {
+                    onDescriptionChange(it.trim().take(200))
+                },
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 label = { Text(text = stringResource(id = R.string.description)) },
                 textStyle = MaterialTheme.typography.bodyLarge,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -249,7 +275,7 @@ fun SearchableExposedDropdownMenuBox(
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(20.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
                     focusedTextColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
@@ -441,12 +467,13 @@ fun TitleLabel(
     Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = product.name,
                 style = TextStyle(
-                    fontSize = MaterialTheme.typography.displaySmall.fontSize,
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 ),
@@ -461,7 +488,7 @@ fun TitleLabel(
                             top = SMALL_PADDING,
                             start = SMALL_PADDING
                         )
-                        .size(36.dp)
+                        .size(20.dp)
                 )
             }
         }
@@ -498,14 +525,11 @@ fun FoodActivities(
         rows = GridCells.Fixed(3),
         // content padding
         contentPadding = PaddingValues(
-            start = 24.dp,
-            top = 16.dp,
-            end = 24.dp,
-            bottom = 16.dp
+            SMALL_PADDING
         ),
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
-            .height(FOOD_ACTIVITIES_HEIGHT)
+            .height(LAZY_GRID_COLUMN_WIDTH)
             .fillMaxWidth(),
         content = {
             items(6) { index ->
@@ -514,14 +538,17 @@ fun FoodActivities(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Checkbox(checked = selectedActivities[index], onCheckedChange = {
-                        selectedActivities = selectedActivities
-                            .toMutableList()
-                            .apply {
-                                this[index] = !this[index]
-                            }
-                        onActivitySelected(selectedActivities)
-                    })
+                    Checkbox(
+                        modifier = Modifier.height(SMALL_PADDING),
+                        checked = selectedActivities[index],
+                        onCheckedChange = {
+                            selectedActivities = selectedActivities
+                                .toMutableList()
+                                .apply {
+                                    this[index] = !this[index]
+                                }
+                            onActivitySelected(selectedActivities)
+                        })
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = strings[index],
@@ -558,7 +585,9 @@ fun AllergySymptomsOccured(
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = SMALL_PADDING),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -568,7 +597,9 @@ fun AllergySymptomsOccured(
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(OUTLINEDBUTTON_HEIGHT),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -600,6 +631,7 @@ fun CalendarLabel(
         Row(
             Modifier
                 .fillMaxWidth()
+                .padding(top = MEDIUM_PADDING)
                 .clickable { datePicker.show() },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
@@ -607,11 +639,23 @@ fun CalendarLabel(
             Icon(
                 painter = painterResource(id = R.drawable.ic_calendar),
                 contentDescription = stringResource(id = R.string.description),
-                modifier = Modifier.size(24.dp),
-                tint = MediumGrey
+                modifier = Modifier.size(35.dp),
+                tint = Blue1
             )
+            val today = LocalDate.now()
+            val yesterday = LocalDate.now().minusDays(1)
+            val tomorrow = LocalDate.now().plusDays(1)
+
+            val formattedDate = when {
+                currentDate == today -> stringResource(id = R.string.today)
+                currentDate == yesterday -> stringResource(id = R.string.yesterday)
+                currentDate == tomorrow -> stringResource(id = R.string.tomorrow)
+                else -> currentDate.format(DateTimeFormatter.ofPattern("EEEE"))
+
+
+            }
             Text(
-                text = currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                text = formattedDate + ", " + currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 fontSize = MaterialTheme.typography.bodyLarge.fontSize
             )
         }
@@ -709,12 +753,18 @@ fun CalendarLabel(
 
 @Composable
 @Preview
-fun DiaryContentPreview(){
+fun DiaryContentPreview() {
     DiaryContent(
         selectedDiary = null,
         evaluation = Evaluation.BAD,
         foodActivities = List(6) { true },
-        selectedProduct = Product(productId = 887, name = "gg", categoryId = 1, description = "", isAllergen = true),
+        selectedProduct = Product(
+            productId = 887,
+            name = "gg",
+            categoryId = 1,
+            description = "",
+            isAllergen = true
+        ),
         diarySympotomsOccured = true,
         diaryDescription = "feuiw fhewiu  fewui hfehwiu ffewui iff ewuif hfiewu fhfhuie",
         selectedDate = 473248,
