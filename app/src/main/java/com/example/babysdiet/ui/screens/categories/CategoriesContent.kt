@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -64,7 +65,8 @@ fun CategoriesContent(
     allDiaries: RequestState<List<Diary>>,
     navigateToProductScreen: (productId: Int) -> Unit,
     selectedCategoryId: Int,
-    selectedProductId: Int
+    selectedProductId: Int,
+    paddings: PaddingValues
 ) {
 
     var allProducts: List<Product> = emptyList()
@@ -77,9 +79,9 @@ fun CategoriesContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(bottom = LARGE_PADDING)
+            .padding(paddings)
     ) {
-        SpacerTopAppBar()
+//        SpacerTopAppBar()
 //        Card(
 //            modifier = Modifier
 //                .fillMaxWidth()
@@ -279,7 +281,8 @@ fun CategoriesContentPreview() {
         ),
         navigateToProductScreen = {},
         selectedCategoryId = 1,
-        selectedProductId = 1
+        selectedProductId = 1,
+        paddings = PaddingValues()
     )
 }
 

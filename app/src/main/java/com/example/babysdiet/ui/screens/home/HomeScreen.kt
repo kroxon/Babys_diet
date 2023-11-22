@@ -71,7 +71,7 @@ fun HomeScreen(
 //        topBar = {
 //            HomeAppBar()
 //        },
-        content = {
+        content = { innerPaddings ->
             HomeContent(
                 diaries = allDiaries,
                 products = allProducts,
@@ -86,7 +86,8 @@ fun HomeScreen(
                         selectedProduct = product
                     )
                     snackbarHostState.currentSnackbarData?.dismiss()
-                }
+                },
+                paddings = innerPaddings
             )
         },
         floatingActionButton = {

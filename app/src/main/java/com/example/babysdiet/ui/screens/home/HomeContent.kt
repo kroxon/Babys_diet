@@ -102,19 +102,21 @@ fun HomeContent(
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     navigateToCategoryScreen: (categoryId: Int, productId: Int, action: Action) -> Unit,
     onAllegrenClickListener: (categoryId: Int, productId: Int) -> Unit,
-    onSwipeToDelete: (Action, Diary, Product) -> Unit
+    onSwipeToDelete: (Action, Diary, Product) -> Unit,
+    paddings: PaddingValues
 ) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                top = MEDIUM_PADDING,
-                bottom = MEDIUM_PADDING
+//                top = MEDIUM_PADDING,
+//                bottom = MEDIUM_PADDING
+                paddings
             )
     ) {
 
-        SpacerTop()
+//        SpacerTop()
 
         DisplayCategories(
             names = ((stringArrayResource(id = R.array.categories_array)).toList()).drop(1),
@@ -152,7 +154,7 @@ fun DisplayDiaries(
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     onSwipeToDelete: (Action, Diary, Product) -> Unit
 ) {
-    Column(Modifier.fillMaxWidth()) {
+    Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(id = R.string.history),
@@ -160,69 +162,73 @@ fun DisplayDiaries(
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
             )
         }
-    }
-    LazyColumn {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
 
-        items(
-            items = diaries,
-            key = { diary ->
-                diary.diaryId
-            }
-        ) { diary ->
-            // Find a product by diary.productId
-            val product = products.find { it.productId == diary.productId }
-
-            val dismissState = rememberDismissState()
-            val dismissDirection = dismissState.dismissDirection
-            val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
-            if (isDismissed && dismissDirection == DismissDirection.EndToStart) {
-                LaunchedEffect(key1 = true) {
-                    onSwipeToDelete(Action.DELETE_DIARY, diary, product!!)
+            items(
+                items = diaries,
+                key = { diary ->
+                    diary.diaryId
                 }
-            }
+            ) { diary ->
+                // Find a product by diary.productId
+                val product = products.find { it.productId == diary.productId }
 
-            val degrees by animateFloatAsState(
-                if (dismissState.targetValue == DismissValue.Default)
-                    0f
-                else
-                    -45f
-            )
-
-            var itemAppeared by remember { mutableStateOf(false) }
-            LaunchedEffect(key1 = true) {
-                itemAppeared = true
-            }
-
-            AnimatedVisibility(
-                visible = itemAppeared && !isDismissed,
-                enter = expandVertically(
-                    animationSpec = tween(
-                        durationMillis = 300
-                    )
-                ),
-                exit = shrinkVertically(
-                    animationSpec = tween(
-                        durationMillis = 300
-                    )
-                )
-            ) {
-                SwipeToDismiss(
-                    state = dismissState,
-                    directions = setOf(DismissDirection.EndToStart),
-                    background = { RedBackground(degrees = degrees) },
-                    dismissContent = {
-                        DiaryCard(
-                            diary = diary,
-                            product = product!!,
-                            navigateToDiaryScreen = navigateToDiaryScreen
-                        )
+                val dismissState = rememberDismissState()
+                val dismissDirection = dismissState.dismissDirection
+                val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
+                if (isDismissed && dismissDirection == DismissDirection.EndToStart) {
+                    LaunchedEffect(key1 = true) {
+                        onSwipeToDelete(Action.DELETE_DIARY, diary, product!!)
                     }
-                )
-            }
+                }
 
+                val degrees by animateFloatAsState(
+                    if (dismissState.targetValue == DismissValue.Default)
+                        0f
+                    else
+                        -45f
+                )
+
+                var itemAppeared by remember { mutableStateOf(false) }
+                LaunchedEffect(key1 = true) {
+                    itemAppeared = true
+                }
+
+                AnimatedVisibility(
+                    visible = itemAppeared && !isDismissed,
+                    enter = expandVertically(
+                        animationSpec = tween(
+                            durationMillis = 300
+                        )
+                    ),
+                    exit = shrinkVertically(
+                        animationSpec = tween(
+                            durationMillis = 300
+                        )
+                    )
+                ) {
+                    SwipeToDismiss(
+                        state = dismissState,
+                        directions = setOf(DismissDirection.EndToStart),
+                        background = { RedBackground(degrees = degrees) },
+                        dismissContent = {
+                            DiaryCard(
+                                diary = diary,
+                                product = product!!,
+                                navigateToDiaryScreen = navigateToDiaryScreen
+                            )
+                        }
+                    )
+                }
+
+            }
         }
     }
 }
+
 
 //@Composable
 //fun DiaryItem(
@@ -609,45 +615,45 @@ fun RedBackground(degrees: Float) {
 //    )
 //}
 
+@Composable
+@Preview
+fun DiaryCardPreview() {
+    DiaryCard(
+        diary = Diary(
+            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
+            true, true, true, true, true, true
+        ),
+        product = Product(1, "banana", 1, "description", true),
+        navigateToDiaryScreen = { _, _ -> }
+    )
+}
+
+
 //@Composable
 //@Preview
-//fun DiaryCardPreview() {
-//    DiaryCard(
-//        diary = Diary(
-//            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
-//            true, true, true, true, true, true
-//        ),
-//        product = Product(1, "banana", 1, "description", true),
-//        navigateToDiaryScreen = { _, _ -> }
+//fun DisplayCategoriesPreview() {
+//    DisplayCategories(
+//        names = listOf("vegetables", "fruits", "vegetables", "fruits", "vegetables", "fruits"),
+//        navigateToCategoryScreen = { _, _, _ -> }
 //    )
 //}
-
-
-@Composable
-@Preview
-fun DisplayCategoriesPreview() {
-    DisplayCategories(
-        names = listOf("vegetables", "fruits", "vegetables", "fruits", "vegetables", "fruits"),
-        navigateToCategoryScreen = { _, _, _ -> }
-    )
-}
-
-@Composable
-@Preview
-fun DisplayAllergensPreview() {
-    DisplayAllergens(
-        allergens = listOf(
-            Product(0, "Milk", 1, "milk", true),
-            Product(1, "Mleko kokosowe", 1, "milk", true),
-            Product(1, "Mleko kokosowe", 1, "milk", true),
-            Product(1, "Mleko kokosowe", 1, "milk", true),
-            Product(1, "Mleko kokosowe", 1, "milk", true),
-            Product(2, "Jaja na twardo", 1, "milk", true),
-            Product(2, "Jaja na twardo", 1, "milk", true),
-            Product(2, "Jaja na twardo", 1, "milk", true),
-            Product(2, "Jaja na twardo", 1, "milk", true),
-            Product(2, "Jaja na twardo", 1, "milk", true),
-            Product(3, "Orzeszki ziemne", 1, "milk", true)
-        ), onAllegrenClickListener = { _, _ -> }
-    )
-}
+//
+//@Composable
+//@Preview
+//fun DisplayAllergensPreview() {
+//    DisplayAllergens(
+//        allergens = listOf(
+//            Product(0, "Milk", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(1, "Mleko kokosowe", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(2, "Jaja na twardo", 1, "milk", true),
+//            Product(3, "Orzeszki ziemne", 1, "milk", true)
+//        ), onAllegrenClickListener = { _, _ -> }
+//    )
+//}
