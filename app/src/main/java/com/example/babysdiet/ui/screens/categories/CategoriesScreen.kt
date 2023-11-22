@@ -78,7 +78,7 @@ fun CategoriesScreen(
                 categoryId = selectedCategoryId
             )
         },
-        content = {
+        content = {innerPadding ->
             CategoriesContent(
                 selectedProducts = selectedProducts,
                 allDiaries = allDiaries,
@@ -86,7 +86,8 @@ fun CategoriesScreen(
                     navigateToProductScreen(selectedCategoryId, productId)
                 },
                 selectedCategoryId = selectedCategoryId,
-                selectedProductId = selectedProductId
+                selectedProductId = selectedProductId,
+                paddings = innerPadding
             )
 
         }
