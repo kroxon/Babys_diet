@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.BIG_EVALUATOIN_INDICATOR_SIZE
+import com.example.babysdiet.ui.theme.Blue1
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
@@ -44,41 +46,58 @@ fun ProductAdvanceItem(
     diaries: List<Diary>,
     navigateToProductScreen: (productId: Int) -> Unit
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start,
-        modifier = Modifier
+    Column(
+        Modifier
             .fillMaxWidth()
-            .clickable { navigateToProductScreen(product.productId) }
             .background(Color.White)
-            .padding(
-                start = SMALL_PADDING,
-                end = ULTRA_LARGE_PADDING,
-                top = SMALL_PADDING,
-                bottom = SMALL_PADDING
-            )
-            .height(BIG_EVALUATOIN_INDICATOR_SIZE)
+            .clickable { navigateToProductScreen(product.productId) }
     ) {
-        Text(
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = SMALL_PADDING,
+                    end = SMALL_PADDING,
+                    top = SMALL_PADDING
+                )
+                .height(BIG_EVALUATOIN_INDICATOR_SIZE)
+        ) {
+            Text(
 //            modifier = Modifier
 //                .padding(LARGE_PADDING),
-            text = product.name,
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = MaterialTheme.typography.headlineSmall.fontSize
-        )
-        if (product.isAllergen) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_alert),
-                contentDescription = "allergen alert",
-                modifier = Modifier
-                    .padding(
-                        start = SMALL_PADDING
-                    )
-                    .size(EVALUATOIN_INDICATOR_SIZE)
+                text = product.name,
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize
             )
+            if (product.isAllergen) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_alert),
+                    contentDescription = "allergen alert",
+                    modifier = Modifier
+                        .padding(
+                            start = SMALL_PADDING
+                        )
+                        .size(EVALUATOIN_INDICATOR_SIZE)
+                )
+            }
+            ProductEvaluations(diaries = diaries)
         }
-        ProductEvaluations(diaries = diaries)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = SMALL_PADDING,
+                    end = SMALL_PADDING,
+                    bottom = SMALL_PADDING
+                )
+                .background(Color.LightGray)
+                .height(1.dp)
+        ) {}
     }
 }
 
@@ -88,7 +107,7 @@ fun ProductEvaluations(diaries: List<Diary>) {
         Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        for (i in 0 until diaries.size.coerceAtMost(10)) {
+        for (i in 0 until diaries.size.coerceAtMost(5)) {
             Box(
                 modifier = Modifier
                     .size(OUTLINEDBUTTON_HEIGHT)
@@ -150,35 +169,35 @@ fun ProductAdvanceItemPreview() {
     )
 }
 
-@Composable
-@Preview
-fun ProductEvaluationsPrewiev() {
-    ProductEvaluations(
-        diaries = listOf(
-            Diary(
-                0, 2, 1, true, "", Evaluation.EXCELLENT,
-                true, true, true, true, true, true
-            ),
-            Diary(
-                0, 2, 1, true, "", Evaluation.BAD,
-                true, true, true, true, true, true
-            ),
-            Diary(
-                0, 2, 1, true, "", Evaluation.EXCELLENT,
-                true, true, true, true, true, true
-            ),
-            Diary(
-                0, 2, 1, true, "", Evaluation.BAD,
-                true, true, true, true, true, true
-            ),
-            Diary(
-                0, 2, 1, true, "", Evaluation.VERY_BAD,
-                true, true, true, true, true, true
-            ),
-            Diary(
-                0, 2, 1, true, "", Evaluation.NEUTRAL,
-                true, true, true, true, true, true
-            )
-        )
-    )
-}
+//@Composable
+//@Preview
+//fun ProductEvaluationsPrewiev() {
+//    ProductEvaluations(
+//        diaries = listOf(
+//            Diary(
+//                0, 2, 1, true, "", Evaluation.EXCELLENT,
+//                true, true, true, true, true, true
+//            ),
+//            Diary(
+//                0, 2, 1, true, "", Evaluation.BAD,
+//                true, true, true, true, true, true
+//            ),
+//            Diary(
+//                0, 2, 1, true, "", Evaluation.EXCELLENT,
+//                true, true, true, true, true, true
+//            ),
+//            Diary(
+//                0, 2, 1, true, "", Evaluation.BAD,
+//                true, true, true, true, true, true
+//            ),
+//            Diary(
+//                0, 2, 1, true, "", Evaluation.VERY_BAD,
+//                true, true, true, true, true, true
+//            ),
+//            Diary(
+//                0, 2, 1, true, "", Evaluation.NEUTRAL,
+//                true, true, true, true, true, true
+//            )
+//        )
+//    )
+//}

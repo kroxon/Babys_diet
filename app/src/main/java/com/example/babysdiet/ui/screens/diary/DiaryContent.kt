@@ -552,7 +552,7 @@ fun FoodActivities(
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = strings[index],
-                        color = Color.LightGray
+                        color = Color.DarkGray
                     )
                 }
 
@@ -609,7 +609,8 @@ fun AllergySymptomsOccured(
             )
             RadioButton(selected = selectedSymptoms, onClick = {
                 onSelectedSymptoms(true)
-                openDialog = true
+                if (!selectedProduct.isAllergen)
+                    openDialog = true
             })
             Text(
                 text = stringResource(id = R.string.no),
