@@ -108,7 +108,10 @@ fun HomeContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = MEDIUM_PADDING)
+            .padding(
+                top = MEDIUM_PADDING,
+                bottom = MEDIUM_PADDING
+            )
     ) {
 
         SpacerTop()
@@ -338,11 +341,26 @@ fun DiaryCard(
                 )
             }
             Spacer(Modifier.weight(1f))
+
+
             val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
-            val formattedDate: String =
-                currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
+//            val formattedDate: String =
+//                currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
+            val today = LocalDate.now()
+            val yesterday = LocalDate.now().minusDays(1)
+            val tomorrow = LocalDate.now().plusDays(1)
+
+            val formattedDate = when {
+                currentDate == today -> stringResource(id = R.string.today)
+                currentDate == yesterday -> stringResource(id = R.string.yesterday)
+                currentDate == tomorrow -> stringResource(id = R.string.tomorrow)
+                else -> currentDate.format(DateTimeFormatter.ofPattern("EEEE"))
+            }
+
             Text(
-                text = formattedDate,
+                text = "$formattedDate, ${currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}",
 //                text = "formattedDate",
                 fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                 color = MaterialTheme.colorScheme.diaryItemTextColor,

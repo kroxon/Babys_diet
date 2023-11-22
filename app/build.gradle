@@ -95,4 +95,7 @@ dependencies {
     // status bar color
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha"
 
+    // for status bar background
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
+
 }

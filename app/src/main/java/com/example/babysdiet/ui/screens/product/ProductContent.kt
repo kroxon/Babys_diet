@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
 import com.example.babysdiet.components.SpacerTopAppBar
@@ -39,6 +40,7 @@ import com.example.babysdiet.ui.screens.home.EmptyContent
 import com.example.babysdiet.ui.theme.EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.LARGE_PADDING
 import com.example.babysdiet.ui.theme.LAZY_GRID_COLUMN_WIDTH
+import com.example.babysdiet.ui.theme.MEDIUM_PADDING
 import com.example.babysdiet.ui.theme.SMALL_PADDING
 import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.ULTRA_LARGE_PADDING
@@ -146,7 +148,11 @@ fun DisplayDiaries(
             )
         }
     }
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.padding(
+            bottom = MEDIUM_PADDING
+        )
+    ) {
 
         items(
             items = diaries,
@@ -184,10 +190,10 @@ fun DiaryCard(
         shape = RoundedCornerShape(8.dp),
         // modifier = modifier.size(280.dp, 240.dp)
         modifier = Modifier.padding(
-            start = 10.dp,
+//            start = 10.dp,
             top = SMALL_PADDING,
             bottom = SMALL_PADDING,
-            end = 10.dp
+//            end = 10.dp
         ),
         //set card elevation of the card
         elevation = CardDefaults.cardElevation(
@@ -250,3 +256,20 @@ fun DiaryCard(
     }
 }
 
+@Composable
+@Preview
+fun ProductContentPreview() {
+    ProductContent(
+        name = "Arbuz",
+        description = "example description",
+        isAllergen = true,
+        productId = 150,
+        categoryId = 2,
+        selectedProduct = null,
+        allDiaries = RequestState.Success(listOf(/* Twoje przykładowe dane do dzienników */)),
+        onTitleChange = {},
+        onDescriptionChange = {},
+        onIsAllergenChange = {},
+        navigateToDiaryScreen = { _, _ -> }
+    )
+}

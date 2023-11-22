@@ -49,7 +49,7 @@ fun EvaluationSelectingRow(
             evaluations.forEach { newEvaluation ->
                 Box(
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(30.dp)
                         .background(Color.Transparent, shape = CircleShape)
                         .clickable {
                             selectedColor = newEvaluation.color

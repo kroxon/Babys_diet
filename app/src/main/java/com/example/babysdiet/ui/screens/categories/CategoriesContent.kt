@@ -40,12 +40,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.babysdiet.R
 import com.example.babysdiet.components.ProductAdvanceItem
 import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.SpacerTopAppBar
 import com.example.babysdiet.components.data.models.Diary
+import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.BIG_EVALUATOIN_INDICATOR_SIZE
 import com.example.babysdiet.ui.theme.LARGE_PADDING
@@ -75,7 +77,7 @@ fun CategoriesContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-//            .padding(LARGE_PADDING)
+            .padding(bottom = LARGE_PADDING)
     ) {
         SpacerTopAppBar()
 //        Card(
@@ -90,7 +92,7 @@ fun CategoriesContent(
                 .fillMaxWidth()
 //                .padding(top = SMALL_PADDING, start = SMALL_PADDING, end = SMALL_PADDING)
 //                .shadow(ambientColor = Color.Blue, elevation = 15.dp)
-                .padding(LARGE_PADDING)
+                .padding(SMALL_PADDING)
         ) {
             items(allProducts) { product ->
                 ProductAdvanceItem(
@@ -102,6 +104,183 @@ fun CategoriesContent(
         }
 //        }
     }
+}
+
+@Composable
+@Preview
+fun CategoriesContentPreview() {
+    CategoriesContent(
+        selectedProducts = RequestState.Success(
+            listOf(
+                Product(
+                    name = "milk",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 1
+                ),
+                Product(
+                    name = "milk2",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 2
+                ),
+                Product(
+                    name = "milk3",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 3
+                ),
+                Product(
+                    name = "milk",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 1
+                ),
+                Product(
+                    name = "milk2",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 2
+                ),                Product(
+                    name = "milk",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 1
+                ),
+                Product(
+                    name = "milk2",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 2
+                ),                Product(
+                    name = "milk",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 1
+                ),
+                Product(
+                    name = "milk2",
+                    categoryId = 1,
+                    isAllergen = false,
+                    description = "description",
+                    productId = 2
+                )
+            )
+        ),
+        allDiaries = RequestState.Success(
+            listOf(
+                Diary(
+                    0,
+                    1700652588,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.EXCELLENT,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ),
+                Diary(
+                    0,
+                    1700652588,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.EXCELLENT,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ),
+                Diary(
+                    0,
+                    1700652588,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.EXCELLENT,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ),
+                Diary(
+                    0,
+                    1700652588,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.EXCELLENT,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ),
+                Diary(
+                    0,
+                    1700652588,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.EXCELLENT,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ),
+                Diary(
+                    0,
+                    1700652589,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.NEUTRAL,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                ),
+                Diary(
+                    0,
+                    1700652587,
+                    2,
+                    true,
+                    "desc",
+                    Evaluation.BAD,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true
+                )
+            )
+        ),
+        navigateToProductScreen = {},
+        selectedCategoryId = 1,
+        selectedProductId = 1
+    )
 }
 
 //@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
