@@ -35,6 +35,7 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -91,8 +92,13 @@ import com.example.babysdiet.ui.theme.diaryItemTextColor
 import com.example.babysdiet.ui.theme.diaryItembackgroudColor
 import com.example.babysdiet.util.Action
 import com.example.babysdiet.util.RequestState
+import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun HomeContent(
@@ -162,70 +168,120 @@ fun DisplayDiaries(
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
             )
         }
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
 
-            items(
-                items = diaries,
-                key = { diary ->
-                    diary.diaryId
-                }
-            ) { diary ->
-                // Find a product by diary.productId
-                val product = products.find { it.productId == diary.productId }
+        val groupedDiaries = diaries.groupBy { getLocalDateFromTimestamp(it.timeEating) }
 
-                val dismissState = rememberDismissState()
-                val dismissDirection = dismissState.dismissDirection
-                val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
-                if (isDismissed && dismissDirection == DismissDirection.EndToStart) {
-                    LaunchedEffect(key1 = true) {
-                        onSwipeToDelete(Action.DELETE_DIARY, diary, product!!)
+        groupedDiaries.forEach { (date, groupedDiaries) ->
+            DateHeader(date.dayOfMonth.toString())
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                items(
+                    items = groupedDiaries,
+                    key = { diary ->
+                        diary.diaryId
                     }
-                }
-
-                val degrees by animateFloatAsState(
-                    if (dismissState.targetValue == DismissValue.Default)
-                        0f
-                    else
-                        -45f
-                )
-
-                var itemAppeared by remember { mutableStateOf(false) }
-                LaunchedEffect(key1 = true) {
-                    itemAppeared = true
-                }
-
-                AnimatedVisibility(
-                    visible = itemAppeared && !isDismissed,
-                    enter = expandVertically(
-                        animationSpec = tween(
-                            durationMillis = 300
-                        )
-                    ),
-                    exit = shrinkVertically(
-                        animationSpec = tween(
-                            durationMillis = 300
-                        )
-                    )
-                ) {
-                    SwipeToDismiss(
-                        state = dismissState,
-                        directions = setOf(DismissDirection.EndToStart),
-                        background = { RedBackground(degrees = degrees) },
-                        dismissContent = {
-                            DiaryCard(
-                                diary = diary,
-                                product = product!!,
-                                navigateToDiaryScreen = navigateToDiaryScreen
-                            )
-                        }
+                ) { diary ->
+                    // Find a product by diary.productId
+                    val product = products.find { it.productId == diary.productId }
+                    DiaryCard(
+                        diary = diary,
+                        product = product!!,
+                        navigateToDiaryScreen = navigateToDiaryScreen
                     )
                 }
-
             }
+
         }
+
+//        LazyColumn(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        ) {
+//
+//
+//            items(
+//                items = diaries,
+//                key = { diary ->
+//                    diary.diaryId
+//                }
+//            ) { diary ->
+//                // Find a product by diary.productId
+//                val product = products.find { it.productId == diary.productId }
+//
+//                val dismissState = rememberDismissState()
+//                val dismissDirection = dismissState.dismissDirection
+//                val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
+//                if (isDismissed && dismissDirection == DismissDirection.EndToStart) {
+//                    LaunchedEffect(key1 = true) {
+//                        onSwipeToDelete(Action.DELETE_DIARY, diary, product!!)
+//                    }
+//                }
+//
+//                val degrees by animateFloatAsState(
+//                    if (dismissState.targetValue == DismissValue.Default)
+//                        0f
+//                    else
+//                        -45f
+//                )
+//
+//                var itemAppeared by remember { mutableStateOf(false) }
+//                LaunchedEffect(key1 = true) {
+//                    itemAppeared = true
+//                }
+//
+//                AnimatedVisibility(
+//                    visible = itemAppeared && !isDismissed,
+//                    enter = expandVertically(
+//                        animationSpec = tween(
+//                            durationMillis = 300
+//                        )
+//                    ),
+//                    exit = shrinkVertically(
+//                        animationSpec = tween(
+//                            durationMillis = 300
+//                        )
+//                    )
+//                ) {
+//                    SwipeToDismiss(
+//                        state = dismissState,
+//                        directions = setOf(DismissDirection.EndToStart),
+//                        background = { RedBackground(degrees = degrees) },
+//                        dismissContent = {
+//                            DiaryCard(
+//                                diary = diary,
+//                                product = product!!,
+//                                navigateToDiaryScreen = navigateToDiaryScreen
+//                            )
+//                        }
+//                    )
+//                }
+//
+//            }
+//        }
+    }
+}
+
+@Composable
+fun getLocalDateFromTimestamp(timestamp: Long): LocalDate {
+    return Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+}
+
+@Composable
+fun DateHeader(date: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 4.dp)
+    ) {
+        Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = date,
+            fontSize = MaterialTheme.typography.displayLarge.fontSize,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 

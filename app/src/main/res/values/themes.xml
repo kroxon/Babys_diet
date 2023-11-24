@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.BabysDiet" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="DatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:colorSecondary">@color/blue1</item>
+        <item name="colorAccent">@color/blue1</item>
+    </style>
 </resources>
+
