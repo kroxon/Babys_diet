@@ -138,6 +138,7 @@ fun DiaryContent(
 
     val datePicker = DatePickerDialog(
         context,
+        R.style.DatePickerTheme,
         { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
             selectedDateText = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
             currentDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDayOfMonth)
