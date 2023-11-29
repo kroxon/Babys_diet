@@ -125,22 +125,22 @@ fun DisplaySnackbar(
     handleDatabaseAction()
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = action) {
-        if (action == Action.DELETE_DIARY) {
-            scope.launch {
-                val snackBarResult = snackbarHostState.showSnackbar(
-                    message = setMessage(
-                        action = action,
-                        context = context
-                    ),
-                    actionLabel = setActionLabel(action)
-                )
-                undoDeleteDiary(
-                    action = action,
-                    snackBarResult = snackBarResult,
-                    onUndoClicked = onUndoClicked
-                )
-            }
-        }
+//        if (action == Action.DELETE_DIARY) {
+//            scope.launch {
+//                val snackBarResult = snackbarHostState.showSnackbar(
+//                    message = setMessage(
+//                        action = action,
+//                        context = context
+//                    ),
+//                    actionLabel = setActionLabel(action)
+//                )
+//                undoDeleteDiary(
+//                    action = action,
+//                    snackBarResult = snackBarResult,
+//                    onUndoClicked = onUndoClicked
+//                )
+//            }
+//        }
     }
 }
 
