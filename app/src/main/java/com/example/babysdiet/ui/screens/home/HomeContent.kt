@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -152,7 +153,7 @@ fun HomeContent(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DisplayDiaries(
     diaries: List<Diary>,
@@ -160,56 +161,43 @@ fun DisplayDiaries(
     navigateToDiaryScreen: (diaryId: Int, productId: Int) -> Unit,
     onSwipeToDelete: (Action, Diary, Product) -> Unit
 ) {
-    Column(Modifier.fillMaxSize()) {
-        Row(Modifier.fillMaxWidth()) {
-            Text(
-                text = stringResource(id = R.string.history),
-                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp),
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+
+    Text(
+        text = stringResource(id = R.string.history),
+        modifier = Modifier.padding(
+            start = 16.dp,
+            end = 16.dp,
+            bottom = 8.dp
+        ),
+        fontSize = MaterialTheme.typography.titleLarge.fontSize,
+        fontWeight = FontWeight.Bold
+    )
+
+    val groupedDiaries = groupDiariesByDate(diaries)
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 12.dp
             )
-        }
-
-        val groupedDiaries = diaries.groupBy { getLocalDateFromTimestamp(it.timeEating) }
-
-        groupedDiaries.forEach { (date, groupedDiaries) ->
-            DateHeader(date.dayOfMonth.toString())
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                items(
-                    items = groupedDiaries,
-                    key = { diary ->
-                        diary.diaryId
-                    }
-                ) { diary ->
-                    // Find a product by diary.productId
-                    val product = products.find { it.productId == diary.productId }
-                    DiaryCard(
-                        diary = diary,
-                        product = product!!,
-                        navigateToDiaryScreen = navigateToDiaryScreen
-                    )
-                }
+    ) {
+        groupedDiaries.forEach { diaryGroup ->
+            stickyHeader {
+                DateHeader(diaryGroup.date)
             }
+            items(diaryGroup.diaries.size) { index ->
+                val diary = diaryGroup.diaries[index]
+                val product = products.find { it.productId == diary.productId }
 
-        }
+                DiaryCard(
+                    diary = diary,
+                    product = product!!,
+                    navigateToDiaryScreen = navigateToDiaryScreen
+                )
 
-//        LazyColumn(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//        ) {
-//
-//
-//            items(
-//                items = diaries,
-//                key = { diary ->
-//                    diary.diaryId
-//                }
-//            ) { diary ->
-//                // Find a product by diary.productId
-//                val product = products.find { it.productId == diary.productId }
-//
 //                val dismissState = rememberDismissState()
 //                val dismissDirection = dismissState.dismissDirection
 //                val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
@@ -257,15 +245,40 @@ fun DisplayDiaries(
 //                        }
 //                    )
 //                }
-//
-//            }
-//        }
+            }
+        }
     }
 }
 
+data class DiaryGroup(val date: String, val diaries: List<Diary>)
+
 @Composable
-fun getLocalDateFromTimestamp(timestamp: Long): LocalDate {
-    return Instant.ofEpochMilli(timestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+fun groupDiariesByDate(diaries: List<Diary>): List<DiaryGroup> {
+    return diaries.groupBy { getLocalDateFromTimestamp(it.timeEating) }
+        .map { (date, diariesForDate) ->
+            DiaryGroup(date, diariesForDate)
+        }
+}
+
+@Composable
+fun getLocalDateFromTimestamp(timestamp: Long): String {
+    val currentDate: LocalDate = LocalDate.ofEpochDay(timestamp)
+
+//            val formattedDate: String =
+//                currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
+    val today = LocalDate.now()
+    val yesterday = LocalDate.now().minusDays(1)
+    val tomorrow = LocalDate.now().plusDays(1)
+
+    val formattedDate = when {
+        currentDate == today -> stringResource(id = R.string.today)
+        currentDate == yesterday -> stringResource(id = R.string.yesterday)
+        currentDate == tomorrow -> stringResource(id = R.string.tomorrow)
+        else -> currentDate.format(DateTimeFormatter.ofPattern("EEEE"))
+    }
+
+    return "$formattedDate, ${currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}"
 }
 
 @Composable
@@ -273,18 +286,17 @@ fun DateHeader(date: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 4.dp)
+            .padding(top = 12.dp, bottom = 4.dp)
     ) {
         Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(20.dp))
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = date,
-            fontSize = MaterialTheme.typography.displayLarge.fontSize,
-            fontWeight = FontWeight.Bold
+            text = date.toString(),
+            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+//            fontWeight = FontWeight.Bold
         )
     }
 }
-
 
 //@Composable
 //fun DiaryItem(
@@ -358,9 +370,9 @@ fun DiaryCard(
         shape = RoundedCornerShape(8.dp),
         // modifier = modifier.size(280.dp, 240.dp)
         modifier = Modifier.padding(
-            start = 10.dp,
+//            start = 10.dp,
             top = SMALL_PADDING,
-            bottom = SMALL_PADDING,
+//            bottom = SMALL_PADDING,
             end = 10.dp
         ),
         //set card elevation of the card
@@ -405,32 +417,32 @@ fun DiaryCard(
             Spacer(Modifier.weight(1f))
 
 
-            val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
-
-//            val formattedDate: String =
-//                currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-
-            val today = LocalDate.now()
-            val yesterday = LocalDate.now().minusDays(1)
-            val tomorrow = LocalDate.now().plusDays(1)
-
-            val formattedDate = when {
-                currentDate == today -> stringResource(id = R.string.today)
-                currentDate == yesterday -> stringResource(id = R.string.yesterday)
-                currentDate == tomorrow -> stringResource(id = R.string.tomorrow)
-                else -> currentDate.format(DateTimeFormatter.ofPattern("EEEE"))
-            }
-
-            Text(
-                text = "$formattedDate, ${currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}",
-//                text = "formattedDate",
-                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                color = MaterialTheme.colorScheme.diaryItemTextColor,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Normal,
-                maxLines = 1,
-                modifier = Modifier.padding(end = ULTRA_LARGE_PADDING)
-            )
+//            val currentDate: LocalDate = LocalDate.ofEpochDay(diary.timeEating)
+//
+////            val formattedDate: String =
+////                currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+//
+//            val today = LocalDate.now()
+//            val yesterday = LocalDate.now().minusDays(1)
+//            val tomorrow = LocalDate.now().plusDays(1)
+//
+//            val formattedDate = when {
+//                currentDate == today -> stringResource(id = R.string.today)
+//                currentDate == yesterday -> stringResource(id = R.string.yesterday)
+//                currentDate == tomorrow -> stringResource(id = R.string.tomorrow)
+//                else -> currentDate.format(DateTimeFormatter.ofPattern("EEEE"))
+//            }
+//
+//            Text(
+//                text = "$formattedDate, ${currentDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))}",
+////                text = "formattedDate",
+//                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+//                color = MaterialTheme.colorScheme.diaryItemTextColor,
+//                style = MaterialTheme.typography.bodyMedium,
+//                fontWeight = FontWeight.Normal,
+//                maxLines = 1,
+//                modifier = Modifier.padding(end = ULTRA_LARGE_PADDING)
+//            )
             Box(
                 modifier = Modifier
                     .padding(start = SMALL_PADDING)
