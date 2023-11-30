@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Baby\'s Diät</string>
+    <string name="add_button">Schaltfläche hinzufügen</string>
+    <string name="home">Zuhause</string>
+    <string name="name">Name</string>
+    <string name="search_action">Suchaktion</string>
+    <string name="sad_icon">Trauriges Gesichtssymbol</string>
+    <string name="no_tasks_found">Keine Mahlzeiten gefunden.</string>
+    <string name="add_diary">Neuen Eintrag hinzufügen</string>
+    <string name="add_product">Neues Produkt hinzufügen</string>
+    <string name="edit_diary">Eintrag bearbeiten</string>
+    <string name="edit_product">Produkt bearbeiten</string>
+    <string name="update_diary">Eintrag aktualisieren</string>
+    <string name="update_product">Produkt aktualisieren</string>
+    <string name="close_diary">Tagebuch schließen</string>
+    <string name="close_product">Produkt schließen</string>
+    <string name="delete_diary">Tagebuch löschen</string>
+    <string name="delete_product">Produkt löschen</string>
+    <string name="arrow_back">Zurück-Pfeil</string>
+    <string name="search">Suche...</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="description">Beschreibung</string>
+    <string name="selectProduct">Das Produkt wurde nicht ausgewählt</string>
+    <string name="deleteAllDiary">Alle Tagebucheinträge gelöscht.</string>
+    <string name="delete_diary_ask_title">Tagebucheintrag löschen</string>
+    <string name="delete_product_ask_title">Produkt löschen</string>
+    <string name="delete_diary_ask">Möchten Sie diesen Tagebucheintrag wirklich löschen?</string>
+    <string name="delete_product_ask">Möchten Sie dieses Produkt wirklich löschen?</string>
+    <string name="delete_all_diaries">Alle Tagebucheinträge gelöscht.</string>
+    <string name="delete_all_products">Alle Produkte gelöscht.</string>
+    <string name="allergens">Allergene</string>
+    <string name="set_as_allergen_title">Als Allergen festlegen</string>
+    <string name="set_as_allergen">Möchten Sie \'%1$s\' als Allergen festlegen?</string>
+    <string name="history">Verlauf</string>
+    <string name="products">Produkte</string>
+    <string name="name_as_allergen">Als Allergen markieren</string>
+
+    <!-- Kalender -->
+    <string name="today">Heute</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="yesterday">Gestern</string>
+
+    <!-- Nahrungsaktivität -->
+    <string name="touched">Berührt</string>
+    <string name="sniffed">Geschnüffelt</string>
+    <string name="licked">Geleckt</string>
+    <string name="firstAttempt">1. Versuch </string>
+    <string name="secondAttempt">2. Versuch</string>
+    <string name="thirdAttempt">3. Versuch</string>
+
+    <string name="alergenSymptoms">Haben Sie irgendwelche Allergiesymptome bemerkt?</string>
+
+
+    <!-- Kategorien -->
+    <string name="all">Alle</string>
+    <string name="vegetables">Gemüse</string>
+    <string name="fruits">Früchte</string>
+    <string name="dried_fruits">Getrocknete Früchte</string>
+    <string name="dairy_and_eggs">Milchprodukte und Eier</string>
+    <string name="spices">Gewürze</string>
+    <string name="legumes">Hülsenfrüchte</string>
+    <string name="meat">Fleisch</string>
+    <string name="fish_and_seafood">Fisch und Meeresfrüchte</string>
+    <string name="grain_products">Getreideprodukte</string>
+    <string name="mushrooms">Pilze</string>
+    <string name="other">Andere</string>
+
+    <string-array name="categories_array">
+        <item>Alle</item>
+        <item>Gemüse</item>
+        <item>Früchte</item>
+        <item>Getrocknete Früchte</item>
+        <item>Milchprodukte und Eier</item>
+        <item>Gewürze</item>
+        <item>Hülsenfrüchte</item>
+        <item>Fleisch</item>
+        <item>Fisch und Meeresfrüchte</item>
+        <item>Getreideprodukte</item>
+        <item>Pilze</item>
+        <item>Andere</item>
+    </string-array>
+
+    <!-- Gemüse -->
+    <string-array name="vegetables">
+        <item>Aubergine</item>
+        <item>Süßkartoffel</item>
+        <item>Rübenblätter</item>
+        <item>Brokkoli</item>
+        <item>Rosenkohl</item>
+        <item>Rote Beete</item>
+        <item>Zwiebel</item>
+        <item>Knoblauch</item>
+        <item>Zucchini</item>
+        <item>Kürbis</item>
+        <item>Grünkohl</item>
+        <item>Blumenkohl</item>
+        <item>Kohlrabi</item>
+        <item>Weißkohl</item>
+        <item>Rotkohl</item>
+        <item>Dill</item>
+        <item>Möhre</item>
+        <item>Gurke</item>
+        <item>Paprika</item>
+        <item>Petersilie – Wurzel</item>
+        <item>Tomate</item>
+        <item>Cocktailtomate</item>
+        <item>Lauch</item>
+        <item>Rhabarber</item>
+        <item>Radieschen</item>
+        <item>Schnittlauch</item>
+        <item>Spargel</item>
+        <item>Spinat</item>
+        <item>Kartoffel</item>
+    </string-array>
+
+    <!-- Früchte -->
+    <string-array name="fruits">
+        <item>Stachelbeere</item>
+        <item>Ananas</item>
+        <item>Wassermelone</item>
+        <item>Aronia</item>
+        <item>Avocado</item>
+        <item>Banane</item>
+        <item>Heidelbeere</item>
+        <item>Pfirsich</item>
+        <item>Zitrone</item>
+        <item>Kirsche</item>
+        <item>Feige</item>
+        <item>Granatapfel</item>
+        <item>Grapefruit</item>
+        <item>Birne</item>
+        <item>Apfel</item>
+        <item>Heidelbeere</item>
+        <item>Brombeere</item>
+        <item>Kiwi</item>
+        <item>Kaki</item>
+        <item>Limette</item>
+        <item>Himbeere</item>
+        <item>Mango</item>
+        <item>Mandarine</item>
+        <item>Melone</item>
+        <item>Aprikose</item>
+        <item>Nektarine</item>
+        <item>Orange</item>
+        <item>Johannisbeere</item>
+        <item>Ribisel</item>
+        <item>Pflaume</item>
+        <item>Erdbeere</item>
+        <item>Weintraube</item>
+        <item>Kirsche</item>
+        <item>Cranberry</item>
+    </string-array>
+    <!-- Getrocknete Früchte -->
+    <string-array name="dried_fruits">
+        <item>Banane</item>
+        <item>Dattel</item>
+        <item>Feige</item>
+        <item>Birne</item>
+        <item>Apfel</item>
+        <item>Mango</item>
+        <item>Aprikose</item>
+        <item>Pflaume</item>
+        <item>Erdbeere</item>
+        <item>Cranberry</item>
+    </string-array>
+
+    <!-- Angebaute Pilze -->
+    <string-array name="mushrooms">
+        <item>Austernpilz</item>
+        <item>Echter Pfifferling</item>
+        <item>Pfifferling</item>
+        <item>Champignon</item>
+        <item>Shiitake</item>
+    </string-array>
+
+    <!-- Milchprodukte und Eier -->
+    <string-array name="dairy_and_eggs">
+        <item>Hühnerei</item>
+        <item>Wachtelei</item>
+        <item>Entenei</item>
+        <item>Naturjoghurt</item>
+        <item>Griechischer Joghurt</item>
+        <item>Kefir</item>
+        <item>Labneh</item>
+        <item>Mascarpone</item>
+        <item>Buttermilch</item>
+        <item>Kuhmilch</item>
+        <item>Mozzarella</item>
+        <item>Ricotta</item>
+        <item>Hüttenkäse</item>
+        <item>Gelber Käse (anderer)</item>
+        <item>Parmesan</item>
+        <item>Sahne</item>
+        <item>Quark</item>
+    </string-array>
+
+    <!-- Gewürze -->
+    <string-array name="spices">
+        <item>Basilikum</item>
+        <item>Getrocknete Chili</item>
+        <item>Knoblauch</item>
+        <item>Zimt</item>
+        <item>Curry</item>
+        <item>Muskatnuss</item>
+        <item>Ingwer</item>
+        <item>Kardamom</item>
+        <item>Römischer Kreuzkümmel</item>
+        <item>Dill</item>
+        <item>Koriander</item>
+        <item>Kurkuma</item>
+        <item>Liebstöckel</item>
+        <item>Lorbeerblatt</item>
+        <item>Majoran</item>
+        <item>Petersilie</item>
+        <item>Oregano</item>
+        <item>Süßer Paprika</item>
+        <item>Rauchiger Paprika</item>
+        <item>Scharfer Paprika</item>
+        <item>Schwarzer Pfeffer</item>
+        <item>Salbei</item>
+        <item>Thymian</item>
+    </string-array>
+
+    <!-- Hülsenfrüchte -->
+    <string-array name="legumes">
+        <item>Bohnen</item>
+        <item>Kichererbsen</item>
+        <item>Adzukibohnen</item>
+        <item>Jackbohnen</item>
+        <item>Cannellini-Bohnen</item>
+        <item>Schwarze Bohnen</item>
+        <item>Rote Bohnen</item>
+        <item>Edamame-Bohnen</item>
+        <item>Grüne Bohnen</item>
+        <item>Grüne Erbsen</item>
+        <item>Erbsen</item>
+        <item>Kichererbsenpasta</item>
+        <item>Linsenpasta</item>
+        <item>Erbsenpasta</item>
+        <item>Rote Linsen</item>
+        <item>Grüne Linsen</item>
+        <item>Soja</item>
+        <item>Fester Tofu</item>
+        <item>Weicher Tofu</item>
+        <item>Tempeh</item>
+    </string-array>
+
+    <!-- Fleisch -->
+    <string-array name="meat">
+        <item>Lamm</item>
+        <item>Kalb</item>
+        <item>Wild</item>
+        <item>Truthahn</item>
+        <item>Lamm</item>
+        <item>Ente</item>
+        <item>Kaninchen</item>
+        <item>Huhn</item>
+        <item>Schwein</item>
+        <item>Rind</item>
+    </string-array>
+
+    <!-- Fisch und Meeresfrüchte -->
+    <string-array name="fish_and_seafood">
+        <item>Sardellen</item>
+        <item>Kabeljau</item>
+        <item>Schwarzer Kabeljau</item>
+        <item>Flunder</item>
+        <item>Heilbutt</item>
+        <item>Hummer</item>
+        <item>Tintenfisch</item>
+        <item>Karpfen</item>
+        <item>Krebs</item>
+        <item>Garnelen</item>
+        <item>Hummer</item>
+        <item>Seelachs</item>
+        <item>Barsch</item>
+        <item>Auster</item>
+        <item>Schleie</item>
+        <item>Lachs</item>
+        <item>Atlantikmakrele</item>
+        <item>Regenbogenforelle</item>
+        <item>Wels</item>
+    </string-array>
+
+    <!-- Getreideprodukte -->
+    <string-array name="cereal_products">
+        <item>Amaranth</item>
+        <item>Aufgeblähter Amaranth</item>
+        <item>Buchweizen</item>
+        <item>Bulgur</item>
+        <item>Buchweizengrütze</item>
+        <item>Hirse</item>
+        <item>Gerste</item>
+        <item>Couscous</item>
+        <item>Grober Couscous</item>
+        <item>Grieß</item>
+        <item>Dinkelmehl</item>
+        <item>Gerstengraupen</item>
+        <item>Reisnudeln</item>
+        <item>Dinkelnudeln</item>
+        <item>Vollkorn-Dinkelnudeln</item>
+        <item>Roggenpasta</item>
+        <item>Weizennudeln</item>
+        <item>Vollkorn-Weizennudeln</item>
+        <item>Buchweizenpasta</item>
+        <item>Buchweizenmehl</item>
+        <item>Hirsemehl</item>
+        <item>Maisstärke</item>
+        <item>Hafermehl</item>
+        <item>Dinkelmehl</item>
+        <item>Vollkorn-Dinkelmehl</item>
+        <item>Weizenmehl</item>
+        <item>Vollkornweizenmehl</item>
+        <item>Roggenmehl</item>
+        <item>Dinkelbrot</item>
+        <item>Weizenbrot</item>
+        <item>Roggenbrot</item>
+        <item>Jaglakflocken</item>
+        <item>Buchweizenflocken</item>
+        <item>Gepuffter Quinoa</item>
+        <item>Polenta</item>
+        <item>Reis</item>
+        <item>Vollkornreis</item>
+        <item>Wildreis</item>
+        <item>Reisnudeln</item>
+    </string-array>
+
+    <!-- Andere -->
+    <string-array name="other">
+        <item>Kakao</item>
+        <item>Johannisbrot</item>
+        <item>Kokosnuss</item>
+        <item>Mandel</item>
+        <item>Butter</item>
+        <item>Chiasamen</item>
+        <item>Brasilianuss</item>
+        <item>Walnuss</item>
+        <item>Haselnuss</item>
+        <item>Cashewnuss</item>
+        <item>Pinienkerne</item>
+        <item>Pekannuss</item>
+        <item>Erdnuss</item>
+        <item>Leinsamenöl</item>
+        <item>Rapsöl</item>
+        <item>Olivenöl</item>
+        <item>Kürbiskern</item>
+        <item>Pistazie</item>
+        <item>Sesam</item>
+        <item>Leinsamen</item>
+        <item>Sonnenblumenkerne</item>
+        <item>Tahini</item>
+    </string-array>
+
+</resources>
