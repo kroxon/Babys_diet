@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dieta del Bebé</string>
+    <string name="add_button">Agregar</string>
+    <string name="home">Inicio</string>
+    <string name="name">Nombre</string>
+    <string name="search_action">Buscar</string>
+    <string name="sad_icon">Icono de cara triste</string>
+    <string name="no_tasks_found">No se encontraron comidas.</string>
+    <string name="add_diary">Agregar nueva entrada</string>
+    <string name="add_product">Agregar nuevo producto</string>
+    <string name="edit_diary">Editar entrada</string>
+    <string name="edit_product">Editar producto</string>
+    <string name="update_diary">Actualizar entrada</string>
+    <string name="update_product">Actualizar producto</string>
+    <string name="close_diary">Cerrar diario</string>
+    <string name="close_product">Cerrar producto</string>
+    <string name="delete_diary">Eliminar entrada</string>
+    <string name="delete_product">Eliminar producto</string>
+    <string name="arrow_back">Atrás</string>
+    <string name="search">Buscar...</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="description">Descripción</string>
+    <string name="selectProduct">No se ha seleccionado el producto</string>
+    <string name="deleteAllDiary">Todas las entradas en el diario de dieta han sido eliminadas.</string>
+    <string name="delete_diary_ask_title">Eliminar entrada del diario</string>
+    <string name="delete_product_ask_title">Eliminar producto</string>
+    <string name="delete_diary_ask">¿Estás seguro de que quieres eliminar esta entrada del diario?</string>
+    <string name="delete_product_ask">¿Estás seguro de que quieres eliminar este producto?</string>
+    <string name="delete_all_diaries">Todas las entradas en el diario de dieta han sido eliminadas.</string>
+    <string name="delete_all_products">Todos los productos han sido eliminados.</string>
+    <string name="allergens">Alergenos</string>
+    <string name="set_as_allergen_title">Establecer como alérgeno</string>
+    <string name="set_as_allergen">¿Quieres establecer \'%1$s\' como alérgeno?</string>
+    <string name="history">Historia</string>
+    <string name="products">Productos</string>
+    <string name="name_as_allergen">Establecer como alérgeno</string>
+
+    <!-- Calendario -->
+    <string name="today">Hoy</string>
+    <string name="tomorrow">Mañana</string>
+    <string name="yesterday">Ayer</string>
+
+    <!-- Actividad alimentaria -->
+    <string name="touched">Tocado</string>
+    <string name="sniffed">Olfateado</string>
+    <string name="licked">Lamido</string>
+    <string name="firstAttempt">1er intento </string>
+    <string name="secondAttempt">2do intento</string>
+    <string name="thirdAttempt">3er intento</string>
+
+    <string name="alergenSymptoms">¿Has notado algún síntoma de alergia?</string>
+
+    <!-- Categorías -->
+    <string name="all">Todo</string>
+    <string name="vegetables">Verduras</string>
+    <string name="fruits">Frutas</string>
+    <string name="dried_fruits">Frutas secas</string>
+    <string name="dairy_and_eggs">Lácteos y huevos</string>
+    <string name="spieces">Especias</string>
+    <string name="legumes">Legumbres</string>
+    <string name="meat">Carne</string>
+    <string name="fish_and_seafood">Pescado y mariscos</string>
+    <string name="grain_products">Productos de grano</string>
+    <string name="mushrooms">Hongos</string>
+    <string name="other">Otro</string>
+
+
+    <!-- Verduras -->
+    <string-array name="vegetables">
+        <item>Berenjena</item>
+        <item>Batata</item>
+        <item>Hoja de remolacha</item>
+        <item>Brócoli</item>
+        <item>Coles de Bruselas</item>
+        <item>Remolacha</item>
+        <item>Cebolla</item>
+        <item>Ajo</item>
+        <item>Calabacín</item>
+        <item>Calabaza</item>
+        <item>Col rizada</item>
+        <item>Coliflor</item>
+        <item>Colinabo</item>
+        <item>Repollo blanco</item>
+        <item>Repollo rojo</item>
+        <item>Eneldo</item>
+        <item>Zanahoria</item>
+        <item>Pepino</item>
+        <item>Pimiento</item>
+        <item>Perejil - raíz</item>
+        <item>Tomate</item>
+        <item>Tomate cóctel</item>
+        <item>Puerro</item>
+        <item>Ruibarbo</item>
+        <item>Rábano</item>
+        <item>Lechuga</item>
+        <item>Apio - raíz</item>
+        <item>Apio</item>
+        <item>Cebollín</item>
+        <item>Espárragos</item>
+        <item>Espinacas</item>
+        <item>Patata</item>
+    </string-array>
+
+    <!-- Frutas -->
+    <string-array name="fruits">
+        <item>Grosella</item>
+        <item>Piña</item>
+        <item>Sandía</item>
+        <item>Aronia</item>
+        <item>aguacate</item>
+        <item>Plátano</item>
+        <item>Arándano</item>
+        <item>Melocotón</item>
+        <item>Limón</item>
+        <item>Cereza</item>
+        <item>higo</item>
+        <item>Granada</item>
+        <item>Pomelo</item>
+        <item>Pera</item>
+        <item>Manzana</item>
+        <item>Arándano</item>
+        <item>Mora</item>
+        <item>Kiwi</item>
+        <item>Caqui</item>
+        <item>Limón</item>
+        <item>Frambuesa</item>
+        <item>Mango</item>
+        <item>Mandarina</item>
+        <item>Melón</item>
+        <item>Albaricoque</item>
+        <item>Nectarina</item>
+        <item>Naranja</item>
+        <item>Grosella negra</item>
+        <item>Grosella roja</item>
+        <item>Ciruela</item>
+        <item>Fresa</item>
+        <item>Uva</item>
+        <item>Cereza</item>
+        <item>Arándano rojo</item>
+    </string-array>
+
+    <!-- Frutas secas -->
+    <string-array name="dried_fruits">
+        <item>Plátano</item>
+        <item>Dátil</item>
+        <item>Higo</item>
+        <item>Pera</item>
+        <item>Manzana</item>
+        <item>Mango</item>
+        <item>Albaricoque</item>
+        <item>Ciruela</item>
+        <item>Fresa</item>
+        <item>Arándano rojo</item>
+    </string-array>
+
+    <!-- Setas cultivadas -->
+    <string-array name="mushrooms">
+        <item>Seta ostra</item>
+        <item>Rebozuelo</item>
+        <item>seta rebozuelo</item>
+        <item>Champiñón común</item>
+        <item>Shiitake</item>
+    </string-array>
+
+
+    <!-- Productos lácteos y huevos -->
+    <string-array name="dairy_and_eggs">
+        <item>Huevo de gallina</item>
+        <item>Huevo de codorniz</item>
+        <item>Huevo de pato</item>
+        <item>Yogur natural</item>
+        <item>Yogur griego</item>
+        <item>Kéfir</item>
+        <item>Labneh</item>
+        <item>Mascarpone</item>
+        <item>Leche cortada</item>
+        <item>Leche de vaca</item>
+        <item>Mozzarella</item>
+        <item>Ricotta</item>
+        <item>Requesón</item>
+        <item>Queso amarillo (otro)</item>
+        <item>Queso parmesano</item>
+        <item>Nata</item>
+        <item>Queso cottage</item>
+    </string-array>
+
+    <!-- Especias -->
+    <string-array name="spices">
+        <item>Albahaca</item>
+        <item>Chile seco</item>
+        <item>Ajo</item>
+        <item>Canela</item>
+        <item>Curry</item>
+        <item>Nuez moscada</item>
+        <item>Jengibre</item>
+        <item>Cardamomo</item>
+        <item>Comino romano</item>
+        <item>Eneldo</item>
+        <item>Cilantro</item>
+        <item>Cúrcuma</item>
+        <item>Lavanda</item>
+        <item>Hoja de laurel</item>
+        <item>Mejorana</item>
+        <item>Perejil</item>
+        <item>Oregano</item>
+        <item>Pimentón dulce</item>
+        <item>Pimentón ahumado</item>
+        <item>Pimentón picante</item>
+        <item>Pimienta negra</item>
+        <item>Salvia</item>
+        <item>Tomillo</item>
+    </string-array>
+
+    <!-- Legumbres -->
+    <string-array name="legumes">
+        <item>Judías</item>
+        <item>Garbanzos</item>
+        <item>Judía adzuki</item>
+        <item>Judía jaś</item>
+        <item>Judía cannellini</item>
+        <item>Judía negra</item>
+        <item>Judía roja</item>
+        <item>Edamame</item>
+        <item>Judía verde</item>
+        <item>Guisantes verdes</item>
+        <item>Guisantes</item>
+        <item>Pasta de garbanzos</item>
+        <item>Pasta de lentejas</item>
+        <item>Pasta de guisantes</item>
+        <item>Lentejas rojas</item>
+        <item>Lentejas verdes</item>
+        <item>Soja</item>
+        <item>Tofu firme</item>
+        <item>Tofu sedoso</item>
+        <item>Tempeh</item>
+    </string-array>
+
+    <!-- Carne -->
+    <string-array name="meat">
+        <item>Cordero</item>
+        <item>Ternera</item>
+        <item>Caza</item>
+        <item>Pavo</item>
+        <item>Cordero</item>
+        <item>Pato</item>
+        <item>Conejo</item>
+        <item>Pollo</item>
+        <item>Cerdo</item>
+        <item>Res</item>
+    </string-array>
+
+    <!-- Pescado y Mariscos -->
+    <string-array name="fish_and_seafood">
+        <item>Anchoas</item>
+        <item>Bacalao</item>
+        <item>Bacalao negro</item>
+        <item>Flounder</item>
+        <item>Halibut</item>
+        <item>Langosta</item>
+        <item>Calamar</item>
+        <item>Carpio</item>
+        <item>Cangrejo</item>
+        <item>Langostino</item>
+        <item>Langosta</item>
+        <item>Abadejo</item>
+        <item>Perca</item>
+        <item>Ostra</item>
+        <item>Pejerrey</item>
+        <item>Salmón</item>
+        <item>Macarela atlántica</item>
+        <item>Trucha arcoíris</item>
+        <item>Bagre</item>
+    </string-array>
+
+    <!-- Productos de cereales -->
+    <string-array name="cereal_products">
+        <item>Amaranto</item>
+        <item>Amaranto expandido</item>
+        <item>Alforfón</item>
+        <item>Bulgur</item>
+        <item>Trigo sarraceno</item>
+        <item>Mijo</item>
+        <item>Cebada</item>
+        <item>Cuscús</item>
+        <item>Cuscús grueso</item>
+        <item>Sémola</item>
+        <item>Harina de espelta</item>
+        <item>Perlado de cebada</item>
+        <item>Pasta de arroz</item>
+        <item>Pasta de espelta</item>
+        <item>Pasta integral de espelta</item>
+        <item>Pasta de centeno</item>
+        <item>Pasta de trigo</item>
+        <item>Pasta integral de trigo</item>
+        <item>Pasta de alforfón</item>
+        <item>Harina de alforfón</item>
+        <item>Harina de mijo</item>
+        <item>Harina de maíz</item>
+        <item>Harina de avena</item>
+        <item>Harina de espelta</item>
+        <item>Harina integral de espelta</item>
+        <item>Harina de trigo</item>
+        <item>Harina integral de trigo</item>
+        <item>Harina de centeno</item>
+        <item>Pan de espelta</item>
+        <item>Pan de trigo</item>
+        <item>Pan de centeno</item>
+        <item>Copos de trigo sarraceno</item>
+        <item>Copos de alforfón</item>
+        <item>Quinoa inflada</item>
+        <item>Polenta</item>
+        <item>Arroz blanco</item>
+        <item>Arroz integral</item>
+        <item>Arroz salvaje</item>
+        <item>Pasta de arroz</item>
+    </string-array>
+
+    <!-- Otros -->
+    <string-array name="other">
+        <item>Cacao</item>
+        <item>Algarrobo</item>
+        <item>Coco</item>
+        <item>Almendra</item>
+        <item>Mantequilla</item>
+        <item>Semillas de chía</item>
+        <item>Nuez de Brasil</item>
+        <item>Nuez</item>
+        <item>Avellana</item>
+        <item>Anacardo</item>
+        <item>Piñón</item>
+        <item>Nuez de pecán</item>
+        <item>Cacahuate</item>
+        <item>Aceite de linaza</item>
+        <item>Aceite de colza</item>
+        <item>Aceite de oliva</item>
+        <item>Pipas de calabaza</item>
+        <item>Pistacho</item>
+        <item>Sésamo</item>
+        <item>Linaza</item>
+        <item>Semilla de girasol</item>
+        <item>Tahini</item>
+    </string-array>
+
+</resources>
