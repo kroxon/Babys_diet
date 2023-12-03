@@ -98,4 +98,7 @@ dependencies {
     // for status bar background
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
 
+    // Searchable Dropdown Menu
+    implementation 'com.github.Breens-Mbaka:Searchable-Dropdown-Menu-Jetpack-Compose:0.2.8'
+
 }

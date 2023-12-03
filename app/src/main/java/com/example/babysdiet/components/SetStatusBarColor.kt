@@ -1,4 +1,4 @@
-package com.example.babysdiet.components.data
+package com.example.babysdiet.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
