@@ -72,6 +72,7 @@ import com.example.babysdiet.R
 import com.example.babysdiet.components.DisplayAlertDialog
 import com.example.babysdiet.components.EvaluationSelectingRow
 import com.example.babysdiet.components.ProductItem
+import com.example.babysdiet.components.SearchableDropdownMenu
 import com.example.babysdiet.components.SpacerTopAppBar
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
@@ -167,8 +168,17 @@ fun DiaryContent(
     ) {
         SpacerTopAppBar()
 
-        SearchableExposedDropdownMenuBox(
-            allProductsRequest = selectedProducts,
+        var allProductsList: List<Product> = emptyList()
+        if (selectedProducts is RequestState.Success)
+            allProductsList = selectedProducts.data
+
+//        SearchableExposedDropdownMenuBox(
+//            allProducts = allProductsList,
+//            onProductSelected = onProductSelected
+//        )
+
+        SearchableDropdownMenu(
+            products = allProductsList,
             onProductSelected = onProductSelected
         )
 
@@ -230,12 +240,9 @@ fun DiaryContent(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchableExposedDropdownMenuBox(
-    allProductsRequest: RequestState<List<Product>>,
+    allProducts: List<Product>,
     onProductSelected: (Product) -> Unit
 ) {
-    var allProducts: List<Product> = emptyList()
-    if (allProductsRequest is RequestState.Success)
-        allProducts = allProductsRequest.data
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
@@ -324,7 +331,11 @@ fun SearchableExposedDropdownMenuBox(
                                 .fillMaxWidth()
                                 .height(36.dp),
                             text = {
-                                item.name
+                                Text(
+                                    text = item.name,
+                                    fontSize = MaterialTheme.typography.displayLarge.fontSize,
+                                    modifier = Modifier.fillMaxSize()
+                                )
                             },
                             leadingIcon = {
                                 ProductItem(product = item)
@@ -665,21 +676,50 @@ fun CalendarLabel(
 }
 
 
-//@Composable
-//@Preview
-//fun SearchableExposedDropdownMenuBoxPreview() {
-//    SearchableExposedDropdownMenuBox(
-//        allProductsRequest = arrayOf(
-//            Product(
-//                name = "milk",
-//                categoryId = 1,
-//                isAllergen = false,
-//                description = "description",
-//                productId = 1
-//            )
-//        ).toList()
-//    )
-//}
+@Composable
+@Preview
+fun SearchableExposedDropdownMenuBoxPreview() {
+    SearchableExposedDropdownMenuBox(
+        allProducts = arrayOf(
+            Product(
+                name = "milk",
+                categoryId = 1,
+                isAllergen = false,
+                description = "description",
+                productId = 1
+            ),
+            Product(
+                name = "milk",
+                categoryId = 1,
+                isAllergen = false,
+                description = "description",
+                productId = 1
+            ),
+            Product(
+                name = "milk",
+                categoryId = 1,
+                isAllergen = false,
+                description = "description",
+                productId = 1
+            ),
+            Product(
+                name = "milk",
+                categoryId = 1,
+                isAllergen = false,
+                description = "description",
+                productId = 1
+            ),
+            Product(
+                name = "milk",
+                categoryId = 1,
+                isAllergen = false,
+                description = "description",
+                productId = 1
+            ),
+        ).toList(),
+        onProductSelected = {}
+    )
+}
 
 //@Composable
 //@Preview
@@ -753,31 +793,31 @@ fun CalendarLabel(
 //    CalendarLabel(LocalDate.now(), )
 //}
 
-@Composable
-@Preview
-fun DiaryContentPreview() {
-    DiaryContent(
-        selectedDiary = null,
-        evaluation = Evaluation.BAD,
-        foodActivities = List(6) { true },
-        selectedProduct = Product(
-            productId = 887,
-            name = "gg",
-            categoryId = 1,
-            description = "",
-            isAllergen = true
-        ),
-        diarySympotomsOccured = true,
-        diaryDescription = "feuiw fhewiu  fewui hfehwiu ffewui iff ewuif hfiewu fhfhuie",
-        selectedDate = 473248,
-        selectedProducts = RequestState.Success(emptyList()),
-        onProductSelected = {},
-        onEvaluationSelected = {},
-        onActivitySelected = {},
-        onSelectedSymptoms = {},
-        onSaveAsAllergen = {},
-        onDescriptionChange = {},
-        onDateSelected = {},
-        onButtonClickListener = {}
-    )
-}
+//@Composable
+//@Preview
+//fun DiaryContentPreview() {
+//    DiaryContent(
+//        selectedDiary = null,
+//        evaluation = Evaluation.BAD,
+//        foodActivities = List(6) { true },
+//        selectedProduct = Product(
+//            productId = 887,
+//            name = "gg",
+//            categoryId = 1,
+//            description = "",
+//            isAllergen = true
+//        ),
+//        diarySympotomsOccured = true,
+//        diaryDescription = "feuiw fhewiu  fewui hfehwiu ffewui iff ewuif hfiewu fhfhuie",
+//        selectedDate = 473248,
+//        selectedProducts = RequestState.Success(emptyList()),
+//        onProductSelected = {},
+//        onEvaluationSelected = {},
+//        onActivitySelected = {},
+//        onSelectedSymptoms = {},
+//        onSaveAsAllergen = {},
+//        onDescriptionChange = {},
+//        onDateSelected = {},
+//        onButtonClickListener = {}
+//    )
+//}

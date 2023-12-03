@@ -59,7 +59,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -287,6 +289,13 @@ fun DateHeader(date: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 12.dp, bottom = 4.dp)
+            .drawBehind {
+                drawRoundRect(
+                    Color(0xFFFFFFFF),
+                    cornerRadius = CornerRadius(10.dp.toPx())
+                )
+            },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(20.dp))
         Spacer(modifier = Modifier.width(8.dp))
@@ -683,18 +692,18 @@ fun RedBackground(degrees: Float) {
 //    )
 //}
 
-@Composable
-@Preview
-fun DiaryCardPreview() {
-    DiaryCard(
-        diary = Diary(
-            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
-            true, true, true, true, true, true
-        ),
-        product = Product(1, "banana", 1, "description", true),
-        navigateToDiaryScreen = { _, _ -> }
-    )
-}
+//@Composable
+//@Preview
+//fun DiaryCardPreview() {
+//    DiaryCard(
+//        diary = Diary(
+//            1, 1, 1, true, "desc", Evaluation.VERY_BAD,
+//            true, true, true, true, true, true
+//        ),
+//        product = Product(1, "banana", 1, "description", true),
+//        navigateToDiaryScreen = { _, _ -> }
+//    )
+//}
 
 
 //@Composable
@@ -725,3 +734,9 @@ fun DiaryCardPreview() {
 //        ), onAllegrenClickListener = { _, _ -> }
 //    )
 //}
+
+@Composable
+@Preview
+fun DateHeaderPreview() {
+    DateHeader("Monday, 12.11.2023")
+}
