@@ -74,6 +74,7 @@ import com.example.babysdiet.components.EvaluationSelectingRow
 import com.example.babysdiet.components.ProductItem
 import com.example.babysdiet.components.SearchableDropdownMenu
 import com.example.babysdiet.components.SpacerTopAppBar
+import com.example.babysdiet.components.SpacerTopSmall
 import com.example.babysdiet.components.data.models.Diary
 import com.example.babysdiet.components.data.models.Evaluation
 import com.example.babysdiet.components.data.models.Product
@@ -157,7 +158,7 @@ fun DiaryContent(
         }
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
@@ -166,75 +167,118 @@ fun DiaryContent(
             .imePadding()
             .padding(LARGE_PADDING)
     ) {
-        SpacerTopAppBar()
 
-        var allProductsList: List<Product> = emptyList()
-        if (selectedProducts is RequestState.Success)
-            allProductsList = selectedProducts.data
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+//                .verticalScroll(scrollState)
+                .background(MaterialTheme.colorScheme.background)
+//                .navigationBarsPadding()
+//                .imePadding()
+//                .padding(LARGE_PADDING)
+        ) {
+//        SpacerTopAppBar()
+//
+//        var allProductsList: List<Product> = emptyList()
+//        if (selectedProducts is RequestState.Success)
+//            allProductsList = selectedProducts.data
 
 //        SearchableExposedDropdownMenuBox(
 //            allProducts = allProductsList,
 //            onProductSelected = onProductSelected
 //        )
 
-        SearchableDropdownMenu(
-            products = allProductsList,
-            onProductSelected = onProductSelected
-        )
+//        SearchableDropdownMenu(
+//            products = allProductsList,
+//            onProductSelected = onProductSelected
+//        )
 
-        // mutable list of selected category
-        val categories: List<String> = stringArrayResource(id = R.array.categories_array).toList()
-        var categorySelectedBtns = remember {
-            mutableStateListOf<Boolean>().apply {
-                addAll(List(categories.size) { true })
+            SpacerTopAppBar()
+//            SpacerTopAppBar()
+            SpacerTopSmall()
+//            SpacerTopAppBar()
+
+
+            // mutable list of selected category
+            val categories: List<String> =
+                stringArrayResource(id = R.array.categories_array).toList()
+            var categorySelectedBtns = remember {
+                mutableStateListOf<Boolean>().apply {
+                    addAll(List(categories.size) { true })
+                }
             }
-        }
-        FlowRowButtons(
-            names = categories,
-            completedList = categorySelectedBtns,
-            onButtonClickListener = onButtonClickListener
-        )
+            Spacer(modifier = Modifier.height(SMALL_PADDING))
+            FlowRowButtons(
+                names = categories,
+                completedList = categorySelectedBtns,
+                onButtonClickListener = onButtonClickListener
+            )
 
-        if (newSelectedProduct != null) {
-            TitleLabel(newSelectedProduct)
+            if (newSelectedProduct != null) {
+                TitleLabel(newSelectedProduct)
 
-            EvaluationSelectingRow(
-                onEvaluationSelected = onEvaluationSelected,
-                evaluation = evaluation
+                EvaluationSelectingRow(
+                    onEvaluationSelected = onEvaluationSelected,
+                    evaluation = evaluation
 //                diary = selectedDiary
-            )
-
-            FoodActivities(
-                onActivitySelected = onActivitySelected,
-                diary = selectedDiary,
-                foodActivities = foodActivities
-            )
-
-            AllergySymptomsOccured(
-                selectedSymptoms = diarySympotomsOccured,
-                selectedProduct = newSelectedProduct,
-                onSelectedSymptoms = onSelectedSymptoms,
-                onSaveAsAllergen = onSaveAsAllergen
-            )
-
-            CalendarLabel(currentDate, datePicker)
-
-            OutlinedTextField(
-                value = diaryDescription,
-                onValueChange = {
-                    onDescriptionChange(it.trim().take(200))
-                },
-                modifier = Modifier
-                    .fillMaxWidth(),
-                label = { Text(text = stringResource(id = R.string.description)) },
-                textStyle = MaterialTheme.typography.bodyLarge,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.34f)
                 )
-            )
+
+                FoodActivities(
+                    onActivitySelected = onActivitySelected,
+                    diary = selectedDiary,
+                    foodActivities = foodActivities
+                )
+
+                AllergySymptomsOccured(
+                    selectedSymptoms = diarySympotomsOccured,
+                    selectedProduct = newSelectedProduct,
+                    onSelectedSymptoms = onSelectedSymptoms,
+                    onSaveAsAllergen = onSaveAsAllergen
+                )
+
+                CalendarLabel(currentDate, datePicker)
+
+                OutlinedTextField(
+                    value = diaryDescription,
+                    onValueChange = {
+                        onDescriptionChange(it.trim().take(200))
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    label = { Text(text = stringResource(id = R.string.description)) },
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.34f)
+                    )
+                )
+            }
+
         }
 
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+//                .verticalScroll(scrollState)
+                .background(MaterialTheme.colorScheme.background)
+//                .padding(LARGE_PADDING)
+        ) {
+//            SpacerTopAppBar()
+            SpacerTopAppBar()
+//            SpacerTopSmall()
+
+
+            var allProductsList: List<Product> = emptyList()
+            if (selectedProducts is RequestState.Success)
+                allProductsList = selectedProducts.data
+
+
+            SearchableDropdownMenu(
+                products = allProductsList,
+                onProductSelected = onProductSelected
+            )
+        }
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -478,7 +522,9 @@ fun TitleLabel(
 ) {
     Column(Modifier.fillMaxWidth()) {
         Row(
-            Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = LARGE_PADDING),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -595,7 +641,11 @@ fun AllergySymptomsOccured(
         onYesClicked = { onSaveAsAllergen(true) },
         onNoClicked = { onSaveAsAllergen(false) })
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(MEDIUM_PADDING)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

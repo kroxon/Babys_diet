@@ -143,7 +143,7 @@ fun DisplayDiaries(
         Row(Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(id = R.string.history),
-                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp),
+                modifier = Modifier.padding(bottom = 8.dp, top = SMALL_PADDING),
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
             )
         }

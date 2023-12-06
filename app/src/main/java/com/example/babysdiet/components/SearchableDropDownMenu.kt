@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -96,7 +97,7 @@ fun SearchableDropdownMenu(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = SMALL_PADDING, end = SMALL_PADDING, bottom = SMALL_PADDING)
+//            .padding(start = SMALL_PADDING, end = SMALL_PADDING, bottom = SMALL_PADDING)
     ) {
         Column(
             modifier = Modifier
@@ -111,20 +112,23 @@ fun SearchableDropdownMenu(
                 )
         ) {
 
-            Text(
-                modifier = Modifier.padding(start = 3.dp, bottom = 2.dp),
-                text = "Category",
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Medium
-            )
+//            Text(
+//                modifier = Modifier.padding(start = 3.dp, bottom = 2.dp),
+//                text = "Category",
+//                fontSize = 16.sp,
+//                color = Color.Black,
+//                fontWeight = FontWeight.Medium
+//            )
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Row(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     OutlinedTextField(
                         shape = RoundedCornerShape(20.dp),
                         modifier = Modifier
@@ -172,7 +176,7 @@ fun SearchableDropdownMenu(
                                     modifier = Modifier.size(24.dp),
                                     imageVector = Icons.Rounded.KeyboardArrowDown,
                                     contentDescription = "arrow",
-                                    tint = Color.Black
+                                    tint = Blue1
                                 )
                             }
                         }
@@ -201,24 +205,48 @@ fun SearchableDropdownMenu(
                                     }
 //                                    .sorted()
                                 ) {
-                                    CategoryItems(
-                                        title = it.name,
-                                        product = it
-                                    ) { title ->
-                                        category = title.name
-                                        expanded = false
+//                                    CategoryItems(
+//                                        title = it.name,
+//                                        product = it
+//                                    ) { title ->
+//                                        category = title.name
+//                                        expanded = false
+//                                    }
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                onProductSelected(it)
+                                                expanded = false
+                                            }
+                                            .background(Color.White)
+                                            .padding(10.dp)
+                                    ) {
+                                        Text(text = it.name, fontSize = 16.sp)
                                     }
                                 }
                             } else {
                                 items(
                                     products
                                 ) {
-                                    CategoryItems(
-                                        title = it.name,
-                                        product = it,
-                                    ) { title ->
-                                        category = title.name
-                                        expanded = false
+//                                    CategoryItems(
+//                                        title = it.name,
+//                                        product = it,
+//                                    ) { title ->
+//                                        category = title.name
+//                                        expanded = false
+//                                    }
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                onProductSelected(it)
+                                                expanded = false
+                                            }
+                                            .background(Color.White)
+                                            .padding(10.dp)
+                                    ) {
+                                        Text(text = it.name, fontSize = 16.sp)
                                     }
                                 }
                             }
