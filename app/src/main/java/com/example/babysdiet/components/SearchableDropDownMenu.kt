@@ -1,6 +1,7 @@
 package com.example.babysdiet.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,8 +19,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,11 +43,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,14 +59,16 @@ import androidx.compose.ui.unit.toSize
 import com.example.babysdiet.R
 import com.example.babysdiet.components.data.models.Product
 import com.example.babysdiet.ui.theme.Blue1
+import com.example.babysdiet.ui.theme.LARGE_PADDING
+import com.example.babysdiet.ui.theme.OUTLINEDBUTTON_HEIGHT
 import com.example.babysdiet.ui.theme.SMALL_PADDING
+import com.example.babysdiet.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.babysdiet.ui.theme.topAppBarBackgroumdColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchableDropdownMenu(
-    products: List<Product>,
-    onProductSelected: (Product) -> Unit
+    products: List<Product>, onProductSelected: (Product) -> Unit
 ) {
 
 //    val categories = listOf(
@@ -79,7 +88,7 @@ fun SearchableDropdownMenu(
     }
 
     val heightTextFields by remember {
-        mutableStateOf(55.dp)
+        mutableStateOf(56.dp)
     }
 
     var textFieldSize by remember {
@@ -93,23 +102,22 @@ fun SearchableDropdownMenu(
         MutableInteractionSource()
     }
 
+    val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
     // Category Field
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
 //            .padding(start = SMALL_PADDING, end = SMALL_PADDING, bottom = SMALL_PADDING)
     ) {
         Column(
             modifier = Modifier
 //            .padding(30.dp)
                 .fillMaxWidth()
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null,
-                    onClick = {
-                        expanded = false
-                    }
-                )
+                .clickable(interactionSource = interactionSource, indication = null, onClick = {
+                    expanded = false
+                })
         ) {
 
 //            Text(
@@ -121,8 +129,7 @@ fun SearchableDropdownMenu(
 //            )
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center
+                modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center
             ) {
 
                 Row(
@@ -130,44 +137,49 @@ fun SearchableDropdownMenu(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     OutlinedTextField(
-                        shape = RoundedCornerShape(20.dp),
+                        shape = RoundedCornerShape(15.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(heightTextFields)
-                            .border(
-                                width = 1.8.dp,
-                                color = Blue1,
-                                shape = RoundedCornerShape(15.dp)
-                            )
+                            .padding(all = 0.dp)
+//                            .height(heightTextFields)
+//                            .border(
+//                                width = 1.8.dp, color = Blue1, shape = RoundedCornerShape(15.dp)
+//                            )
                             .onGloballyPositioned { coordinates ->
                                 textFieldSize = coordinates.size.toSize()
                             },
-                        label = {
-                            Text(
-                                text = stringResource(id = R.string.search),
-//                            modifier = Modifier.padding(start = SMALL_PADDING)
-                            )
-                        },
+//                        label = {
+//                            Text(
+//                                text = stringResource(id = R.string.search),
+////                                text = stringResource(id = R.string.description),
+//                                modifier = Modifier.padding(all = SMALL_PADDING)
+//                            )
+//                        },
                         value = category,
                         onValueChange = {
                             category = it
                             expanded = true
                         },
-                        colors = TextFieldDefaults.textFieldColors(
-                            focusedTextColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
-                            focusedLabelColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
-                            focusedIndicatorColor = Color.White,
-                            unfocusedIndicatorColor = Color.White,
-                            cursorColor = Color.Black,
-                            containerColor = Color.White
+//                        colors = TextFieldDefaults.textFieldColors(
+//                            focusedTextColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+//                            focusedLabelColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+//                            focusedIndicatorColor = Color.Transparent,
+//                            unfocusedIndicatorColor = Color.Transparent,
+//                            cursorColor = Color.Black,
+//                            containerColor = Color.White
+//                        ),
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = Blue1,
+                            focusedBorderColor = Blue1,
+                            cursorColor = Blue1,
+                            focusedTextColor = Blue1,
+                            unfocusedTextColor = Blue1
                         ),
                         textStyle = TextStyle(
-                            color = Color.Black,
-                            fontSize = 16.sp
+                            color = Color.Black, fontSize = 16.sp
                         ),
                         keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done
+                            keyboardType = KeyboardType.Text, imeAction = ImeAction.Done
                         ),
                         singleLine = true,
                         trailingIcon = {
@@ -179,8 +191,16 @@ fun SearchableDropdownMenu(
                                     tint = Blue1
                                 )
                             }
-                        }
-                    )
+                        },
+                        placeholder = {
+                            Text(
+//                                text = stringResource(id = R.string.search),
+                                text = stringResource(id = R.string.description),
+//                                modifier = Modifier
+//                                    .padding(all = SMALL_PADDING)
+//                                    .height(OUTLINEDBUTTON_HEIGHT)
+                            )
+                        })
                 }
 
                 AnimatedVisibility(visible = expanded) {
@@ -197,12 +217,11 @@ fun SearchableDropdownMenu(
                         ) {
 
                             if (category.isNotEmpty()) {
-                                items(
-                                    products.filter {
-                                        it.name.lowercase()
-                                            .contains(category.lowercase()) || it.name.lowercase()
-                                            .contains("others")
-                                    }
+                                items(products.filter {
+                                    it.name.lowercase()
+                                        .contains(category.lowercase()) || it.name.lowercase()
+                                        .contains("others")
+                                }
 //                                    .sorted()
                                 ) {
 //                                    CategoryItems(
@@ -212,16 +231,17 @@ fun SearchableDropdownMenu(
 //                                        category = title.name
 //                                        expanded = false
 //                                    }
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                onProductSelected(it)
-                                                expanded = false
-                                            }
-                                            .background(Color.White)
-                                            .padding(10.dp)
-                                    ) {
+                                    Row(modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            onProductSelected(it)
+                                            expanded = false
+                                            category = it.name
+                                            keyboardController?.hide() // Hide the keyboard to remove focus
+                                            focusManager.clearFocus()
+                                        }
+                                        .background(Color.White)
+                                        .padding(10.dp)) {
                                         Text(text = it.name, fontSize = 16.sp)
                                     }
                                 }
@@ -236,16 +256,17 @@ fun SearchableDropdownMenu(
 //                                        category = title.name
 //                                        expanded = false
 //                                    }
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                onProductSelected(it)
-                                                expanded = false
-                                            }
-                                            .background(Color.White)
-                                            .padding(10.dp)
-                                    ) {
+                                    Row(modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            onProductSelected(it)
+                                            expanded = false
+                                            category = it.name
+                                            keyboardController?.hide() // Hide the keyboard to remove focus
+                                            focusManager.clearFocus()
+                                        }
+                                        .background(Color.White)
+                                        .padding(10.dp)) {
                                         Text(text = it.name, fontSize = 16.sp)
                                     }
                                 }
@@ -256,28 +277,70 @@ fun SearchableDropdownMenu(
                     }
                 }
 
-            }
 
+//                Column(
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(top = LARGE_PADDING)
+//                ) {
+//
+//                    var name by remember {
+//                        mutableStateOf("")
+//                    }
+//                    OutlinedTextField(
+//                        value = name,
+//                        onValueChange = { name = it },
+//                        label = { Text(text = "Name") },
+//                        placeholder = { Text(text = "Enter you name") },
+//                        maxLines = 1,
+//                        colors = TextFieldDefaults.textFieldColors(
+//                            focusedTextColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+//                            focusedLabelColor = MaterialTheme.colorScheme.topAppBarBackgroumdColor,
+//                            focusedIndicatorColor = Color.White,
+//                            unfocusedIndicatorColor = Color.White,
+//                            cursorColor = Color.Black,
+//                            containerColor = Color.White
+//                        ),
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(all = 0.dp)
+//                            .border(
+//                                BorderStroke(width = 1.dp, color = Blue1),
+//                                shape = RoundedCornerShape(15)
+//                            ),
+//                        trailingIcon = {
+//                            IconButton(onClick = { expanded = !expanded }) {
+//                                Icon(
+//                                    modifier = Modifier.size(24.dp),
+//                                    imageVector = Icons.Rounded.KeyboardArrowDown,
+//                                    contentDescription = "arrow",
+//                                    tint = Blue1
+//                                )
+//                            }
+//                        },
+//                        shape = RoundedCornerShape(15.dp),
+//                    )
+//                }
+
+            }
         }
     }
 }
 
 @Composable
 fun CategoryItems(
-    title: String,
-    product: Product,
-    onSelect: (Product) -> Unit
+    title: String, product: Product, onSelect: (Product) -> Unit
 ) {
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                onSelect(product)
-            }
-            .background(Color.White)
-            .padding(10.dp)
-    ) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .clickable {
+            onSelect(product)
+        }
+        .background(Color.White)
+        .padding(10.dp)) {
         Text(text = title, fontSize = 16.sp)
     }
 
@@ -287,44 +350,43 @@ fun CategoryItems(
 @Composable
 @Preview
 fun SearchExpandableDropdownMenuPreview() {
-    SearchableDropdownMenu(
-        products = arrayOf(
-            Product(
-                name = "milk",
-                categoryId = 1,
-                isAllergen = false,
-                description = "description",
-                productId = 1
-            ),
-            Product(
-                name = "carrot",
-                categoryId = 1,
-                isAllergen = false,
-                description = "description",
-                productId = 1
-            ),
-            Product(
-                name = "meat",
-                categoryId = 1,
-                isAllergen = false,
-                description = "description",
-                productId = 1
-            ),
-            Product(
-                name = "bread",
-                categoryId = 1,
-                isAllergen = false,
-                description = "description",
-                productId = 1
-            ),
-            Product(
-                name = "potato",
-                categoryId = 1,
-                isAllergen = false,
-                description = "description",
-                productId = 1
-            ),
-        ).toList(),
-        onProductSelected = {}
-    )
+    SearchableDropdownMenu(products = arrayOf(
+        Product(
+            name = "milk",
+            categoryId = 1,
+            isAllergen = false,
+            description = "description",
+            productId = 1
+        ), Product(
+            name = "carrot",
+            categoryId = 1,
+            isAllergen = false,
+            description = "description",
+            productId = 1
+        ), Product(
+            name = "meat",
+            categoryId = 1,
+            isAllergen = false,
+            description = "description",
+            productId = 1
+        ), Product(
+            name = "bread",
+            categoryId = 1,
+            isAllergen = false,
+            description = "description",
+            productId = 1
+        ), Product(
+            name = "potato",
+            categoryId = 1,
+            isAllergen = false,
+            description = "description",
+            productId = 1
+        ), Product(
+            name = "meatppTT",
+            categoryId = 1,
+            isAllergen = false,
+            description = "description",
+            productId = 1
+        )
+    ).toList(), onProductSelected = {})
 }
