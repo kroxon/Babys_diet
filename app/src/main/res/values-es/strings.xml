@@ -143,16 +143,16 @@
 
     <!-- Frutas secas -->
     <string-array name="dried_fruits">
-        <item>Plátano</item>
-        <item>Dátil</item>
-        <item>Higo</item>
-        <item>Pera</item>
-        <item>Manzana</item>
-        <item>Mango</item>
-        <item>Albaricoque</item>
-        <item>Ciruela</item>
-        <item>Fresa</item>
-        <item>Arándano rojo</item>
+        <item>Plátano (secas)</item>
+        <item>Dátil (secas)</item>
+        <item>Higo (secas)</item>
+        <item>Pera (secas)</item>
+        <item>Manzana (secas)</item>
+        <item>Mango (secas)</item>
+        <item>Albaricoque (secas)</item>
+        <item>Ciruela (secas)</item>
+        <item>Fresa (secas)</item>
+        <item>Arándano rojo (secas)</item>
     </string-array>
 
     <!-- Setas cultivadas -->

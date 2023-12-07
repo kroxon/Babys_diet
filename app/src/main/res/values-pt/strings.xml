@@ -60,7 +60,7 @@
     <string name="fruits">Frutas</string>
     <string name="dried_fruits">Frutas Secas</string>
     <string name="dairy_and_eggs">Leite e Ovos</string>
-    <string name="spices">Especiarias</string>
+    <string name="spieces">Especiarias</string>
     <string name="legumes">Legumes</string>
     <string name="meat">Carne</string>
     <string name="fish_and_seafood">Peixe e Frutos do Mar</string>
@@ -159,16 +159,16 @@
 
     <!-- Frutas Secas -->
     <string-array name="dried_fruits">
-        <item>Banana</item>
-        <item>Tâmara</item>
-        <item>Figo</item>
-        <item>Pera</item>
-        <item>Maçã</item>
-        <item>Manga</item>
-        <item>Alperce</item>
-        <item>Ameixa</item>
-        <item>Morango</item>
-        <item>Cranberry</item>
+        <item>Banana (secas)</item>
+        <item>Tâmara (secas)</item>
+        <item>Figo (secas)</item>
+        <item>Pera (secas)</item>
+        <item>Maçã (secas)</item>
+        <item>Manga (secas)</item>
+        <item>Alperce (secas)</item>
+        <item>Ameixa (secas)</item>
+        <item>Morango (secas)</item>
+        <item>Cranberry (secas)</item>
     </string-array>
 
     <!-- Cogumelos Cultivados -->

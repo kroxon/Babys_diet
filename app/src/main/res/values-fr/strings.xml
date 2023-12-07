@@ -161,16 +161,16 @@
 
     <!-- Fruits secs -->
     <string-array name="dried_fruits">
-        <item>Banane</item>
-        <item>Date</item>
-        <item>Figue</item>
-        <item>Poire</item>
-        <item>Pomme</item>
-        <item>Mangue</item>
-        <item>Abricot</item>
-        <item>Prune</item>
-        <item>Fraise</item>
-        <item>Cranberry</item>
+        <item>Banane (secs)</item>
+        <item>Date (secs)</item>
+        <item>Figue (secs)</item>
+        <item>Poire (secs)</item>
+        <item>Pomme (secs)</item>
+        <item>Mangue (secs)</item>
+        <item>Abricot (secs)</item>
+        <item>Prune (secs)</item>
+        <item>Fraise (secs)</item>
+        <item>Cranberry (secs)</item>
     </string-array>
 
 

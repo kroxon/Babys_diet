@@ -162,16 +162,16 @@
 
     <!-- Owoce suszone -->
     <string-array name="dried_fruits">
-        <item>Banan</item>
-        <item>Daktyl</item>
-        <item>Figa</item>
-        <item>Gruszka</item>
-        <item>Jabłko</item>
-        <item>Mango</item>
-        <item>Morela</item>
-        <item>Śliwka</item>
-        <item>Truskawka</item>
-        <item>Żurawina</item>
+        <item>Banan (suszony)</item>
+        <item>Daktyl (suszony)</item>
+        <item>Figa (suszona)</item>
+        <item>Gruszka (suszona)</item>
+        <item>Jabłko (suszone)</item>
+        <item>Mango (suszone)</item>
+        <item>Morela (suszona)</item>
+        <item>Śliwka (suszona)</item>
+        <item>Truskawka (suszona)</item>
+        <item>Żurawina (suszona)</item>
     </string-array>
 
     <!-- Grzyby hodowlane -->
