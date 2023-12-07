@@ -59,7 +59,7 @@
     <string name="fruits">Früchte</string>
     <string name="dried_fruits">Getrocknete Früchte</string>
     <string name="dairy_and_eggs">Milchprodukte und Eier</string>
-    <string name="spices">Gewürze</string>
+    <string name="spieces">Gewürze</string>
     <string name="legumes">Hülsenfrüchte</string>
     <string name="meat">Fleisch</string>
     <string name="fish_and_seafood">Fisch und Meeresfrüchte</string>
@@ -154,16 +154,16 @@
     </string-array>
     <!-- Getrocknete Früchte -->
     <string-array name="dried_fruits">
-        <item>Banane</item>
-        <item>Dattel</item>
-        <item>Feige</item>
-        <item>Birne</item>
-        <item>Apfel</item>
-        <item>Mango</item>
-        <item>Aprikose</item>
-        <item>Pflaume</item>
-        <item>Erdbeere</item>
-        <item>Cranberry</item>
+        <item>Banane (getrocknete)</item>
+        <item>Dattel (getrocknete)</item>
+        <item>Feige (getrocknete)</item>
+        <item>Birne (getrocknete)</item>
+        <item>Apfel (getrocknete)</item>
+        <item>Mango (getrocknete)</item>
+        <item>Aprikose (getrocknete)</item>
+        <item>Pflaume (getrocknete)</item>
+        <item>Erdbeere (getrocknete)</item>
+        <item>Cranberry (getrocknete)</item>
     </string-array>
 
     <!-- Angebaute Pilze -->

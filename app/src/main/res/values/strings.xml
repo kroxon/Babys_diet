@@ -158,17 +158,17 @@
 
     <!-- Owoce suszone -->
     <string-array name="dried_fruits">
-        <item>Banana</item>
-        <item>Date</item>
-        <item>Fig</item>
-        <item>Pear</item>
-        <item>Apple</item>
-        <item>Mango</item>
-        <item>Apricot</item>
-        <item>Plum</item>
-        <item>Strawberry</item>
-        <item>Cranberry</item>
-    </string-array>
+        <item>Banana (dried)</item>
+        <item>Date (dried)</item>
+        <item>Fig (dried)</item>
+        <item>Pear (dried)</item>
+        <item>Apple (dried)</item>
+        <item>Mango (dried)</item>
+        <item>Apricot (dried)</item>
+        <item>Plum (dried)</item>
+        <item>Strawberry (dried)</item>
+        <item>Cranberry (dried)</item>
+    </string-array>d
 
     <!-- Grzyby hodowlane -->
     <string-array name="mushrooms">
